@@ -1,0 +1,60 @@
+import org.gradle.api.artifacts.*
+
+buildscript {
+    def home = System.getProperty('user.home')
+    repositories {
+        maven {
+            url uri("$home/repo")
+        }
+        mavenCentral()
+        mavenLocal()
+
+    }
+    dependencies {
+        classpath group: 'com.wileyfuller', name: 'glovr', version: '1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'base'
+apply plugin: 'glovr'
+
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://bbprepo.blackboard.com/content/repositories/releases/"
+    }
+}
+
+glovr {
+    jsRoot = 'src/main/javascript/'
+}
+
+
+dependencies {
+
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+
+    compile project(':jshack-api')
+    compile files('../lib/bb-stripes-utils-1.0.jar')
+
+    compile 'javax.servlet:servlet-api:2.5'
+    compile 'net.sourceforge.stripes:stripes:1.5.7'
+    compile 'org.springframework:spring-beans:3.2.5.RELEASE'
+    compile 'org.springframework:spring-web:3.2.5.RELEASE'
+
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'org.slf4j:jul-to-slf4j:1.7.5'
+    compile 'org.slf4j:slf4j-simple:1.7.5'
+
+
+    compile 'org.glassfish.jersey.containers:jersey-container-servlet-core:2.4.1'
+    compile 'org.glassfish.jersey.ext:jersey-spring3:2.4.1'
+    compile 'org.glassfish.jersey.media:jersey-media-moxy:2.4.1'
+    compile 'org.glassfish.jersey.media:jersey-media-json-processing:2.4.1'
+
+}
+
+
+

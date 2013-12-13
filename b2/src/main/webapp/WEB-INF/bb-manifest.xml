@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Author     : Wiley Fuller <wfuller@swin.edu.au>
+    Copyright Swinburne University of Technology, 2011.
+-->
+<manifest>
+  <plugin>
+    <name value="jsh.plugin.name"/>
+    <handle value="jshack"/>
+    <description value="jsh.plugin.description"/>
+    <default-locale value="en_GB" />
+    <webapp-type value="javaext" />
+    <version value="1.0.1"/>
+    <requires>
+      <bbversion value="9.1"/>
+    </requires>
+    <vendor>
+      <id value="oslt"/>
+      <name value="Oscelot"/>
+      <url value="http://www.oscelot.org/"/>
+      <description value="Oscelot"/>
+    </vendor>
+    <http-actions>
+
+    </http-actions>
+
+
+    <extension-defs>
+      <definition namespace="org.oscelot">
+        <extension id="jshackTagLearningSystemPageStartHook"
+                   point="blackboard.platform.renderingHook"
+                   class="org.oscelot.jshack.hooks.TagLearningSystemPageStartHook"
+                   singleton="true" />
+        <extension id="jshackTagEditModeViewToggleStartHook"
+                   point="blackboard.platform.renderingHook"
+                   class="org.oscelot.jshack.hooks.TagEditModeViewToggleStartHook"
+                   singleton="true" />
+        <extension id="jshackJspTopFrameStartHook"
+                   point="blackboard.platform.renderingHook"
+                   class="org.oscelot.jshack.hooks.JspTopFrameStartHook"
+                   singleton="true" />
+        <extension id="jshackJspFramesetStartHook"
+                   point="blackboard.platform.renderingHook"
+                   class="org.oscelot.jshack.hooks.JspFramesetStartHook"
+                   singleton="true" />
+      </definition>
+    </extension-defs>
+
+    <application-defs>
+      <application handle="oslt-jsh-manage-hacks" type="system" name="jsh.plugin.manage.title">
+        <description>jsh.plugin.manage.description</description>
+        <links>
+          <link>
+            <type value="nav_handle_param" />
+            <navhandle value="pa_ext"/>
+            <name value="jsh.plugin.manage.label" />
+            <url value="ListHacks.action" />
+            <entitlement-uid value="system.jshacks.CREATE" />
+            <description value="jsh.plugin.manage.description" />
+            <icons>
+              <listitem value="" />
+            </icons>
+          </link>
+        </links>
+      </application>
+    </application-defs>
+
+    <entitlements>
+      <entitlement uid="system.jshacks.CREATE"
+                   label="jsh.entitlement.CREATE.label"
+                   type="Course"
+                   template="system.plugin.CREATE" />
+    </entitlements>
+
+
+    <permissions>
+      <!-- Stripes Permissions -->
+      <permission type="java.lang.RuntimePermission" name="accessDeclaredMembers" />
+      <permission type="java.lang.reflect.ReflectPermission" name="suppressAccessChecks" />
+
+      <!-- Other Permissions -->
+
+      <permission type="java.util.logging.LoggingPermission" name="control"/>
+
+      <permission type="blackboard.data.AttributePermission" name="user.authinfo" actions="get" />
+      <permission type="blackboard.data.AttributePermission" name="user.personalinfo" actions="get" />
+      <permission type="blackboard.data.AttributePermission" name="user.cardnumber" actions="get" />
+      <permission type="blackboard.persist.PersistPermission" name="userlifecycleeventimpl" actions="get" />
+      <permission type="blackboard.persist.PersistPermission" name="userlifecycleeventpropertyimpl" actions="get" />
+      <permission type="blackboard.persist.PersistPermission" name="user" actions="get" />
+      <permission type="java.lang.RuntimePermission" name="createClassLoader" />
+    </permissions>
+  </plugin>
+</manifest>

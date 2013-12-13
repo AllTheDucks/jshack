@@ -1,0 +1,105 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://localhost:9810/compile?id=jshack-dev"></script>
+        <script src="js/ace/ace.js"></script>
+        <link rel="stylesheet" href="css/default.css"/>
+        <link rel="stylesheet" href="css/tabbar.css"/>
+        <link rel="stylesheet" href="css/tab.css"/>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+    <div id="stepcontent1" class="stepcontent">
+        <ol>
+
+            <li class="required">
+                <div class="label">
+                    <!--<img src="/images/ci/icons/required.gif" alt="Asterisk">-->
+                    Name
+                </div>
+
+                <div class="field">
+                    <input style="width:35em;" name="hack.name" type="text">
+                    <span class="fieldErrorText"></span>
+
+                </div>
+            </li>
+
+            <li class="required">
+                <div class="label">
+                    <!--<img src="/images/ci/icons/required.gif" alt="Asterisk">-->
+                    Description
+                </div>
+
+                <div class="field">
+                    <input style="width:35em;" name="hack.description" type="text">
+                    <span class="fieldErrorText"></span>
+
+                </div>
+            </li>
+
+            <li class="required">
+                <div class="label">
+                    <!--<img src="/images/ci/icons/required.gif" alt="Asterisk">-->
+                    Identifier
+                </div>
+
+                <div class="field">
+                    <input maxlength="20" name="hack.identifier" type="text" size="20">
+                    <span class="fieldErrorText"></span>
+
+                </div>
+            </li>
+
+            <li>
+                <div class="label">
+                    Hack Version
+                </div>
+
+                <div class="field">
+                    <input name="hack.version" type="text">
+                    <span class="fieldErrorText"></span>
+
+                </div>
+            </li>
+
+            <li>
+                <div class="label">
+                    Minimum Bb Version
+                </div>
+
+                <div class="field">
+                    <input name="hack.targetVersionMin" type="text">
+                    <span class="fieldErrorText"></span>
+
+                </div>
+            </li>
+
+            <li>
+                <div class="label">
+                    Max Bb Version
+                </div>
+
+                <div class="field">
+                    <input name="hack.targetVersionMax" type="text">
+                    <span class="fieldErrorText"></span>
+
+                </div>
+            </li>
+        </ol>
+    </div>
+    <div id="stepcontent2" class="stepcontent">
+
+    </div>
+    <div  id="stepcontent3" class="stepcontent">
+        <div id="hack-resources">
+
+        </div>
+    </div>
+    </body>
+</html>

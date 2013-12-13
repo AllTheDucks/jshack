@@ -1,0 +1,63 @@
+import org.gradle.api.artifacts.*
+
+buildscript {
+    def home = System.getProperty('user.home')
+    repositories {
+        maven {
+            url uri("$home/repo")
+        }
+        mavenCentral()
+        mavenLocal()
+
+    }
+    dependencies {
+        classpath group: 'com.wileyfuller', name: 'glovr', version: '1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'base'
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://bbprepo.blackboard.com/content/repositories/releases/"
+    }
+}
+
+war {
+    dependsOn ":jshack-common-web:plovrBuild"
+    from '../common-web/src/main/webapp'
+    from '../common-web/build/plovr/compiled'
+    webInf { from 'src/main/webapp/WEB-INF' }
+//    webXml = file('src/main/webapp/WEB-INF/web.xml')
+}
+
+dependencies {
+
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+
+    compile project(':jshack-common-web')
+
+    providedCompile 'blackboard.platform:bb-platform:9.1.100401.0'
+    providedCompile 'blackboard.platform:bb-cms-admin:9.1.100401.0'
+    providedCompile 'blackboard.platform:bb-taglibs:9.1.100401.0'
+    providedCompile 'blackboard.platform:bb-ws-gradebook:9.1.100401.0'
+
+    providedCompile 'commons-codec:commons-codec:1.3'
+    providedCompile 'commons-io:commons-io:1.4'
+    providedCompile 'commons-lang:commons-lang:2.4'
+    providedCompile 'org.apache.velocity:velocity:1.5'
+
+    providedCompile 'javax.servlet:servlet-api:2.5'
+    providedCompile 'jstl:jstl:1.2'
+    providedCompile 'javax.activation:activation:1.1'
+
+
+}
+
+
+

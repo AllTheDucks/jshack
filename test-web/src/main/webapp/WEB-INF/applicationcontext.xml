@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+
+    <context:annotation-config />
+    <context:component-scan base-package="org.oscelot.jshack" />
+
+
+    <bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackTestDirectoryFactory">
+        <property name="rootConfigDirPath" value="test-web/src/test/data"></property>
+    </bean>
+
+    <!--<bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackTestDirectoryFactory">-->
+        <!--<property name="hacksDirPath" value="test-web/src/test/data" />-->
+    <!--</bean>-->
+
+
+    <!--<bean id="hackDir" class="java.io.File" >-->
+
+        <!--<constructor-arg type="java.lang.String" value="test-web/src/test/data"></constructor-arg>-->
+    <!--</bean>-->
+
+    <!--<bean id="streamFactory" class="org.oscelot.jshack.service.HackStreamFactory">-->
+        <!--<property name="hacksDir" value="test-web/src/test/data"></property>-->
+    <!--</bean>-->
+    <!--<bean id="hackDiscoveryService" class="org.oscelot.jshack.service.HackDiscoveryService">-->
+        <!--<property name="hacksDir" ref="hackDir"></property>-->
+    <!--</bean>-->
+    <!--<bean id="xstreamHackService" class="org.oscelot.jshack.service.XStreamHackService"></bean>-->
+    <!--<bean id="hackManager" class="org.oscelot.jshack.service.HackManager">-->
+        <!--<property name="discoveryService" ref="hackDiscoveryService"></property>-->
+        <!--<property name="hackService" ref="xstreamHackService"></property>-->
+    <!--</bean>-->
+</beans>

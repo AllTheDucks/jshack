@@ -1,0 +1,146 @@
+/*
+    Document   : default
+    Created on : 17/10/2012, 3:21:41 PM
+    Author     : Wiley Fuller <wfuller@swin.edu.au>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.editorContainer, #editorContainer {
+    position: relative;
+    height: 30em;
+    width: 100%;
+    border: 1px solid lightgray;
+    border-radius: .25em;
+}
+
+#snippetEditor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.jsh-resourceDiv {
+    border: 1px solid lightsteelblue;
+    border-radius: .25em;
+    background-color: lightsteelblue;
+    padding: .25em;
+    padding-right: .75em;
+    width: 45em;
+    margin-bottom: .3em;
+}
+
+.disabledIcon {
+    margin-right: 1em;
+}
+
+.snippetBlock {
+    background-color: #e6e6e6;
+    border-radius: 3px;
+    padding: .5em;
+    margin-bottom: 1.5em;
+    -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.15);  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.15);  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    border: 1px solid #c6c6c6;
+}
+
+.jsh-restrictionDiv {
+    border: 1px solid lightsteelblue;
+    background-color: lightsteelblue;
+    padding:  0 .5em;
+    border-radius: 3px;
+    margin-bottom: .25em;
+}
+
+.jsh-tabbar {
+    height: 2.5em;
+    margin: 0 0 10px 0px;
+    border-bottom: 1px solid #ddd;
+}
+.jsh-tab {
+    padding: 0 .5em;
+    margin-left: .25em;
+    display: inline-block;
+    border-color: transparent;
+    -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    font-weight: bold;
+    margin-bottom: -1px;
+}
+.jsh-tab > a {
+    line-height: 2.5em;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px;
+    border-color: transparent;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.jsh-active-tab > a {
+    color: #555555;
+    cursor: default;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-bottom-color: white;
+}
+
+.jsh-inactive-tab {
+    background-color: transparent;
+}
+.jsh-tab > a:hover, jsh-tab > a:focus {
+    color: #555555;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+.jsh-active-tab > a:hover, .jsh-active-tab > a:focus {
+    color: #555555;
+    cursor: default;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-bottom-color: #fff;
+}
+.jsh-active-tab >a:hover, jsh-active-tab >a:focus {
+    cursor: default;
+}
+.jsh-new-tab > a {
+    background-color: rgb(0, 173, 255);
+    color: white;
+}
+
+.title-page-img {
+    box-shadow: 0 0 1em gray;
+}
+
+
+.goog-tab-content {
+    /*height: 15em;*/
+    margin: 0;
+    border: 1px solid #6b90da;
+    border-top: 0;
+    padding: 4px 8px;
+    background: #fff;
+    overflow: auto;
+}
+
+
+.resource-editor {
+    position: relative;
+    width: 100%;
+    height:20em;
+}
+
+.ace-editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /*width: 0%;*/
+    /*height: 20em;*/
+}

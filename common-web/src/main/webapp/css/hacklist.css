@@ -1,0 +1,74 @@
+.jsh-hacklist {
+    padding: 10px;
+}
+
+.jsh-hacklist-hackname {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.jsh-hacklist-hackid {
+    font-size: 12px;
+}
+.jsh-hacklist-hackid:before {
+    content: '(';
+}
+.jsh-hacklist-hackid:after {
+    content: ')';
+}
+
+
+.jsh-hacklist-resourcelist {
+    list-style: none;
+    margin: 10px 0 10px 0;
+    padding: 0;
+}
+
+.jsh-hacklist-resource {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.jsh-hacklist-resource > .text {
+    display: inline;
+    vertical-align: middle;
+}
+
+.jsh-hacklist-resource > .icon {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.jsh-hacklist-resource-gif > .icon {
+    background-image: url(../images/icons/image-gif.png);
+}
+
+.jsh-hacklist-resource-jpg > .icon {
+    background-image: url(../images/icons/image-jpeg.png);
+}
+
+.jsh-hacklist-resource-png > .icon {
+    background-image: url(../images/icons/image-png.png);
+}
+
+.jsh-hacklist-resource-css > .icon {
+    background-image: url(../images/icons/text-css.png);
+}
+
+.jsh-hacklist-resource-html > .icon {
+    background-image: url(../images/icons/text-html.png);
+}
+
+.jsh-hacklist-resource-js > .icon {
+    background-image: url(../images/icons/text-x-javascript.png);
+}
+
+.jsh-hacklist-resource-unknown > .icon {
+    background-image: url(../images/icons/unknown.png);
+}

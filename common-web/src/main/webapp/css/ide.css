@@ -1,0 +1,52 @@
+body {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+
+    background-color: #292b2d;
+
+    color: #eee;
+    font-size: 14px;
+}
+
+.goog-inline-block {
+    display: inline-block;
+}
+
+
+.ace-editor-container .ace-editor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.icon {
+    font-size: 20px;
+}
+.toolbar-text {
+    font-size: 14px;
+    padding: 2px 5px 2px 5px;
+}
+.goog-toolbar-button {
+    color: #eee;
+    margin: 3px;
+}
+.goog-toolbar {
+    padding: 5px 10px 2px 10px;
+}
+
+#outersplitpane > .goog-splitpane-first-container {
+    border-top-right-radius: 10px;
+    background-color: #191919;
+}
+
+#innersplitpane > .goog-splitpane-second-container {
+    border-top-left-radius: 10px;
+    background-color: #191919;
+}
+.ace_gutter {
+    border-radius: 10px 0 0 10px
+}
