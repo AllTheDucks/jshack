@@ -6,7 +6,7 @@
 
     <c:choose>
         <c:when test="${actionBean.dev}"><script src="http://localhost:9810/compile?id=jshack-common-web"></script></c:when>
-        <c:otherwise><script src="js/jsh-compiled.js"></script></c:otherwise>
+        <c:otherwise><script src="js/main.js"></script></c:otherwise>
     </c:choose>
     <script src="js/ace/ace.js"></script>
     <link rel="stylesheet" href="css/ide.css"/>

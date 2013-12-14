@@ -28,6 +28,8 @@ repositories {
 
 glovr {
     jsRoot = 'src/main/javascript/'
+    mode = 'ADVANCED'
+    externs = ['src/main/webapp/js/ace/ace.js']
 }
 
 
