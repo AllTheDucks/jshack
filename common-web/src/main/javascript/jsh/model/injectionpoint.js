@@ -7,7 +7,7 @@
  */
 
 
-goog.provides('jsh.model.injectionPoint');
+goog.provide('jsh.model.injectionPoint');
 
 
 /**

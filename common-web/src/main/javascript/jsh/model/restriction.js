@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-goog.provides('jsh.model.Restriction');
-goog.provides('jsh.model.restrictionType');
+goog.provide('jsh.model.Restriction');
+goog.provide('jsh.model.restrictionType');
 
 
 

@@ -1,0 +1,24 @@
+{namespace org.plovr}
+
+/**
+ * Template for laying out JS test pages.
+ * @param title Title of the page.
+ * @param baseJsUrl The Closure base.js path.
+ * @param testJsUrl The that to the test JS.
+ */
+{template .test}
+<!doctype html>
+<html>
+<head>
+  <title>{$title}</title>
+</head>
+<body>
+  <script src="{$baseJsUrl}"></script>
+  <script>
+    goog.require('goog.testing.jsunit');
+    goog.require('goog.testing.AsyncTestCase');
+  </script>
+  <script src="{$testJsUrl}"></script>
+</body>
+</html>
+{/template}

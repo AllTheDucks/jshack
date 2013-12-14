@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-goog.provides('jsh.model.HackPackage');
+goog.provide('jsh.model.Hack');
 
 goog.require('jsh.model.HackResource');
 
@@ -16,7 +16,7 @@ goog.require('jsh.model.HackResource');
  *
  * @constructor
  */
-jsh.model.HackPackage = function() {
+jsh.model.Hack = function() {
   /** @type {string} */
   this.name;
   /** @type {string} */

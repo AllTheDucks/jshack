@@ -7,7 +7,7 @@
  */
 
 
-goog.provides('jsh.model.HackResource');
+goog.provide('jsh.model.HackResource');
 
 
 
