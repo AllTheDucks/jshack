@@ -3,6 +3,7 @@ goog.provide('jsh.DataService');
 goog.require('goog.Uri.QueryData');
 goog.require('goog.async.Deferred');
 goog.require('goog.net.XhrIo');
+goog.require('goog.net.XhrManager');
 goog.require('jsh.model.Hack');
 
 
