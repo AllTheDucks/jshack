@@ -2,6 +2,7 @@ goog.provide('jsh.DataService');
 
 goog.require('goog.Uri.QueryData');
 goog.require('goog.async.Deferred');
+goog.require('goog.net.XhrIo');
 goog.require('jsh.model.Hack');
 
 
@@ -9,15 +10,28 @@ goog.require('jsh.model.Hack');
 /**
  * Creates a DataService.
  * @param {string} contextRoot The application context root url.
+ * @param {goog.net.XhrManager=} opt_xhrManager The XhrManager used to process
+ *     Xhr requests.
  * @constructor
  * @extends {goog.Disposable}
  */
-jsh.DataService = function(contextRoot) {
+jsh.DataService = function(contextRoot, opt_xhrManager) {
   goog.base(this);
 
-  this.contextRoot = contextRoot;
+  this.contextRoot_ = contextRoot;
 
-  this.xhr_ = new goog.net.XhrIo();
+  this.wsUrl_ = this.contextRoot_ + '/ws/hacks/';
+
+  this.xhrManager_ = opt_xhrManager ?
+      opt_xhrManager :
+      new goog.net.XhrManager();
+
+  this.requestMap_ = {};
+
+  this.requestCounter_ = 0;
+
+  goog.events.listen(this.xhrManager_, goog.net.EventType.COMPLETE,
+      this.handleXhrResponse, false, this);
 };
 goog.inherits(jsh.DataService, goog.Disposable);
 
@@ -28,24 +42,16 @@ goog.inherits(jsh.DataService, goog.Disposable);
  * @return {jsh.async.Deferred} The hack.
  */
 jsh.DataService.prototype.getHack = function(id) {
-
+  var requestId = this.requestCounter_++;
   var deferred = new goog.async.Deferred();
+  var callback = this.unpackHackJSON;
+  var dataServiceReq = new jsh.DataService.Request(deferred, callback);
 
-  goog.events.listenOnce(this.xhr_, goog.net.EventType.COMPLETE,
-      function(e) {
-        var xhr = /** @type {goog.net.XhrIo} */ (e.target);
-        if (xhr.isSuccess()) {
-          deferred.callback(this.unpackHackJSON(xhr.getResponseJson()));
-        } else {
-          deferred.errback();
-        }
-      }, false, this);
-  var data = goog.Uri.QueryData.createFromMap(new goog.structs.Map({
-    hackId: id
-  }));
-  this.xhr_.send('ManageShells.action', 'POST', data.toString());
+  this.requestMap_[requestId] = dataServiceReq;
 
-  return deferred;
+  this.xhrManager_.send(requestId, this.wsUrl_ + id, 'GET');
+
+  return dataServiceReq.deferred;
 };
 
 
@@ -75,6 +81,35 @@ jsh.DataService.prototype.unpackHackJSON = function(jsonData) {
  * @override
  */
 jsh.DataService.prototype.disposeInternal = function() {
-  this.xhr_.dispose();
+  this.xhrManager_.dispose();
   goog.base(this, 'disposeInternal');
+};
+
+
+/**
+ * @param {goog.net.XhrManager.Event} event The xhr response event.
+ */
+jsh.DataService.prototype.handleXhrResponse = function(event) {
+  var request = this.requestMap_[event.id];
+  delete this.requestMap_[event.id];
+
+  var xhr = event.xhrIo;
+  if (xhr.isSuccess()) {
+    request.deferred.callback(request.callback(xhr.getResponseJson()));
+  } else {
+    request.deferred.errback();
+  }
+};
+
+
+
+/**
+ * A pending request to the remote server.
+ * @param {goog.async.Deferred} deferred the deferred for the client code
+ * @param {function} callback function to convert the returned data
+ * @constructor
+ */
+jsh.DataService.Request = function(deferred, callback) {
+  this.deferred = deferred;
+  this.callback = callback;
 };
