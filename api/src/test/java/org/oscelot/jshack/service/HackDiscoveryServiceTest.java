@@ -30,7 +30,12 @@ public class HackDiscoveryServiceTest {
 
     @Test
     public void enumerateHacks_withNoHacks_returnsEmptyList() {
-        when(directoryFactory.getHacksDir()).thenReturn(new File("api/src/test/data/zerohacks"));
+        //Git won't checkout empty directories, so create the dir if it doesn't exist.
+        File emptyDir = new File("api/src/test/data/zerohacks");
+        if (!emptyDir.exists()) {
+          emptyDir.mkdirs();
+        }
+        when(directoryFactory.getHacksDir()).thenReturn(emptyDir);
 
         List<String> hackIdList = discoveryService.enumerateHackIds();
 
