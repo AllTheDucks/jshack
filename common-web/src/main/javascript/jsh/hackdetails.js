@@ -3,6 +3,7 @@ goog.provide('jsh.HackDetailsArea');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('jsh.soy');
 
 
 
@@ -23,7 +24,9 @@ goog.inherits(jsh.HackDetailsArea, goog.ui.Component);
  * @override
  */
 jsh.HackDetailsArea.prototype.createDom = function() {
-  this.decorateInternal(goog.dom.getElement('stepcontent1'));
+
+  var el = goog.soy.renderAsElement(jsh.soy.hackDetailsArea);
+  this.decorateInternal(el);
 };
 
 
@@ -37,18 +40,18 @@ jsh.HackDetailsArea.prototype.createDom = function() {
 jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  this.hackNameInput =
-      document.getElementsByName('hack.name', element)[0];
-  this.hackDescInput =
-      document.getElementsByName('hack.description', element)[0];
-  this.hackIdInput =
-      document.getElementsByName('hack.identifier', element)[0];
-  this.hackVersionInput =
-      document.getElementsByName('hack.version', element)[0];
-  this.hackTargetVerMinInput =
-      document.getElementsByName('hack.targetVersionMin', element)[0];
-  this.hackTargetVerMaxInput =
-      document.getElementsByName('hack.targetVersionMax', element)[0];
+//  this.hackNameInput =
+//      document.getElementsByName('hack.name', element)[0];
+//  this.hackDescInput =
+//      document.getElementsByName('hack.description', element)[0];
+//  this.hackIdInput =
+//      document.getElementsByName('hack.identifier', element)[0];
+//  this.hackVersionInput =
+//      document.getElementsByName('hack.version', element)[0];
+//  this.hackTargetVerMinInput =
+//      document.getElementsByName('hack.targetVersionMin', element)[0];
+//  this.hackTargetVerMaxInput =
+//      document.getElementsByName('hack.targetVersionMax', element)[0];
 
 };
 
@@ -59,14 +62,14 @@ jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
  */
 jsh.HackDetailsArea.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  goog.events.listen(this.hackNameInput,
-      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
-        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
-  goog.events.listen(this.hackDescInput,
-      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
-        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
-  goog.events.listen(this.hackIdInput,
-      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
-        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
+//  goog.events.listen(this.hackNameInput,
+//      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
+//        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
+//  goog.events.listen(this.hackDescInput,
+//      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
+//        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
+//  goog.events.listen(this.hackIdInput,
+//      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
+//        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
 };
 

@@ -33,6 +33,7 @@ glovr {
     options = [
         'test-template': new File('common-web/src/test/resources/test-template.soy').getAbsolutePath()
     ]
+    paths = new File('common-web/src/main/soy').getAbsolutePath()
 }
 
 

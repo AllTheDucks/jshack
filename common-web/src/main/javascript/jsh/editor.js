@@ -8,6 +8,7 @@ goog.require('goog.ui.Toolbar');
 goog.require('goog.ui.ToolbarButton');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
+goog.require('jsh.HackDetailsArea');
 goog.require('jsh.HackList');
 goog.require('jsh.SplitPane');
 
@@ -63,10 +64,11 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   this.lhs = new goog.ui.Component();
   this.editor = new jsh.AceEditor();
+  this.details = new jsh.HackDetailsArea();
   this.props = new goog.ui.Component();
 
 
-  this.innersplitpane_ = new jsh.SplitPane(this.editor, this.props,
+  this.innersplitpane_ = new jsh.SplitPane(this.details, this.props,
       goog.ui.SplitPane.Orientation.VERTICAL);
   this.innersplitpane_.setInitialSize(300);
   this.innersplitpane_.setHandleSize(this.splitPaneHandleWidth_);
@@ -108,7 +110,7 @@ jsh.HackEditor.prototype.resizeInnerSplitPane_ = function() {
   var rhswidth = this.viewSizeMonitor_.getSize().width -
       this.outersplitpane_.getFirstComponentSize() - this.splitPaneHandleWidth_;
   this.innersplitpane_.setSize(new goog.math.Size(rhswidth, rhsheight));
-  this.editor.resize();
+//  this.editor.resize();
 };
 
 
