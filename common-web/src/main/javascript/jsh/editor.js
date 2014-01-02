@@ -10,6 +10,7 @@ goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
 goog.require('jsh.HackDetailsArea');
 goog.require('jsh.HackList');
+goog.require('jsh.ResourceEditor');
 goog.require('jsh.SplitPane');
 
 
@@ -63,18 +64,19 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   this.addChild(toolbar, true);
 
   this.lhs = new goog.ui.Component();
-  this.editor = new jsh.AceEditor();
-  this.details = new jsh.HackDetailsArea();
-  this.props = new goog.ui.Component();
+//  this.editor = new jsh.AceEditor();
+//  this.details = new jsh.HackDetailsArea();
+//  this.props = new goog.ui.Component();
 
+  this.editor = new jsh.ResourceEditor();
 
-  this.innersplitpane_ = new jsh.SplitPane(this.details, this.props,
-      goog.ui.SplitPane.Orientation.VERTICAL);
-  this.innersplitpane_.setInitialSize(300);
-  this.innersplitpane_.setHandleSize(this.splitPaneHandleWidth_);
-  this.innersplitpane_.setSecondComponentStatic(true);
+//  this.innersplitpane_ = new jsh.SplitPane(this.details, this.props,
+//      goog.ui.SplitPane.Orientation.VERTICAL);
+//  this.innersplitpane_.setInitialSize(300);
+//  this.innersplitpane_.setHandleSize(this.splitPaneHandleWidth_);
+//  this.innersplitpane_.setSecondComponentStatic(true);
 
-  this.outersplitpane_ = new jsh.SplitPane(this.lhs, this.innersplitpane_,
+  this.outersplitpane_ = new jsh.SplitPane(this.lhs, this.editor,
       goog.ui.SplitPane.Orientation.HORIZONTAL);
   this.outersplitpane_.setInitialSize(300);
   this.outersplitpane_.setHandleSize(this.splitPaneHandleWidth_);
@@ -89,13 +91,13 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
  */
 jsh.HackEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  this.resizeOuterSplitPane_();
-  goog.events.listen(this.viewSizeMonitor_,
-      goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
-  goog.events.listen(this.outersplitpane_, goog.ui.Component.EventType.CHANGE,
-      this.resizeInnerSplitPane_, false, this);
-  goog.events.listen(this.innersplitpane_, goog.ui.Component.EventType.CHANGE,
-      goog.events.Event.stopPropagation, false, this);
+//  this.resizeOuterSplitPane_();
+//  goog.events.listen(this.viewSizeMonitor_,
+//      goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
+//  goog.events.listen(this.outersplitpane_, goog.ui.Component.EventType.CHANGE,
+//      this.resizeInnerSplitPane_, false, this);
+//  goog.events.listen(this.innersplitpane_, goog.ui.Component.EventType.CHANGE,
+//      goog.events.Event.stopPropagation, false, this);
 
 };
 
