@@ -10,6 +10,7 @@ goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
 goog.require('jsh.HackDetailsArea');
 goog.require('jsh.HackList');
+goog.require('jsh.HackListResource');
 goog.require('jsh.ResourceEditor');
 goog.require('jsh.SplitPane');
 
@@ -18,12 +19,17 @@ goog.require('jsh.SplitPane');
 /**
  * The Main Editor component for JSHack.  Contains the splitpane and
  * coordinates interactions between the child components.
+ * @param {jsh.model.Hack} hack The hack to be edited.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {goog.ui.Component}
  * @constructor
  */
-jsh.HackEditor = function(opt_domHelper) {
+jsh.HackEditor = function(hack, opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  this.hack_ = hack;
+
+  this.hackList_ = null;
 
   this.splitpane_ = null;
 
@@ -63,6 +69,14 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   this.addChild(toolbar, true);
 
   this.lhs = new goog.ui.Component();
+  this.hackList_ = new jsh.HackList(this.hack_.name, this.hack_.identifier);
+  this.lhs.addChild(this.hackList_, true);
+
+  for (var i = 0; i < this.hack_.resources.length; i++) {
+    var res = this.hack_.resources[i];
+    var resItem = new jsh.HackListResource(res);
+    this.hackList_.addChild(resItem, true);
+  }
 
   this.editor = new jsh.ResourceEditor();
 
