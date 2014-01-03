@@ -3,8 +3,8 @@ goog.provide('jsh.ResourceEditor');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
-goog.require('jsh.soy');
 goog.require('jsh.SplitPane');
+goog.require('jsh.soy');
 
 
 
@@ -27,7 +27,9 @@ jsh.ResourceEditor = function(opt_domHelper) {
   /** @type {goog.ui.Component} */
   this.resourceProperties_;
 
-  /** @type {number} */
+  /** @type {number}
+   *  @private
+   */
   this.splitPaneHandleWidth_ = 5;
 };
 goog.inherits(jsh.ResourceEditor, goog.ui.Component);
@@ -57,7 +59,7 @@ jsh.ResourceEditor.prototype.decorateInternal = function(element) {
   this.editor_ = new jsh.AceEditor();
   this.resourceProperties_ = new goog.ui.Component();
   this.splitPane_ = new jsh.SplitPane(this.editor_, this.resourceProperties_,
-    goog.ui.SplitPane.Orientation.VERTICAL);
+      goog.ui.SplitPane.Orientation.VERTICAL);
   this.splitPane_.setInitialSize(300);
   this.splitPane_.setHandleSize(this.splitPaneHandleWidth_);
   this.splitPane_.setSecondComponentStatic(true);
@@ -69,14 +71,13 @@ jsh.ResourceEditor.prototype.decorateInternal = function(element) {
   goog.events.listen(this.splitPane_, goog.ui.Component.EventType.CHANGE,
       goog.events.Event.stopPropagation, false, this);
 
-}
+};
 
 
 /**
  * Handler for when the parent component changes. We're interested in size
  * changes in particular.
  * @param {!goog.events.Event} e An event.
- * @private
  */
 jsh.ResourceEditor.prototype.handleParentSizeChange = function(e) {
   var size = goog.style.getSize(this.getElement());
