@@ -50,3 +50,7 @@ body {
 .ace_gutter {
     border-radius: 10px 0 0 10px
 }
+
+.jsh-resEditor {
+    height: 100%;
+}
