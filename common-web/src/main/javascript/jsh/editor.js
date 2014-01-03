@@ -25,8 +25,7 @@ goog.require('jsh.SplitPane');
 jsh.HackEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
 
-  this.outersplitpane_ = null;
-  this.innersplitpane_ = null;
+  this.splitpane_ = null;
 
   this.viewSizeMonitor_ = new goog.dom.ViewportSizeMonitor();
 
@@ -64,24 +63,15 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   this.addChild(toolbar, true);
 
   this.lhs = new goog.ui.Component();
-//  this.editor = new jsh.AceEditor();
-//  this.details = new jsh.HackDetailsArea();
-//  this.props = new goog.ui.Component();
 
   this.editor = new jsh.ResourceEditor();
 
-//  this.innersplitpane_ = new jsh.SplitPane(this.details, this.props,
-//      goog.ui.SplitPane.Orientation.VERTICAL);
-//  this.innersplitpane_.setInitialSize(300);
-//  this.innersplitpane_.setHandleSize(this.splitPaneHandleWidth_);
-//  this.innersplitpane_.setSecondComponentStatic(true);
-
-  this.outersplitpane_ = new jsh.SplitPane(this.lhs, this.editor,
+  this.splitpane_ = new jsh.SplitPane(this.lhs, this.editor,
       goog.ui.SplitPane.Orientation.HORIZONTAL);
-  this.outersplitpane_.setInitialSize(300);
-  this.outersplitpane_.setHandleSize(this.splitPaneHandleWidth_);
+  this.splitpane_.setInitialSize(300);
+  this.splitpane_.setHandleSize(this.splitPaneHandleWidth_);
 
-  this.addChild(this.outersplitpane_, true);
+  this.addChild(this.splitpane_, true);
 };
 
 
@@ -91,28 +81,9 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
  */
 jsh.HackEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-//  this.resizeOuterSplitPane_();
-//  goog.events.listen(this.viewSizeMonitor_,
-//      goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
-//  goog.events.listen(this.outersplitpane_, goog.ui.Component.EventType.CHANGE,
-//      this.resizeInnerSplitPane_, false, this);
-//  goog.events.listen(this.innersplitpane_, goog.ui.Component.EventType.CHANGE,
-//      goog.events.Event.stopPropagation, false, this);
-
-};
-
-
-/**
- * Handler for the viewSizeMonitor event, to resize the innerSplitPane
- * @private
- */
-jsh.HackEditor.prototype.resizeInnerSplitPane_ = function() {
-  var rhsheight = this.viewSizeMonitor_.getSize().height -
-      goog.style.getPosition(this.outersplitpane_.getElement()).y;
-  var rhswidth = this.viewSizeMonitor_.getSize().width -
-      this.outersplitpane_.getFirstComponentSize() - this.splitPaneHandleWidth_;
-  this.innersplitpane_.setSize(new goog.math.Size(rhswidth, rhsheight));
-//  this.editor.resize();
+  this.resizeOuterSplitPane_();
+  goog.events.listen(this.viewSizeMonitor_,
+      goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
 };
 
 
@@ -122,9 +93,8 @@ jsh.HackEditor.prototype.resizeInnerSplitPane_ = function() {
  */
 jsh.HackEditor.prototype.resizeOuterSplitPane_ = function() {
   var lhsheight = this.viewSizeMonitor_.getSize().height -
-      goog.style.getPosition(this.outersplitpane_.getElement()).y;
+      goog.style.getPosition(this.splitpane_.getElement()).y;
   var lhswidth = this.viewSizeMonitor_.getSize().width;
-  this.outersplitpane_.setSize(new goog.math.Size(lhswidth, lhsheight));
-  this.resizeInnerSplitPane_();
+  this.splitpane_.setSize(new goog.math.Size(lhswidth, lhsheight));
 };
 

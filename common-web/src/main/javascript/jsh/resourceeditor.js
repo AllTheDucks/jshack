@@ -26,6 +26,9 @@ jsh.ResourceEditor = function(opt_domHelper) {
 
   /** @type {goog.ui.Component} */
   this.resourceProperties_;
+
+  /** @type {number} */
+  this.splitPaneHandleWidth_ = 5;
 };
 goog.inherits(jsh.ResourceEditor, goog.ui.Component);
 
@@ -35,7 +38,7 @@ goog.inherits(jsh.ResourceEditor, goog.ui.Component);
  */
 jsh.ResourceEditor.prototype.createDom = function() {
 
-  var el = this.dom_.createDom('div');
+  var el = this.dom_.createDom('div', {'class': 'jsh-resEditor'});
   this.decorateInternal(el);
 
 };
@@ -55,7 +58,29 @@ jsh.ResourceEditor.prototype.decorateInternal = function(element) {
   this.resourceProperties_ = new goog.ui.Component();
   this.splitPane_ = new jsh.SplitPane(this.editor_, this.resourceProperties_,
     goog.ui.SplitPane.Orientation.VERTICAL);
+  this.splitPane_.setInitialSize(300);
+  this.splitPane_.setHandleSize(this.splitPaneHandleWidth_);
+  this.splitPane_.setSecondComponentStatic(true);
 
   this.addChild(this.splitPane_, true);
+
+  goog.events.listen(this.getParent(), goog.ui.Component.EventType.CHANGE,
+      this.handleParentSizeChange, false, this);
+  goog.events.listen(this.splitPane_, goog.ui.Component.EventType.CHANGE,
+      goog.events.Event.stopPropagation, false, this);
+
 }
+
+
+/**
+ * Handler for when the parent component changes. We're interested in size
+ * changes in particular.
+ * @param {!goog.events.Event} e An event.
+ * @private
+ */
+jsh.ResourceEditor.prototype.handleParentSizeChange = function(e) {
+  var size = goog.style.getSize(this.getElement());
+  this.splitPane_.setSize(size);
+  this.editor_.resize();
+};
 
