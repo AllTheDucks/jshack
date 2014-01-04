@@ -12,7 +12,7 @@ goog.require('jsh.model.HackResource');
  * @param {jsh.model.HackResource} resource a resource in the hack.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  *
- * @extends {goog.ui.Component}
+ * @extends {goog.ui.Control}
  * @constructor
  */
 jsh.HackListResource = function(resource, opt_domHelper) {
@@ -20,7 +20,7 @@ jsh.HackListResource = function(resource, opt_domHelper) {
 
   this.setModel(resource);
 };
-goog.inherits(jsh.HackListResource, goog.ui.Component);
+goog.inherits(jsh.HackListResource, goog.ui.Control);
 
 
 /**

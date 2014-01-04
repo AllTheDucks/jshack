@@ -2,6 +2,7 @@ goog.provide('jsh.HackList');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('jsh.soy.editor');
 
 
 
@@ -29,8 +30,9 @@ goog.inherits(jsh.HackList, goog.ui.Component);
  * @override
  */
 jsh.HackList.prototype.createDom = function() {
-  this.decorateInternal(this.dom_.createElement('div',
-      {'class': 'jsh-hacklist'}));
+  var el = goog.soy.renderAsElement(jsh.soy.editor.hackList,
+      {hackName: this.hackName_, hackId: this.hackId_});
+  this.decorateInternal(el);
 };
 
 
@@ -41,30 +43,10 @@ jsh.HackList.prototype.createDom = function() {
  *    text, if any will be used as the component's label.
  * @override
  */
-jsh.HackList.prototype.decorateInternal = function(element) {
-  this.setElementInternal(element);
-  goog.dom.classlist.add(element, goog.getCssName('jsh-hacklist'));
-
-  var hackNameElem = goog.dom.createDom('div');
-  goog.dom.classlist.add(hackNameElem,
-      goog.getCssName('jsh-hacklist-hackname'));
-  goog.dom.setTextContent(hackNameElem, this.hackName_);
-
-  var hackIdElem = goog.dom.createDom('div');
-  goog.dom.classlist.add(hackIdElem,
-      goog.getCssName('jsh-hacklist-hackid'));
-  goog.dom.setTextContent(hackIdElem, this.hackId_);
-
-  var resourceListElem = goog.dom.createDom('ul');
-  goog.dom.classlist.add(resourceListElem,
-      goog.getCssName('jsh-hacklist-resourcelist'));
-
-
-  this.contentEl_ = resourceListElem;
-
-  element.appendChild(hackNameElem);
-  element.appendChild(hackIdElem);
-  element.appendChild(resourceListElem);
+jsh.HackList.prototype.decorateInternal = function(el) {
+  this.setElementInternal(el);
+  this.contentEl_ = goog.dom.getElementByClass('jsh-hacklist-resourcelist',
+      el);
 };
 
 

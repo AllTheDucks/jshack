@@ -3,13 +3,15 @@ goog.provide('jsh.HackDetailsArea');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
-goog.require('jsh.soy');
+goog.require('jsh.BaseEditor');
+goog.require('jsh.soy.editor');
 
 
 
 /**
  *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {jsh.BaseEditor}
  * @constructor
  */
 jsh.HackDetailsArea = function(opt_domHelper) {
@@ -17,7 +19,7 @@ jsh.HackDetailsArea = function(opt_domHelper) {
 
   this.valid = true;
 };
-goog.inherits(jsh.HackDetailsArea, goog.ui.Component);
+goog.inherits(jsh.HackDetailsArea, jsh.BaseEditor);
 
 
 /**
@@ -25,7 +27,7 @@ goog.inherits(jsh.HackDetailsArea, goog.ui.Component);
  */
 jsh.HackDetailsArea.prototype.createDom = function() {
 
-  var el = goog.soy.renderAsElement(jsh.soy.hackDetailsArea);
+  var el = goog.soy.renderAsElement(jsh.soy.editor.hackDetailsArea);
   this.decorateInternal(el);
 };
 

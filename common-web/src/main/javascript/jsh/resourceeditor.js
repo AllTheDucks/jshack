@@ -3,8 +3,8 @@ goog.provide('jsh.ResourceEditor');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('jsh.BaseEditor');
 goog.require('jsh.SplitPane');
-goog.require('jsh.soy');
 
 
 
@@ -32,7 +32,7 @@ jsh.ResourceEditor = function(opt_domHelper) {
    */
   this.splitPaneHandleWidth_ = 5;
 };
-goog.inherits(jsh.ResourceEditor, goog.ui.Component);
+goog.inherits(jsh.ResourceEditor, jsh.BaseEditor);
 
 
 /**
@@ -40,7 +40,7 @@ goog.inherits(jsh.ResourceEditor, goog.ui.Component);
  */
 jsh.ResourceEditor.prototype.createDom = function() {
 
-  var el = this.dom_.createDom('div', {'class': 'jsh-resEditor'});
+  var el = this.dom_.createDom('div', {'class': 'jsh-reseditor'});
   this.decorateInternal(el);
 
 };
@@ -66,7 +66,20 @@ jsh.ResourceEditor.prototype.decorateInternal = function(element) {
 
   this.addChild(this.splitPane_, true);
 
-  goog.events.listen(this.getParent(), goog.ui.Component.EventType.CHANGE,
+};
+
+
+/**
+ * Executed when the Ace component is inserted into the page.
+ *
+ * @param {Element} element The DIV element for the component
+ * @override
+ */
+jsh.ResourceEditor.prototype.enterDocument = function(element) {
+  goog.base(this, 'enterDocument');
+  //TODO this is nasty.  Really shouldn't rely on the dom structure like this.
+  goog.events.listen(this.getParent().getParent(),
+      goog.ui.Component.EventType.CHANGE,
       this.handleParentSizeChange, false, this);
   goog.events.listen(this.splitPane_, goog.ui.Component.EventType.CHANGE,
       goog.events.Event.stopPropagation, false, this);

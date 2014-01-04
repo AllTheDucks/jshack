@@ -45,7 +45,7 @@ jsh.AceEditor.prototype.decorateInternal = function(element) {
 
 
 /**
- * Executed when the Ace compnent is inserted into the page.
+ * Executed when the Ace component is inserted into the page.
  *
  * @param {Element} element The DIV element for the component
  * @override
@@ -63,5 +63,7 @@ jsh.AceEditor.prototype.enterDocument = function(element) {
  * Resize the internal Ace editor to fit the component.
  */
 jsh.AceEditor.prototype.resize = function() {
+  //  if (this.aceEditor) {
   this.aceEditor.resize();
+  //  }
 };

@@ -35,6 +35,12 @@ jsh.HackEditor = function(hack, opt_domHelper) {
 
   this.viewSizeMonitor_ = new goog.dom.ViewportSizeMonitor();
 
+  this.editorCache_ = {};
+
+  this.editorContainer_ = null;
+
+  this.currentEditor_ = null;
+
   //TODO This needs to go somewhere else, like a constant or something
   this.splitPaneHandleWidth_ = 5;
 };
@@ -68,19 +74,26 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   this.addChild(toolbar, true);
 
-  this.lhs = new goog.ui.Component();
   this.hackList_ = new jsh.HackList(this.hack_.name, this.hack_.identifier);
-  this.lhs.addChild(this.hackList_, true);
+
+  this.editorContainer_ = new goog.ui.Component();
+
+  this.hackDetails_ = new jsh.HackDetailsArea();
+  this.editorContainer_.addChild(this.hackDetails_, true);
+  this.currentEditor_ = this.hackDetails_;
 
   for (var i = 0; i < this.hack_.resources.length; i++) {
     var res = this.hack_.resources[i];
     var resItem = new jsh.HackListResource(res);
     this.hackList_.addChild(resItem, true);
+    goog.events.listen(resItem, goog.ui.Component.EventType.ACTION,
+        this.handleResourceClick, false, this);
   }
 
-  this.editor = new jsh.ResourceEditor();
 
-  this.splitpane_ = new jsh.SplitPane(this.lhs, this.editor,
+  //  this.editor = new jsh.ResourceEditor();
+
+  this.splitpane_ = new jsh.SplitPane(this.hackList_, this.editorContainer_,
       goog.ui.SplitPane.Orientation.HORIZONTAL);
   this.splitpane_.setInitialSize(300);
   this.splitpane_.setHandleSize(this.splitPaneHandleWidth_);
@@ -98,6 +111,9 @@ jsh.HackEditor.prototype.enterDocument = function() {
   this.resizeOuterSplitPane_();
   goog.events.listen(this.viewSizeMonitor_,
       goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
+
+  goog.dom.classes.add(this.editorContainer_.getElement(),
+      'jsh-editorcontainer');
 };
 
 
@@ -112,3 +128,44 @@ jsh.HackEditor.prototype.resizeOuterSplitPane_ = function() {
   this.splitpane_.setSize(new goog.math.Size(lhswidth, lhsheight));
 };
 
+
+/**
+ *
+ * @param {goog.events.Event!} e the click event
+ */
+jsh.HackEditor.prototype.handleResourceClick = function(e) {
+  console.log('clicked!');
+  this.showEditor(e.currentTarget.getModel());
+};
+
+
+/**
+ * Display the HackDetails Area, and hide the currently active resource editor.
+ */
+jsh.HackEditor.prototype.showHackDetailsArea = function() {
+  this.currentEditor_.setVisible(false);
+  this.hackDetails_.setVisible(true);
+  this.currentEditor_ = this.hackDetails_;
+};
+
+
+/**
+ *
+ * @param {jsh.model.HackResource!} resource the resource to display the editor
+ * for.
+ */
+jsh.HackEditor.prototype.showEditor = function(resource) {
+  var ed = this.editorCache_[resource.path];
+  if (ed == null) {
+    ed = new jsh.ResourceEditor();
+    this.editorCache_[resource.path] = ed;
+    this.editorContainer_.addChild(ed, true);
+  }
+
+  this.currentEditor_.setVisible(false);
+  ed.setVisible(true);
+  this.currentEditor_ = ed;
+
+  // trigger resize on ResourceEditor
+  this.splitpane_.dispatchEvent(goog.ui.Component.EventType.CHANGE);
+};

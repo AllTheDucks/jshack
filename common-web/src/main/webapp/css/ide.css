@@ -51,6 +51,23 @@ body {
     border-radius: 10px 0 0 10px
 }
 
-.jsh-resEditor {
+.jsh-hackdetailsarea {
+    border-radius: 10px 0 0 0;
+    background-color: #191919;
+    height: 100%;
+    padding: 1em;
+}
+
+.jsh-hacklist {
+    border-radius: 0 10px 0 0;
+    background-color: #191919;
+    height: 100%;
+}
+
+.jsh-reseditor {
+    height: 100%;
+}
+
+.jsh-editorcontainer {
     height: 100%;
 }
