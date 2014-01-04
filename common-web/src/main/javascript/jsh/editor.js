@@ -8,10 +8,13 @@ goog.require('goog.ui.Toolbar');
 goog.require('goog.ui.ToolbarButton');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
+goog.require('jsh.EditorContainer');
 goog.require('jsh.HackDetailsArea');
-goog.require('jsh.HackList');
-goog.require('jsh.HackListResource');
 goog.require('jsh.ResourceEditor');
+goog.require('jsh.ResourceListArea');
+goog.require('jsh.ResourceListContainer');
+goog.require('jsh.ResourceListHeader');
+goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
 
 
@@ -29,8 +32,6 @@ jsh.HackEditor = function(hack, opt_domHelper) {
 
   this.hack_ = hack;
 
-  this.hackList_ = null;
-
   this.splitpane_ = null;
 
   this.viewSizeMonitor_ = new goog.dom.ViewportSizeMonitor();
@@ -40,6 +41,8 @@ jsh.HackEditor = function(hack, opt_domHelper) {
   this.editorContainer_ = null;
 
   this.currentEditor_ = null;
+
+  this.resourceListContainer_ = null;
 
   //TODO This needs to go somewhere else, like a constant or something
   this.splitPaneHandleWidth_ = 5;
@@ -74,26 +77,30 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   this.addChild(toolbar, true);
 
-  this.hackList_ = new jsh.HackList(this.hack_.name, this.hack_.identifier);
+  var resourceListArea = new jsh.ResourceListArea();
+  var resourceListHeader = new jsh.ResourceListHeader(this.hack_);
+  this.resourceListContainer_ = new jsh.ResourceListContainer();
+  resourceListArea.addChild(resourceListHeader, true);
+  resourceListArea.addChild(this.resourceListContainer_, true);
 
-  this.editorContainer_ = new goog.ui.Component();
+  goog.events.listen(resourceListHeader, goog.ui.Component.EventType.ACTION,
+      this.showHackDetailsArea, false, this);
+
+  for (var i = 0; i < this.hack_.resources.length; i++) {
+    var res = this.hack_.resources[i];
+    var resItem = new jsh.ResourceListItem(res);
+    this.resourceListContainer_.addChild(resItem, true);
+    goog.events.listen(resItem, goog.ui.Component.EventType.ACTION,
+        this.handleResourceClick, false, this);
+  }
+
+  this.editorContainer_ = new jsh.EditorContainer();
 
   this.hackDetails_ = new jsh.HackDetailsArea();
   this.editorContainer_.addChild(this.hackDetails_, true);
   this.currentEditor_ = this.hackDetails_;
 
-  for (var i = 0; i < this.hack_.resources.length; i++) {
-    var res = this.hack_.resources[i];
-    var resItem = new jsh.HackListResource(res);
-    this.hackList_.addChild(resItem, true);
-    goog.events.listen(resItem, goog.ui.Component.EventType.ACTION,
-        this.handleResourceClick, false, this);
-  }
-
-
-  //  this.editor = new jsh.ResourceEditor();
-
-  this.splitpane_ = new jsh.SplitPane(this.hackList_, this.editorContainer_,
+  this.splitpane_ = new jsh.SplitPane(resourceListArea, this.editorContainer_,
       goog.ui.SplitPane.Orientation.HORIZONTAL);
   this.splitpane_.setInitialSize(300);
   this.splitpane_.setHandleSize(this.splitPaneHandleWidth_);
@@ -112,8 +119,6 @@ jsh.HackEditor.prototype.enterDocument = function() {
   goog.events.listen(this.viewSizeMonitor_,
       goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
 
-  goog.dom.classes.add(this.editorContainer_.getElement(),
-      'jsh-editorcontainer');
 };
 
 
@@ -134,7 +139,6 @@ jsh.HackEditor.prototype.resizeOuterSplitPane_ = function() {
  * @param {goog.events.Event!} e the click event
  */
 jsh.HackEditor.prototype.handleResourceClick = function(e) {
-  console.log('clicked!');
   this.showEditor(e.currentTarget.getModel());
 };
 

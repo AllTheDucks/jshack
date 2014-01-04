@@ -60,7 +60,7 @@ jsh.ResourceEditor.prototype.decorateInternal = function(element) {
   this.resourceProperties_ = new goog.ui.Component();
   this.splitPane_ = new jsh.SplitPane(this.editor_, this.resourceProperties_,
       goog.ui.SplitPane.Orientation.VERTICAL);
-  this.splitPane_.setInitialSize(300);
+  this.splitPane_.setInitialSize(50);
   this.splitPane_.setHandleSize(this.splitPaneHandleWidth_);
   this.splitPane_.setSecondComponentStatic(true);
 

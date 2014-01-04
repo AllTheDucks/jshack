@@ -1,43 +1,46 @@
-.jsh-hacklist {
+.jsh-resourcelistarea {
     padding: 10px;
+    border-radius: 0 10px 0 0;
+    background-color: #191919;
+    height: 100%;
 }
 
-.jsh-hacklist-hackname {
+.jsh-resourcelistheader-hackname {
     font-size: 16px;
     font-weight: bold;
 }
 
 
-.jsh-hacklist-hackid {
+.jsh-resourcelistheader-hackid {
     font-size: 12px;
 }
-.jsh-hacklist-hackid:before {
+.jsh-resourcelistheader-hackid:before {
     content: '(';
 }
-.jsh-hacklist-hackid:after {
+.jsh-resourcelistheader-hackid:after {
     content: ')';
 }
 
 
-.jsh-hacklist-resourcelist {
+.jsh-resourcelistcontainer {
     list-style: none;
     margin: 10px 0 10px 0;
     padding: 0;
 }
 
-.jsh-hacklist-resource {
+.jsh-resourcelistitem {
     padding-top: 2px;
     padding-bottom: 2px;
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
-.jsh-hacklist-resource > .text {
+.jsh-resourcelistitem > .text {
     display: inline;
     vertical-align: middle;
 }
 
-.jsh-hacklist-resource > .icon {
+.jsh-resourcelistitem > .icon {
     width: 32px;
     height: 32px;
     display: inline-block;
@@ -45,30 +48,30 @@
     margin-right: 5px;
 }
 
-.jsh-hacklist-resource-gif > .icon {
+.jsh-resourcelistitem-gif > .icon {
     background-image: url(../images/icons/image-gif.png);
 }
 
-.jsh-hacklist-resource-jpg > .icon {
+.jsh-resourcelistitem-jpg > .icon {
     background-image: url(../images/icons/image-jpeg.png);
 }
 
-.jsh-hacklist-resource-png > .icon {
+.jsh-resourcelistitem-png > .icon {
     background-image: url(../images/icons/image-png.png);
 }
 
-.jsh-hacklist-resource-css > .icon {
+.jsh-resourcelistitem-css > .icon {
     background-image: url(../images/icons/text-css.png);
 }
 
-.jsh-hacklist-resource-html > .icon {
+.jsh-resourcelistitem-html > .icon {
     background-image: url(../images/icons/text-html.png);
 }
 
-.jsh-hacklist-resource-js > .icon {
+.jsh-resourcelistitem-js > .icon {
     background-image: url(../images/icons/text-x-javascript.png);
 }
 
-.jsh-hacklist-resource-unknown > .icon {
+.jsh-resourcelistitem-default > .icon {
     background-image: url(../images/icons/unknown.png);
 }

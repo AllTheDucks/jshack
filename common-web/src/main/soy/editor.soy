@@ -1,15 +1,14 @@
 {namespace jsh.soy.editor}
 
 /**
-  * The list of resources on the left hand side of the editor.
+  * The hack name and id above the hack resources on the left hand side.
   * @param hackName the name of the hack.
   * @param hackId the identifier of the hack.
   */
-{template .hackList}
-    <div class="jsh-hacklist">
-        <div class="jsh-hacklist-hackname">{$hackName}</div>
-        <div class="jsh-hacklist-hackid">{$hackId}</div>
-        <ul class="jsh-hacklist-resourcelist"></ul>
+{template .resourceListHeader}
+    <div class="jsh-resourcelistheader">
+        <div class="jsh-resourcelistheader-hackname">{$hackName}</div>
+        <div class="jsh-resourcelistheader-hackid">{$hackId}</div>
     </div>
 {/template}
 

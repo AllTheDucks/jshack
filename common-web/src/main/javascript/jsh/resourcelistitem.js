@@ -1,4 +1,4 @@
-goog.provide('jsh.HackListResource');
+goog.provide('jsh.ResourceListItem');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
@@ -15,37 +15,35 @@ goog.require('jsh.model.HackResource');
  * @extends {goog.ui.Control}
  * @constructor
  */
-jsh.HackListResource = function(resource, opt_domHelper) {
+jsh.ResourceListItem = function(resource, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.setModel(resource);
 };
-goog.inherits(jsh.HackListResource, goog.ui.Control);
+goog.inherits(jsh.ResourceListItem, goog.ui.Control);
 
 
 /**
  * Creates an initial DOM representation for the component.
  * @override
  */
-jsh.HackListResource.prototype.createDom = function() {
+jsh.ResourceListItem.prototype.createDom = function() {
   var resource = this.getModel();
-  var resourceItem = goog.dom.createDom('li');
-  goog.dom.classlist.add(resourceItem,
-      goog.getCssName('jsh-hacklist-resource'));
+  var resourceItem = goog.dom.createDom('li', 'jsh-resourcelistitem');
 
   var iconClass;
   switch (resource.mime) {
     case 'image/png':
-      iconClass = goog.getCssName('jsh-hacklist-resource-png');
+      iconClass = goog.getCssName('jsh-resourcelistitem-png');
       break;
     case 'text/css':
-      iconClass = goog.getCssName('jsh-hacklist-resource-css');
+      iconClass = goog.getCssName('jsh-resourcelistitem-css');
       break;
     case 'application/javascript':
-      iconClass = goog.getCssName('jsh-hacklist-resource-js');
+      iconClass = goog.getCssName('jsh-resourcelistitem-js');
       break;
     default:
-      iconClass = goog.getCssName('jsh-hacklist-resource-default');
+      iconClass = goog.getCssName('jsh-resourcelistitem-default');
   }
   goog.dom.classlist.add(resourceItem, iconClass);
 
@@ -65,7 +63,7 @@ jsh.HackListResource.prototype.createDom = function() {
  *    text, if any will be used as the component's label.
  * @override
  */
-jsh.HackListResource.prototype.decorateInternal = function(element) {
+jsh.ResourceListItem.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
 };

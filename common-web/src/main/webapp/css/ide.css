@@ -58,12 +58,6 @@ body {
     padding: 1em;
 }
 
-.jsh-hacklist {
-    border-radius: 0 10px 0 0;
-    background-color: #191919;
-    height: 100%;
-}
-
 .jsh-reseditor {
     height: 100%;
 }
