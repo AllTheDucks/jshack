@@ -6,9 +6,9 @@
   * @param hackId the identifier of the hack.
   */
 {template .resourceListHeader}
-    <div class="jsh-resourcelistheader">
-        <div class="jsh-resourcelistheader-hackname">{$hackName}</div>
-        <div class="jsh-resourcelistheader-hackid">{$hackId}</div>
+    <div class="{css jsh-resourcelistheader}">
+        <div class="{css jsh-resourcelistheader-hackname}">{$hackName}</div>
+        <div class="{css jsh-resourcelistheader-hackid}">{$hackId}</div>
     </div>
 {/template}
 
@@ -17,12 +17,26 @@
   * The area which contains all the inputs for entering details of the hack.
   */
 {template .hackDetailsArea}
-    <div class="jsh-hackdetailsarea">
-        Identifier: <input><br>
-        Hack Name: <input><br>
-        Version: <input><br>
-        Description: <input><br>
-        Max Bb Version: <input><br>
-        Min Bb Version: <input><br>
+    <div class="{css jsh-hackdetailsarea}">
+        Identifier: <input name="hack.identifier"><br>
+        Hack Name: <input name="hack.name"><br>
+        Version: <input name="hack.version"><br>
+        Description: <input name="hack.description"><br>
+        Max Bb Version: <input name="hack.targetVersionMax"><br>
+        Min Bb Version: <input name="hack.targetVersionMin"><br>
+    </div>
+{/template}
+
+
+/**
+ * A toolbar button with an icon and some text.
+ *
+ * @param text the text to display on the button
+ * @param iconClass the class name of the icon
+ */
+{template .toolbarButton}
+    <div>
+        <i class='{css fa} {$iconClass} {css icon}'></i>
+        <span class='{css toolbar-text}'>{$text}</span>
     </div>
 {/template}

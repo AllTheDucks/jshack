@@ -16,6 +16,7 @@ goog.require('jsh.ResourceListContainer');
 goog.require('jsh.ResourceListHeader');
 goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
+goog.require('jsh.ToolbarButton');
 
 
 
@@ -63,17 +64,13 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   var toolbar = new goog.ui.Toolbar();
 
-  var btnSave = goog.dom.createDom('div');
-  btnSave.innerHTML = "<i class='fa fa-floppy-o icon'></i>" +
-      "<span class='toolbar-text'>Save</span>";
-  var btnSave = new goog.ui.ToolbarButton(btnSave);
-  toolbar.addChild(btnSave, true);
+  this.btnSave_ = new jsh.ToolbarButton('Save', goog.getCssName('fa-floppy-o'));
+  this.btnSave_.setEnabled(false);
+  toolbar.addChild(this.btnSave_, true);
 
-  var btnClose = goog.dom.createDom('div');
-  btnClose.innerHTML = "<i class='fa fa-power-off icon'></i>" +
-      "<span class='toolbar-text'>Close</span>";
-  var btnSave = new goog.ui.ToolbarButton(btnClose);
-  toolbar.addChild(btnSave, true);
+  var btnClose = new jsh.ToolbarButton('Close',
+      goog.getCssName('fa-power-off'));
+  toolbar.addChild(btnClose, true);
 
   this.addChild(toolbar, true);
 
@@ -119,6 +116,17 @@ jsh.HackEditor.prototype.enterDocument = function() {
   goog.events.listen(this.viewSizeMonitor_,
       goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
 
+  goog.events.listen(this.hackDetails_,
+      jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_VALID,
+      function() {
+        this.btnSave_.setEnabled(true);
+      }, false, this);
+
+  goog.events.listen(this.hackDetails_,
+      jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_INVALID,
+      function() {
+        this.btnSave_.setEnabled(false);
+      }, false, this);
 };
 
 
