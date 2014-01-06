@@ -17,14 +17,40 @@
   * The area which contains all the inputs for entering details of the hack.
   */
 {template .hackDetailsArea}
-    <div class="{css jsh-hackdetailsarea}">
-        Identifier: <input name="hack.identifier"><br>
-        Hack Name: <input name="hack.name"><br>
-        Version: <input name="hack.version"><br>
-        Description: <input name="hack.description"><br>
-        Max Bb Version: <input name="hack.targetVersionMax"><br>
-        Min Bb Version: <input name="hack.targetVersionMin"><br>
-    </div>
+<div class="{css jsh-hackdetailsarea}" style="">
+  <h2>Required Information</h2>
+  <table>
+    <tbody><tr>
+      <td>Identifier: </td>
+      <td><input name="hack.identifier" type="text" placeholder="hackid"></td>
+    </tr>
+    <tr>
+      <td>Hack Name:</td>
+      <td><input name="hack.name" type="text" placeholder="Human Readable Name"></td>
+    </tr>
+  </tbody></table>
+  <h2>Extra Information</h2>
+  <table>
+    <tbody>
+    <tr>
+      <td>Version: </td>
+      <td><input name="hack.version" type="text" placeholder="1.0"></td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td><input name="hack.description" type="text" placeholder="A Description of the hack"></td>
+    </tr>
+    <tr>
+      <td>Max Bb Version: </td>
+      <td><input name="hack.targetVersionMax" type="text" placeholder="9.1.0"></td>
+    </tr>
+    <tr>
+      <td>Min Bb Version:</td>
+      <td><input name="hack.targetVersionMin" type="text" placeholder="9.1.14"></td>
+    </tr>
+  </tbody></table>
+  </div>
+
 {/template}
 
 
