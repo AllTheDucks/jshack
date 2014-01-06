@@ -65,3 +65,10 @@ body {
 .jsh-editorcontainer {
     height: 100%;
 }
+
+input[type="text"] {
+    background-color: #eee;
+    border: 1px solid white;
+    border-radius: .25em;
+    padding: .25em;
+}
