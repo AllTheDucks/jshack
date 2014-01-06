@@ -11,7 +11,7 @@ buildscript {
 
     }
     dependencies {
-        classpath group: 'com.wileyfuller', name: 'glovr', version: '1.0-SNAPSHOT'
+        classpath group: 'com.alltheducks', name: 'glovr', version: '1.0-SNAPSHOT'
     }
 }
 
