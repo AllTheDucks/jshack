@@ -86,7 +86,9 @@ jsh.HackDetailsArea.prototype.enterDocument = function() {
  */
 jsh.HackDetailsArea.prototype.onRequiredInputChange = function(e) {
   var idVal = this.hackIdInput.value.trim();
-  var newStateValid = (idVal && idVal !== '');
+  var nameVal = this.hackNameInput.value.trim();
+  var newStateValid = (idVal && idVal !== '' && nameVal && nameVal !== '');
+
   if (!this.valid && newStateValid) {
     this.dispatchEvent({type:
           jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_VALID});
