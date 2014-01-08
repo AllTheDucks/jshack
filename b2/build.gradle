@@ -1,7 +1,6 @@
 import org.gradle.api.artifacts.*
 
 buildscript {
-    def home = System.getProperty('user.home')
     repositories {
         mavenCentral()
         maven {

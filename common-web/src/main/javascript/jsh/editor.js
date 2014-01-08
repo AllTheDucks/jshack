@@ -72,6 +72,18 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
       goog.getCssName('fa-power-off'));
   toolbar.addChild(btnClose, true);
 
+  var btnUpload = new jsh.ToolbarButton('Upload Resource',
+      goog.getCssName('fa-upload'));
+  toolbar.addChild(btnUpload, true);
+
+  var btnNew = new jsh.ToolbarButton('New Resource',
+      goog.getCssName('fa-plus'));
+  toolbar.addChild(btnNew, true);
+
+  var btnDelete = new jsh.ToolbarButton('Delete Resource',
+      goog.getCssName('fa-minus'));
+  toolbar.addChild(btnDelete, true);
+
   this.addChild(toolbar, true);
 
   var resourceListArea = new jsh.ResourceListArea();
