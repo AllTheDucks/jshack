@@ -21,13 +21,6 @@
     content: ')';
 }
 
-
-.jsh-resourcelistcontainer {
-    list-style: none;
-    margin: 10px 0 10px 0;
-    padding: 0;
-}
-
 .jsh-resourcelistitem {
     padding-top: 2px;
     padding-bottom: 2px;

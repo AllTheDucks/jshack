@@ -29,7 +29,7 @@ goog.inherits(jsh.ResourceListItem, goog.ui.Control);
  */
 jsh.ResourceListItem.prototype.createDom = function() {
   var resource = this.getModel();
-  var resourceItem = goog.dom.createDom('li', 'jsh-resourcelistitem');
+  var resourceItem = goog.dom.createDom('div', 'jsh-resourcelistitem');
 
   var iconClass;
   switch (resource.mime) {

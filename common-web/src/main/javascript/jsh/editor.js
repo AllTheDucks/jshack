@@ -11,7 +11,6 @@ goog.require('jsh.AceEditor');
 goog.require('jsh.EditorContainer');
 goog.require('jsh.HackDetailsArea');
 goog.require('jsh.ResourceEditor');
-goog.require('jsh.ResourceListArea');
 goog.require('jsh.ResourceListContainer');
 goog.require('jsh.ResourceListHeader');
 goog.require('jsh.ResourceListItem');
@@ -42,8 +41,6 @@ jsh.HackEditor = function(hack, opt_domHelper) {
   this.editorContainer_ = null;
 
   this.currentEditor_ = null;
-
-  this.resourceListContainer_ = null;
 
   //TODO This needs to go somewhere else, like a constant or something
   this.splitPaneHandleWidth_ = 5;
@@ -86,11 +83,10 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   this.addChild(toolbar, true);
 
-  var resourceListArea = new jsh.ResourceListArea();
+  var resourceListContainer = new jsh.ResourceListContainer();
+
   var resourceListHeader = new jsh.ResourceListHeader(this.hack_);
-  this.resourceListContainer_ = new jsh.ResourceListContainer();
-  resourceListArea.addChild(resourceListHeader, true);
-  resourceListArea.addChild(this.resourceListContainer_, true);
+  resourceListContainer.addChild(resourceListHeader, true);
 
   goog.events.listen(resourceListHeader, goog.ui.Component.EventType.ACTION,
       this.showHackDetailsArea, false, this);
@@ -98,7 +94,7 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   for (var i = 0; i < this.hack_.resources.length; i++) {
     var res = this.hack_.resources[i];
     var resItem = new jsh.ResourceListItem(res);
-    this.resourceListContainer_.addChild(resItem, true);
+    resourceListContainer.addChild(resItem, true);
     goog.events.listen(resItem, goog.ui.Component.EventType.ACTION,
         this.handleResourceClick, false, this);
   }
@@ -109,7 +105,7 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   this.editorContainer_.addChild(this.hackDetails_, true);
   this.currentEditor_ = this.hackDetails_;
 
-  this.splitpane_ = new jsh.SplitPane(resourceListArea, this.editorContainer_,
+  this.splitpane_ = new jsh.SplitPane(resourceListContainer, this.editorContainer_,
       goog.ui.SplitPane.Orientation.HORIZONTAL);
   this.splitpane_.setInitialSize(300);
   this.splitpane_.setHandleSize(this.splitPaneHandleWidth_);
