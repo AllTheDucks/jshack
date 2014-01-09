@@ -1,17 +1,3 @@
-import org.gradle.api.artifacts.*
-
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            url "http://repo.alltheducks.com/"
-        }
-    }
-    dependencies {
-        classpath group: 'com.alltheducks', name: 'glovr', version: '1.0-SNAPSHOT'
-    }
-}
-
 apply plugin: 'base'
 apply plugin: 'war'
 
