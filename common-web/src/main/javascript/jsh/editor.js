@@ -6,6 +6,7 @@ goog.require('goog.ui.MenuItem');
 goog.require('goog.ui.SplitPane');
 goog.require('goog.ui.Toolbar');
 goog.require('goog.ui.ToolbarButton');
+goog.require('goog.ui.ToolbarSeparator');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
 goog.require('jsh.EditorContainer');
@@ -69,6 +70,8 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
       goog.getCssName('fa-power-off'));
   toolbar.addChild(btnClose, true);
 
+  toolbar.addChild(new goog.ui.ToolbarSeparator(), true);
+
   var btnUpload = new jsh.ToolbarButton('Upload Resource',
       goog.getCssName('fa-upload'));
   toolbar.addChild(btnUpload, true);
@@ -105,8 +108,8 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   this.editorContainer_.addChild(this.hackDetails_, true);
   this.currentEditor_ = this.hackDetails_;
 
-  this.splitpane_ = new jsh.SplitPane(resourceListContainer, this.editorContainer_,
-      goog.ui.SplitPane.Orientation.HORIZONTAL);
+  this.splitpane_ = new jsh.SplitPane(resourceListContainer,
+      this.editorContainer_, goog.ui.SplitPane.Orientation.HORIZONTAL);
   this.splitpane_.setInitialSize(300);
   this.splitpane_.setHandleSize(this.splitPaneHandleWidth_);
 
