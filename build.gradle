@@ -1,25 +1,6 @@
 import org.gradle.api.artifacts.*
 
-buildscript {
-    def home = System.getProperty('user.home')
-    repositories {
-        maven {
-            url uri("$home/repo")
-        }
-        mavenCentral()
-        mavenLocal()
-
-    }
-    dependencies {
-        classpath group: 'com.alltheducks', name: 'glovr', version: '1.0-SNAPSHOT'
-    }
-}
-
 apply plugin: 'base' // To add "clean" task to the root project.
-
-//apply plugin: 'war'
-//apply plugin: 'glovr'
-
 
 subprojects {
     apply from: rootProject.file('common.gradle')

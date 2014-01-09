@@ -112,7 +112,6 @@
 .goog-toolbar-button-disabled .goog-toolbar-button-outer-box,
 .goog-toolbar-button-disabled .goog-toolbar-button-inner-box {
     /* Disabled text/border color trumps everything else. */
-    color: #666 !important;
     border-color: #999 !important;
 }
 
