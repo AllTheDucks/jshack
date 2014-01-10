@@ -19,6 +19,8 @@ jsh.ResourceListItem = function(resource, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.setModel(resource);
+  this.setSupportedState(goog.ui.Component.State.SELECTED, true);
+  this.setAutoStates(goog.ui.Component.State.SELECTED, true);
 };
 goog.inherits(jsh.ResourceListItem, goog.ui.Control);
 
