@@ -154,7 +154,7 @@
 .goog-toolbar-button-hover .goog-toolbar-button-outer-box,
 .goog-toolbar-button-hover .goog-toolbar-button-inner-box {
     /* Hover border style wins over active/checked/selected. */
-    border-color: #a1badf !important;
+    border-color: #996329 !important;
 }
 
 /* Active/checked/selected styles. */
@@ -162,7 +162,7 @@
 .goog-toolbar-button-checked,
 .goog-toolbar-button-selected {
     /* Active/checked/selected background color always wins. */
-    background-color: #dde1eb !important;
+    background-color: gray !important;
 }
 
 .goog-toolbar-button-active .goog-toolbar-button-outer-box,

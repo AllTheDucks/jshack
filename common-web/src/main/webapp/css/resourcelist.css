@@ -26,6 +26,17 @@
     padding-bottom: 2px;
     margin-top: 2px;
     margin-bottom: 2px;
+    border: 1px solid transparent;
+}
+
+.jsh-resourcelistitem-hover {
+    border: 1px solid #996329;
+    border-radius: .25em;
+}
+
+.jsh-resourcelistitem-selected {
+    background-color: gray !important;
+    border-radius: .25em;
 }
 
 .jsh-resourcelistitem > .text {
