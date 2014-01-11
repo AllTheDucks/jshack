@@ -2,6 +2,7 @@ goog.provide('jsh.ResourceListItem');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('jsh.ResourceListItemRenderer');
 goog.require('jsh.model.HackResource');
 
 
@@ -69,3 +70,8 @@ jsh.ResourceListItem.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
 };
+
+
+// Register the default renderer for goog.ui.Controls.
+goog.ui.registry.setDefaultRenderer(jsh.ResourceListItem,
+    jsh.ResourceListItemRenderer);
