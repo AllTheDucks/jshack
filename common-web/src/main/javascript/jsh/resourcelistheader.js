@@ -2,6 +2,7 @@ goog.provide('jsh.ResourceListHeader');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('jsh.ResourceListItemRenderer');
 goog.require('jsh.model.HackResource');
 
 
@@ -20,6 +21,10 @@ jsh.ResourceListHeader = function(hack, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.setModel(hack);
+
+  this.setSupportedState(goog.ui.Component.State.SELECTED, true);
+  this.setAutoStates(goog.ui.Component.State.SELECTED, true);
+  this.setDispatchTransitionEvents(goog.ui.Component.State.SELECTED, true);
 };
 goog.inherits(jsh.ResourceListHeader, goog.ui.Control);
 
@@ -46,3 +51,7 @@ jsh.ResourceListHeader.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
 };
+
+// Register the default renderer for goog.ui.Controls.
+goog.ui.registry.setDefaultRenderer(jsh.ResourceListHeader,
+    jsh.ResourceListItemRenderer);

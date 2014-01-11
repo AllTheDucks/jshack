@@ -11,6 +11,8 @@ goog.require('goog.ui.Container');
  */
 jsh.ResourceListContainer = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  this.selectedItem_ = null;
 };
 goog.inherits(jsh.ResourceListContainer, goog.ui.Container);
 
@@ -26,6 +28,17 @@ jsh.ResourceListContainer.prototype.createDom = function() {
 
 
 /**
+ * @override
+ */
+jsh.ResourceListContainer.prototype.enterDocument = function() {
+  goog.base(this, 'enterDocument');
+
+  this.getHandler().listen(this, goog.ui.Component.EventType.SELECT,
+      this.handleItemSelect);
+};
+
+
+/**
  * Decorates an existing HTML DIV element..
  *
  * @param {Element} element The DIV element to decorate. The element's
@@ -34,4 +47,17 @@ jsh.ResourceListContainer.prototype.createDom = function() {
  */
 jsh.ResourceListContainer.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
+};
+
+
+/**
+ *
+ * @param {goog.events.Event!} e The event.
+ */
+jsh.ResourceListContainer.prototype.handleItemSelect = function(e) {
+  if (this.selectedItem_) {
+    this.selectedItem_.setSelected(false);
+  }
+  this.selectedItem_ = e.target;
+
 };
