@@ -1,6 +1,5 @@
 package org.oscelot.jshack.service;
 
-import org.oscelot.jshack.model.Hack;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -22,7 +21,7 @@ public class HackDiscoveryService {
     JSHackDirectoryFactory directoryFactory;
 
     public List<String> enumerateHackIds() {
-        File hacksDir = directoryFactory.getHacksDir();
+        File hacksDir = directoryFactory.getAndCreateHacksDir();
         File[] files = hacksDir.listFiles();
 
         ArrayList<String> hackIds = new ArrayList<String>();

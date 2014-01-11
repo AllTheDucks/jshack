@@ -5,10 +5,7 @@ import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.service.HackManager;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,9 +24,16 @@ public class HacksResource {
     @Produces("application/json")
     @Path("{hackId}")
     public Hack getHackDetails(@PathParam("hackId") String hackId) {
-        Hack hack = null;
-        hack = hackManager.getHackById(hackId);
+        Hack hack = hackManager.getHackById(hackId);
         return hack;
+    }
+
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Hack saveHack(Hack hack) {
+        hackManager.persistHack(hack);
+        return hackManager.getHackById(hack.getIdentifier());
     }
 
     public HackManager getHackManager() {

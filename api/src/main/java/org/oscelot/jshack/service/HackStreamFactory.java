@@ -1,55 +1,25 @@
 package org.oscelot.jshack.service;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-
-import javax.inject.Inject;
-import java.io.*;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created with IntelliJ IDEA.
- * User: wiley
- * Date: 29/11/13
- * Time: 8:13 AM
+ * User: shane
+ * Date: 11/01/14
+ * Time: 9:11 PM
  * To change this template use File | Settings | File Templates.
  */
-@Component
-public class HackStreamFactory {
+public interface HackStreamFactory {
+    InputStream getHackMetadataInputStream(String hackId);
 
-    public static final String METADATA_FILENAME = "hack.xml";
+    OutputStream getHackMetadataOutputStream(String hackId);
 
-    @Inject
-    public JSHackDirectoryFactory directoryFactory;
+    InputStream getHackResourceInputStream(String hackId, String resourceName);
 
-    public InputStream getHackMetadataInputStream(String hackId) throws FileNotFoundException {
-        File hackDir = new File(directoryFactory.getHacksDir(), hackId);
-        File hackMetadataFile = new File(hackDir, METADATA_FILENAME);
+    OutputStream getHackResourceOutputStream(String hackId, String resourceName);
 
-        return new FileInputStream(hackMetadataFile);
-    }
-    public OutputStream getHackMetadataOutputStream(String hackId) {
-        throw new RuntimeException("Not Implemented");
-    }
+    InputStream getHackConfigInputStream(String hackId);
 
-    public InputStream getHackResourceInputStream(String hackId, String resourceName) {
-        throw new RuntimeException("Not Implemented");
-    }
-    public OutputStream getHackResourceOutputStream(String hackId, String resourceName) {
-        throw new RuntimeException("Not Implemented");
-    }
-
-    public InputStream getHackConfigInputStream(String hackId) {
-        throw new RuntimeException("Not Implemented");
-    }
-    public OutputStream getHackConfigOutputStream(String hackId) {
-        throw new RuntimeException("Not Implemented");
-    }
-
-    public JSHackDirectoryFactory getDirectoryFactory() {
-        return directoryFactory;
-    }
-
-    public void setDirectoryFactory(JSHackDirectoryFactory directoryFactory) {
-        this.directoryFactory = directoryFactory;
-    }
+    OutputStream getHackConfigOutputStream(String hackId);
 }

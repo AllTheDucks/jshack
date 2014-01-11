@@ -8,6 +8,7 @@ import org.oscelot.jshack.model.ConfigEntry;
 import org.oscelot.jshack.model.Hack;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class XStreamHackServiceTest {
     @Before
     public void setup() {
         service = new XStreamHackService();
-        streamFactory = mock(HackStreamFactory.class);
+        streamFactory = mock(FileHackStreamFactory.class);
 
         service.setStreamFactory(streamFactory);
 
@@ -193,6 +194,25 @@ public class XStreamHackServiceTest {
         when(streamFactory.getHackConfigInputStream("MYHACK")).thenReturn(is);
 
         service.getConfigEntriesForId("MYHACK");
+    }
+
+    @Test
+    public void persistHack_withValidHack_writesSuccessfully() {
+        ByteArrayOutputStream hackOS = new ByteArrayOutputStream();
+
+        when(streamFactory.getHackConfigOutputStream("MYHACK")).thenReturn(hackOS);
+
+        Hack hack = new Hack();
+        hack.setIdentifier("MYHACK");
+        hack.setName("My Hack");
+
+        service.persistHack(hack);
+
+        String hackOutput = hackOS.toString();
+        assertEquals("<hack>\n" +
+                "  <name>My Hack</name>\n" +
+                "  <identifier>MYHACK</identifier>\n" +
+                "</hack>", hackOutput);
     }
 
     public ByteArrayInputStream getISForString(String s) {

@@ -1,3 +1,4 @@
+goog.require('jsh.EditorController');
 goog.require('jsh.HackEditor');
 goog.require('jsh.model.Hack');
 goog.require('jsh.model.HackResource');
@@ -33,5 +34,9 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
 
   var editor = new jsh.HackEditor(hack);
   editor.decorate(mainEl);
+
+  var dataService = new jsh.DataService('/jshack-test-web');
+
+  var controller = new jsh.EditorController(editor, dataService);
 
 });

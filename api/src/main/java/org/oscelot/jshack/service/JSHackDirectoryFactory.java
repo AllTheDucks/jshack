@@ -18,30 +18,38 @@ public abstract class JSHackDirectoryFactory {
 
     public abstract File getRootConfigDir();
 
-    public File getHacksDir() {
-        return getOrCreateRootSubDir(HACKS_DIR_NAME);
+    public File getAndCreateHacksDir() {
+        return getOrCreateSubDir(HACKS_DIR_NAME, getRootConfigDir());
     }
 
-    public File getWorkingDir() {
-        return getOrCreateRootSubDir(WORKING_DIR_NAME);
+    public File getAndCreateWorkingDir() {
+        return getOrCreateSubDir(WORKING_DIR_NAME, getRootConfigDir());
     }
 
-    public File getArchiveDir() {
-        return getOrCreateRootSubDir(ARCHIVE_DIR_NAME);
+    public File getAndCreateArchiveDir() {
+        return getOrCreateSubDir(ARCHIVE_DIR_NAME, getRootConfigDir());
     }
 
-    public File getConfigDir() {
-        return getOrCreateRootSubDir(CONFIG_DIR_NAME);
+    public File getAndCreateConfigDir() {
+        return getOrCreateSubDir(CONFIG_DIR_NAME, getRootConfigDir());
     }
 
-    private File getOrCreateRootSubDir(String subDirName) {
-        File hacksDir = new File(getRootConfigDir(), subDirName);
-        if(!hacksDir.exists()) {
-            hacksDir.mkdir();
-        } else if (!hacksDir.isDirectory())  {
-            throw new RuntimeException(String.format("Expected a directory, but got a file. (%s)", hacksDir.getAbsolutePath()));
+    public File getAndCreateHackDir(String hackId) {
+        return getOrCreateSubDir(hackId, getAndCreateHacksDir());
+    }
+
+    public File getHackDir(String hackId) {
+        return new File(this.getAndCreateHacksDir(), hackId);
+    }
+
+    private File getOrCreateSubDir(String subDirName, File parent) {
+        File dir = new File(parent, subDirName);
+        if(!dir.exists()) {
+            dir.mkdir();
+        } else if (!dir.isDirectory())  {
+            throw new RuntimeException(String.format("Expected a directory, but got a file. (%s)", dir.getAbsolutePath()));
         }
-        return hacksDir;
+        return dir;
     }
 
 }

@@ -50,6 +50,11 @@ public class HackManager {
 
     }
 
+    public void persistHack(Hack hack) {
+        hackService.persistHack(hack);
+        hackLookup.put(hack.getIdentifier(), hack);
+    }
+
     public HackService getHackService() {
         return hackService;
     }

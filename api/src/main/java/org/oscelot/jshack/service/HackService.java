@@ -15,4 +15,5 @@ import java.util.List;
 public interface HackService {
     public Hack getHackForId(String hackId);
     public List<ConfigEntry> getConfigEntriesForId(String hackId);
+    public void persistHack(Hack hack);
 }

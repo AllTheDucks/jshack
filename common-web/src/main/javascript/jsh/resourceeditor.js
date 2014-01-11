@@ -22,7 +22,7 @@ jsh.ResourceEditor = function(opt_domHelper) {
   this.splitPane_;
 
   /** @type {jsh.AceEditor} */
-  this.editor_;
+  this.hackEditor_;
 
   /** @type {goog.ui.Component} */
   this.resourceProperties_;
@@ -56,10 +56,10 @@ jsh.ResourceEditor.prototype.createDom = function() {
 jsh.ResourceEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  this.editor_ = new jsh.AceEditor();
+  this.hackEditor_ = new jsh.AceEditor();
   this.resourceProperties_ = new goog.ui.Component();
-  this.splitPane_ = new jsh.SplitPane(this.editor_, this.resourceProperties_,
-      goog.ui.SplitPane.Orientation.VERTICAL);
+  this.splitPane_ = new jsh.SplitPane(this.hackEditor_,
+      this.resourceProperties_, goog.ui.SplitPane.Orientation.VERTICAL);
   this.splitPane_.setInitialSize(50);
   this.splitPane_.setHandleSize(this.splitPaneHandleWidth_);
   this.splitPane_.setSecondComponentStatic(true);
@@ -95,6 +95,6 @@ jsh.ResourceEditor.prototype.enterDocument = function(element) {
 jsh.ResourceEditor.prototype.handleParentSizeChange = function(e) {
   var size = goog.style.getSize(this.getElement());
   this.splitPane_.setSize(size);
-  this.editor_.resize();
+  this.hackEditor_.resize();
 };
 

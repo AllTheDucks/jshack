@@ -2,6 +2,7 @@ goog.provide('jsh.DataService');
 
 goog.require('goog.Uri.QueryData');
 goog.require('goog.async.Deferred');
+goog.require('goog.json');
 goog.require('goog.net.XhrIo');
 goog.require('goog.net.XhrManager');
 goog.require('jsh.model.Hack');
@@ -81,6 +82,25 @@ jsh.DataService.prototype.getHack = function(id) {
 
 
 /**
+ * Persist hack to server.
+ * @param {jsh.model.Hack} hack the hack
+ */
+jsh.DataService.prototype.saveHack = function(hack) {
+  var dataServiceReq = new jsh.DataService.Request(
+      new goog.async.Deferred(),
+      this.handlePostResponse
+      );
+
+  var requestId = this.putRequest_(dataServiceReq);
+
+  var json = this.packHackJSON(hack);
+
+  this.xhrManager_.send(requestId, this.wsUrl_, 'POST', json,
+      {'Content-Type': 'application/json'});
+};
+
+
+/**
  * Converts a JSON representation of a hack to a hack model.
  * @param {Object} jsonData JSON object representing a hack.
  * @return {jsh.Hack} Hack object constructed from the jsonData.
@@ -98,6 +118,36 @@ jsh.DataService.prototype.unpackHackJSON = function(jsonData) {
   hack.developerInstitution = jsonData['developerInstitution'];
 
   return hack;
+};
+
+
+/**
+ * Serializes a hack for posting to the server.
+ * @param {jsh,model.Hack!} hack the hack
+ * @return {string}
+ */
+jsh.DataService.prototype.packHackJSON = function(hack) {
+  var jsonData = {};
+
+  jsonData['name'] = hack.name;
+  jsonData['identifier'] = hack.identifier;
+  jsonData['description'] = hack.description;
+  jsonData['version'] = hack.version;
+  jsonData['targetVersionMin'] = hack.targetVersionMin;
+  jsonData['targetVersionMax'] = hack.targetVersionMax;
+  jsonData['developerName'] = hack.developerName;
+  jsonData['developerInstitution'] = hack.developerInstitution;
+
+  return goog.json.serialize(jsonData);
+};
+
+
+/**
+ *
+ * @param {goog.events.Event!} e
+ */
+jsh.DataService.prototype.handlePostResponse = function(e) {
+  console.log('response!');
 };
 
 

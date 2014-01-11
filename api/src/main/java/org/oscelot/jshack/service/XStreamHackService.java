@@ -5,13 +5,15 @@ import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
+import org.oscelot.jshack.exceptions.HackPersistenceException;
 import org.oscelot.jshack.model.*;
 import org.oscelot.jshack.resources.HackResource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,13 +35,8 @@ public class XStreamHackService implements HackService {
     @Override
     public Hack getHackForId(String hackId) {
 
-        InputStream is = null;
-        try {
-            is = streamFactory.getHackMetadataInputStream(hackId);
-        } catch (FileNotFoundException e) {
-            throw new HackNotFoundException(e);
-        }
-        XStream xstream = getHackPackageXstream();
+        InputStream is = streamFactory.getHackMetadataInputStream(hackId);
+        XStream xstream = getHackMetadataXstream();
         Hack hack = (Hack) xstream.fromXML(is);
 
         return hack;
@@ -55,9 +52,23 @@ public class XStreamHackService implements HackService {
         return hackConfig;
     }
 
+    @Override
+    public void persistHack(Hack hack) {
+        OutputStream hackOS = streamFactory.getHackMetadataOutputStream(hack.getIdentifier());
+
+        XStream xstream = getHackMetadataXstream();
+        xstream.toXML(hack, hackOS);
+        try {
+            hackOS.close();
+        } catch (IOException e) {
+            throw new HackPersistenceException(e);
+        }
+
+    }
+
 
     //TODO: Cache XStream object
-    public XStream getHackPackageXstream() {
+    public XStream getHackMetadataXstream() {
         XStream xstream = new XStream(new DomDriver("UTF-8"));
         xstream.alias("hack", Hack.class);
 

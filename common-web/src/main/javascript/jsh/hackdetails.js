@@ -59,7 +59,7 @@ jsh.HackDetailsArea.prototype.enterDocument = function() {
       getElementsByName('hack.name', element)[0];
   this.hackDescInput = document.
       getElementsByName('hack.description', element)[0];
-  this.hackIdInput = document.
+  this.hackIdentifierInput = document.
       getElementsByName('hack.identifier', element)[0];
   this.hackVersionInput = document.
       getElementsByName('hack.version', element)[0];
@@ -74,7 +74,7 @@ jsh.HackDetailsArea.prototype.enterDocument = function() {
   goog.events.listen(this.hackDescInput,
       [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
         goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
-  goog.events.listen(this.hackIdInput,
+  goog.events.listen(this.hackIdentifierInput,
       [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
         goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
 };
@@ -85,7 +85,7 @@ jsh.HackDetailsArea.prototype.enterDocument = function() {
  * @param {goog.events.Event!} e the event.
  */
 jsh.HackDetailsArea.prototype.onRequiredInputChange = function(e) {
-  var idVal = this.hackIdInput.value.trim();
+  var idVal = this.hackIdentifierInput.value.trim();
   var nameVal = this.hackNameInput.value.trim();
   var newStateValid = (idVal && idVal !== '' && nameVal && nameVal !== '');
 

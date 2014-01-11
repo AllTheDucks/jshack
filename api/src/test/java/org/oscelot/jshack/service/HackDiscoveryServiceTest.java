@@ -35,7 +35,7 @@ public class HackDiscoveryServiceTest {
         if (!emptyDir.exists()) {
           emptyDir.mkdirs();
         }
-        when(directoryFactory.getHacksDir()).thenReturn(emptyDir);
+        when(directoryFactory.getAndCreateHacksDir()).thenReturn(emptyDir);
 
         List<String> hackIdList = discoveryService.enumerateHackIds();
 
@@ -45,7 +45,7 @@ public class HackDiscoveryServiceTest {
 
     @Test
     public void enumerateHacks_withSingleHack_returnsSingleElementList() {
-        when(directoryFactory.getHacksDir()).thenReturn(new File("api/src/test/data/singlehack"));
+        when(directoryFactory.getAndCreateHacksDir()).thenReturn(new File("api/src/test/data/singlehack"));
         List<String> hackIdList = discoveryService.enumerateHackIds();
 
         assertNotNull(hackIdList);
@@ -55,7 +55,7 @@ public class HackDiscoveryServiceTest {
 
     @Test
     public void enumerateHacks_withMultipleHacks_returnsSingleElementList() {
-        when(directoryFactory.getHacksDir()).thenReturn(new File("api/src/test/data/threehacks"));
+        when(directoryFactory.getAndCreateHacksDir()).thenReturn(new File("api/src/test/data/threehacks"));
         List<String> hackIdList = discoveryService.enumerateHackIds();
 
         assertNotNull(hackIdList);
