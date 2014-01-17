@@ -29,17 +29,5 @@ jsh.EditorController = function(hackEditor, dataService) {
  * @param {goog.events.Event!} e the event
  */
 jsh.EditorController.prototype.handleSave = function(e) {
-  var hack = new jsh.model.Hack();
-
-  var ed = e.target;
-  hack.name = ed.getHackName();
-  hack.identifier = ed.getHackIdentifier();
-  //  hack.description = ed.hackDetails.hackNameInput.value;
-  //  hack.version = ed.hackDetails.hackNameInput.value;
-  //  hack.targetVersionMin = ed.hackDetails.hackNameInput.value;
-  //  hack.targetVersionMax = ed.hackDetails.hackNameInput.value;
-  //  hack.developerName = ed.hackDetails.hackNameInput.value;
-  //  hack.developerInstitution = ed.hackDetails.hackNameInput.value;
-
-  this.dataService_.saveHack(hack);
+  this.dataService_.saveHack(e.target.getHackModel());
 };

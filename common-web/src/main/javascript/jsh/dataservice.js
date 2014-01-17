@@ -88,15 +88,20 @@ jsh.DataService.prototype.getHack = function(id) {
 jsh.DataService.prototype.saveHack = function(hack) {
   var dataServiceReq = new jsh.DataService.Request(
       new goog.async.Deferred(),
-      this.handlePostResponse
+      this.handleSaveResponse
       );
 
   var requestId = this.putRequest_(dataServiceReq);
 
   var json = this.packHackJSON(hack);
 
-  this.xhrManager_.send(requestId, this.wsUrl_, 'POST', json,
-      {'Content-Type': 'application/json'});
+  if (hack.lastUpdatedDate == null) {
+    this.xhrManager_.send(requestId, this.wsUrl_, 'POST', json,
+        {'Content-Type': 'application/json'});
+  } else {
+    this.xhrManager_.send(requestId, this.wsUrl_ + hack.identifier, 'PUT', json,
+        {'Content-Type': 'application/json'});
+  }
 };
 
 
@@ -146,7 +151,7 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
  *
  * @param {goog.events.Event!} e
  */
-jsh.DataService.prototype.handlePostResponse = function(e) {
+jsh.DataService.prototype.handleSaveResponse = function(e) {
   console.log('response!');
 };
 

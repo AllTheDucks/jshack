@@ -17,21 +17,20 @@ goog.require('jsh.ResourceListHeader');
 goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
 goog.require('jsh.ToolbarButton');
+goog.require('jsh.model.Hack');
 
 
 
 /**
  * The Main Editor component for JSHack.  Contains the splitpane and
  * coordinates interactions between the child components.
- * @param {jsh.model.Hack} hack The hack to be edited.
+ * @param {jsh.model.Hack?} hack The hack to be edited.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {goog.ui.Component}
  * @constructor
  */
 jsh.HackEditor = function(hack, opt_domHelper) {
   goog.base(this, opt_domHelper);
-
-  this.hack_ = hack;
 
   this.splitpane_ = null;
 
@@ -43,10 +42,13 @@ jsh.HackEditor = function(hack, opt_domHelper) {
 
   this.currentEditor_ = null;
 
+  this.resourceListHeader_ = null;
+
   //TODO This needs to go somewhere else, like a constant or something
   this.splitPaneHandleWidth_ = 5;
 
   this.setModel(hack);
+
 };
 goog.inherits(jsh.HackEditor, goog.ui.Component);
 
@@ -94,19 +96,13 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   var resourceListContainer = new jsh.ResourceListContainer();
 
-  var resourceListHeader = new jsh.ResourceListHeader(this.hack_);
-  resourceListContainer.addChild(resourceListHeader, true);
+  this.resourceListHeader_ = new jsh.ResourceListHeader();
+  resourceListContainer.addChild(this.resourceListHeader_, true);
 
-  goog.events.listen(resourceListHeader, goog.ui.Component.EventType.ACTION,
+  goog.events.listen(this.resourceListHeader_,
+      goog.ui.Component.EventType.ACTION,
       this.showHackDetailsArea, false, this);
 
-  for (var i = 0; i < this.hack_.resources.length; i++) {
-    var res = this.hack_.resources[i];
-    var resItem = new jsh.ResourceListItem(res);
-    resourceListContainer.addChild(resItem, true);
-    goog.events.listen(resItem, goog.ui.Component.EventType.ACTION,
-        this.handleResourceClick, false, this);
-  }
 
   this.editorContainer_ = new jsh.EditorContainer();
 
@@ -120,6 +116,39 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   this.splitpane_.setHandleSize(this.splitPaneHandleWidth_);
 
   this.addChild(this.splitpane_, true);
+
+};
+
+
+/**
+ * Update the state of the editor based on the details in a hack object.
+ * @param {jsh.model.Hack} hack The hack containing the new details
+ */
+jsh.HackEditor.prototype.updateEditorState = function(hack) {
+  this.hackDetails_.hackIdentifierInput.value =
+      hack.identifier ? hack.identifier : '';
+  this.hackDetails_.hackNameInput.value = hack.name ? hack.name : '';
+  this.hackDetails_.hackDescInput.value =
+      hack.description ? hack.description : '';
+  this.hackDetails_.hackVersionInput.value =
+      hack.version ? hack.version : '';
+  this.hackDetails_.hackTargetVerMinInput.value =
+      hack.targetVersionMin ? hack.targetVersionMin : '';
+  this.hackDetails_.hackTargetVerMaxInput.value =
+      hack.targetVersionMax ? hack.targetVersionMax : '';
+
+  this.resourceListHeader_.setHackName(hack.name);
+  this.resourceListHeader_.setHackIdentifier(hack.identifier);
+
+  this.setModel(hack);
+  //  for (var i = 0; i < this.hack_.resources.length; i++) {
+  //    var res = this.hack_.resources[i];
+  //    var resItem = new jsh.ResourceListItem(res);
+  //    resourceListContainer.addChild(resItem, true);
+  //    goog.events.listen(resItem, goog.ui.Component.EventType.ACTION,
+  //        this.handleResourceClick, false, this);
+  //  }
+
 };
 
 
@@ -144,6 +173,10 @@ jsh.HackEditor.prototype.enterDocument = function() {
       function() {
         this.btnSave_.setEnabled(false);
       }, false, this);
+
+  if (this.getModel()) {
+    this.updateEditorState(this.getModel());
+  }
 };
 
 
@@ -208,29 +241,20 @@ jsh.HackEditor.EventTypes = {
   SAVE: 'save'
 };
 
-//hack.name = ed.hackDetails.hackNameInput.value;
-//hack.identifier = ed.hackDetails.hackNameInput.value;
-//hack.description = ed.hackDetails.hackNameInput.value;
-//hack.version = ed.hackDetails.hackNameInput.value;
-//hack.targetVersionMin = ed.hackDetails.hackNameInput.value;
-//hack.targetVersionMax = ed.hackDetails.hackNameInput.value;
-//hack.developerName = ed.hackDetails.hackNameInput.value;
-//hack.developerInstitution = ed.hackDetails.hackNameInput.value;
-
 
 /**
- * Returns the name of the hack.
+ * Returns hack model which represents the current unsaved state of the editor.
  * @return {String}
  */
-jsh.HackEditor.prototype.getHackName = function() {
-  return this.hackDetails_.hackNameInput.value;
-};
+jsh.HackEditor.prototype.getHackModel = function() {
+  var hack = new jsh.model.Hack();
 
+  hack.identifier = this.hackDetails_.hackIdentifierInput.value;
+  hack.name = this.hackDetails_.hackNameInput.value;
+  hack.description = this.hackDetails_.hackDescInput.value;
+  hack.version = this.hackDetails_.hackVersionInput.value;
+  hack.targetVersionMin = this.hackDetails_.hackTargetVerMinInput.value;
+  hack.targetVersionMax = this.hackDetails_.hackTargetVerMaxInput.value;
 
-/**
- * Returns the name of the hack.
- * @return {String}
- */
-jsh.HackEditor.prototype.getHackIdentifier = function() {
-  return this.hackDetails_.hackIdentifierInput.value;
+  return hack;
 };

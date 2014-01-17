@@ -32,8 +32,10 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
   pngRes.path = 'lock.png';
   hack.resources.push(pngRes);
 
-  var editor = new jsh.HackEditor(hack);
+  var editor = new jsh.HackEditor();
   editor.decorate(mainEl);
+
+  editor.updateEditorState(hack);
 
   var dataService = new jsh.DataService('/jshack-test-web');
 

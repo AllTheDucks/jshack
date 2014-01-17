@@ -11,16 +11,18 @@ goog.require('jsh.model.HackResource');
  * A component which renders the title and id of the hack at the top of the
  * resource list.
  *
- * @param {jsh.model.Hack} hack the hack.
+ * @param {string?} hackName the name of the hack.
+ * @param {string?} hackId the id of the hack.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  *
  * @extends {goog.ui.Control}
  * @constructor
  */
-jsh.ResourceListHeader = function(hack, opt_domHelper) {
+jsh.ResourceListHeader = function(hackName, hackId, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
-  this.setModel(hack);
+  this.hackId_ = hackId;
+  this.hackName_ = hackName;
 
   this.setSupportedState(goog.ui.Component.State.SELECTED, true);
   this.setAutoStates(goog.ui.Component.State.SELECTED, true);
@@ -35,7 +37,7 @@ goog.inherits(jsh.ResourceListHeader, goog.ui.Control);
  */
 jsh.ResourceListHeader.prototype.createDom = function() {
   var el = goog.soy.renderAsElement(jsh.soy.editor.resourceListHeader,
-      {hackName: this.getModel().name, hackId: this.getModel().identifier});
+      {hackName: this.hackName_, hackId: this.hackId_});
   this.decorateInternal(el);
 };
 
@@ -49,8 +51,30 @@ jsh.ResourceListHeader.prototype.createDom = function() {
  */
 jsh.ResourceListHeader.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
-
+  this.nameEl_ = goog.dom.getElementByClass(
+      goog.getCssName('jsh-resourcelistheader-hackname'), element);
+  this.idEl_ = goog.dom.getElementByClass(
+      goog.getCssName('jsh-resourcelistheader-hackid'), element);
 };
+
+
+/**
+ *
+ * @param {string} name
+ */
+jsh.ResourceListHeader.prototype.setHackName = function(name) {
+  goog.dom.setTextContent(this.nameEl_, name);
+};
+
+
+/**
+ *
+ * @param {string} identifier
+ */
+jsh.ResourceListHeader.prototype.setHackIdentifier = function(identifier) {
+  goog.dom.setTextContent(this.idEl_, identifier);
+};
+
 
 // Register the default renderer for goog.ui.Controls.
 goog.ui.registry.setDefaultRenderer(jsh.ResourceListHeader,

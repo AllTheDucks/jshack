@@ -31,7 +31,17 @@ public class HacksResource {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Hack saveHack(Hack hack) {
+    public Hack createHack(Hack hack) {
+        hackManager.persistHack(hack);
+        return hackManager.getHackById(hack.getIdentifier());
+    }
+
+    @PUT
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("{hackId}")
+    public Hack updateHack(Hack hack) {
+        //TODO check for existence of hack before persisting it.
         hackManager.persistHack(hack);
         return hackManager.getHackById(hack.getIdentifier());
     }

@@ -2,8 +2,8 @@
 
 /**
   * The hack name and id above the hack resources on the left hand side.
-  * @param hackName the name of the hack.
-  * @param hackId the identifier of the hack.
+  * @param? hackName the name of the hack.
+  * @param? hackId the identifier of the hack.
   */
 {template .resourceListHeader}
     <div class="{css jsh-resourcelistheader}">
@@ -41,12 +41,12 @@
       <td><input name="hack.description" type="text" placeholder="A Description of the hack"></td>
     </tr>
     <tr>
-      <td>Max Bb Version: </td>
-      <td><input name="hack.targetVersionMax" type="text" placeholder="9.1.0"></td>
+      <td>Min Bb Version:</td>
+      <td><input name="hack.targetVersionMin" type="text" placeholder="9.1.0"></td>
     </tr>
     <tr>
-      <td>Min Bb Version:</td>
-      <td><input name="hack.targetVersionMin" type="text" placeholder="9.1.14"></td>
+      <td>Max Bb Version: </td>
+      <td><input name="hack.targetVersionMax" type="text" placeholder="9.1.14"></td>
     </tr>
   </tbody></table>
   </div>
