@@ -80,13 +80,19 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   toolbar.addChild(new goog.ui.ToolbarSeparator(), true);
 
-  var btnUpload = new jsh.ToolbarButton('Upload Resource',
+  var btnUpload = new jsh.ToolbarButton('Import Resource',
       goog.getCssName('fa-upload'));
   toolbar.addChild(btnUpload, true);
 
-  var btnNew = new jsh.ToolbarButton('New Resource',
+  goog.events.listen(btnUpload, goog.ui.Component.EventType.ACTION,
+      this.handleImportResourceAction, false, this);
+
+  var btnNew = new jsh.ToolbarButton('Create Resource',
       goog.getCssName('fa-plus'));
   toolbar.addChild(btnNew, true);
+
+  goog.events.listen(btnNew, goog.ui.Component.EventType.ACTION,
+      this.handleCreateResourceAction, false, this);
 
   var btnDelete = new jsh.ToolbarButton('Delete Resource',
       goog.getCssName('fa-minus'));
@@ -94,15 +100,14 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   this.addChild(toolbar, true);
 
-  var resourceListContainer = new jsh.ResourceListContainer();
+  this.resourceListContainer_ = new jsh.ResourceListContainer();
 
   this.resourceListHeader_ = new jsh.ResourceListHeader();
-  resourceListContainer.addChild(this.resourceListHeader_, true);
+  this.resourceListContainer_.addChild(this.resourceListHeader_, true);
 
   goog.events.listen(this.resourceListHeader_,
-      goog.ui.Component.EventType.ACTION,
+      goog.ui.Component.EventType.SELECT,
       this.showHackDetailsArea, false, this);
-
 
   this.editorContainer_ = new jsh.EditorContainer();
 
@@ -110,7 +115,7 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   this.editorContainer_.addChild(this.hackDetails_, true);
   this.currentEditor_ = this.hackDetails_;
 
-  this.splitpane_ = new jsh.SplitPane(resourceListContainer,
+  this.splitpane_ = new jsh.SplitPane(this.resourceListContainer_,
       this.editorContainer_, goog.ui.SplitPane.Orientation.HORIZONTAL);
   this.splitpane_.setInitialSize(300);
   this.splitpane_.setHandleSize(this.splitPaneHandleWidth_);
@@ -153,6 +158,30 @@ jsh.HackEditor.prototype.updateEditorState = function(hack) {
 
 
 /**
+ * Event handler for when the "Create Resource" button is clicked.
+ */
+jsh.HackEditor.prototype.handleCreateResourceAction = function() {
+  var resource = new jsh.model.HackResource();
+  resource.path = 'newresource.js';
+  resource.mime = 'application/javascript';
+  var resItem = new jsh.ResourceListItem(resource);
+  this.resourceListContainer_.addChild(resItem, true);
+  goog.events.listen(resItem, goog.ui.Component.EventType.SELECT,
+      this.handleResourceClick, false, this);
+
+  this.resourceListContainer_.setSelectedChild(resItem);
+};
+
+
+/**
+ * Event handler for when the "Import Resource" button is clicked.
+ */
+jsh.HackEditor.prototype.handleImportResourceAction = function() {
+  alert('Use HTML5 file API to import resource.');
+};
+
+
+/**
  * Called when component's element is known to be in the document.
  * @override
  */
@@ -173,6 +202,8 @@ jsh.HackEditor.prototype.enterDocument = function() {
       function() {
         this.btnSave_.setEnabled(false);
       }, false, this);
+
+  this.resourceListContainer_.setSelectedChild(this.resourceListHeader_);
 
   if (this.getModel()) {
     this.updateEditorState(this.getModel());
