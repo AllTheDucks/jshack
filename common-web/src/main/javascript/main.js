@@ -1,3 +1,4 @@
+goog.require('goog.Uri');
 goog.require('jsh.EditorController');
 goog.require('jsh.HackEditor');
 goog.require('jsh.model.Hack');
@@ -12,33 +13,40 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
   var mainEl = goog.dom.createDom('div', 'ide');
   goog.dom.appendChild(document.body, mainEl);
 
-  var hack = new jsh.model.Hack();
-  hack.name = 'Gradebook Column Protector';
-  hack.identifier = 'gbcolprotect';
-  hack.resources = new Array();
-
-  var cssRes = new jsh.model.HackResource();
-  cssRes.mime = 'text/css';
-  cssRes.path = 'gbcolprotect.css';
-  hack.resources.push(cssRes);
-
-  var jsRes = new jsh.model.HackResource();
-  jsRes.mime = 'application/javascript';
-  jsRes.path = 'gbcolprotect.js';
-  hack.resources.push(jsRes);
-
-  var pngRes = new jsh.model.HackResource();
-  pngRes.mime = 'image/png';
-  pngRes.path = 'lock.png';
-  hack.resources.push(pngRes);
+  //  var hack = new jsh.model.Hack();
+  //  hack.name = 'Gradebook Column Protector';
+  //  hack.identifier = 'gbcolprotect';
+  //  hack.resources = new Array();
+  //
+  //  var cssRes = new jsh.model.HackResource();
+  //  cssRes.mime = 'text/css';
+  //  cssRes.path = 'gbcolprotect.css';
+  //  hack.resources.push(cssRes);
+  //
+  //  var jsRes = new jsh.model.HackResource();
+  //  jsRes.mime = 'application/javascript';
+  //  jsRes.path = 'gbcolprotect.js';
+  //  hack.resources.push(jsRes);
+  //
+  //  var pngRes = new jsh.model.HackResource();
+  //  pngRes.mime = 'image/png';
+  //  pngRes.path = 'lock.png';
+  //  hack.resources.push(pngRes);
 
   var editor = new jsh.HackEditor();
   editor.decorate(mainEl);
 
-  editor.updateEditorState(hack);
+  //editor.updateEditorState(hack);
 
   var dataService = new jsh.DataService('/jshack-test-web');
 
   var controller = new jsh.EditorController(editor, dataService);
+
+  var uri = new goog.Uri(window.location);
+  var hackId = uri.getQueryData().get('hackid');
+
+  if (hackId) {
+    controller.loadHackById(hackId);
+  }
 
 });

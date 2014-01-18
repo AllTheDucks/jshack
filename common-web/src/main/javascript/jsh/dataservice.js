@@ -84,11 +84,12 @@ jsh.DataService.prototype.getHack = function(id) {
 /**
  * Persist hack to server.
  * @param {jsh.model.Hack} hack the hack
+ * @return {jsh.async.Deferred} The hack.
  */
 jsh.DataService.prototype.saveHack = function(hack) {
   var dataServiceReq = new jsh.DataService.Request(
       new goog.async.Deferred(),
-      this.handleSaveResponse
+      this.unpackHackJSON
       );
 
   var requestId = this.putRequest_(dataServiceReq);
@@ -102,6 +103,8 @@ jsh.DataService.prototype.saveHack = function(hack) {
     this.xhrManager_.send(requestId, this.wsUrl_ + hack.identifier, 'PUT', json,
         {'Content-Type': 'application/json'});
   }
+
+  return dataServiceReq.deferred;
 };
 
 
@@ -147,13 +150,13 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
 };
 
 
-/**
- *
- * @param {goog.events.Event!} e
- */
-jsh.DataService.prototype.handleSaveResponse = function(e) {
-  console.log('response!');
-};
+///**
+// *
+// * @param {goog.events.Event!} e
+// */
+//jsh.DataService.prototype.handleSaveResponse = function(e) {
+//  console.log('response!');
+//};
 
 
 /**

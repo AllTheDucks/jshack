@@ -7,8 +7,20 @@
   */
 {template .resourceListHeader}
     <div class="{css jsh-resourcelistheader}">
-        <div class="{css jsh-resourcelistheader-hackname}">{$hackName}</div>
-        <div class="{css jsh-resourcelistheader-hackid}">{$hackId}</div>
+        <div class="{css jsh-resourcelistheader-hackname}">
+        {if $hackName}
+            {$hackName}
+        {else}
+            Unsaved
+        {/if}
+        </div>
+        <div class="{css jsh-resourcelistheader-hackid}">
+        {if $hackId}
+            {$hackId}
+        {else}
+            This hack has not been saved.
+        {/if}
+        </div>
     </div>
 {/template}
 

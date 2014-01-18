@@ -1,8 +1,0 @@
-<hack>
-  <name>test blah</name>
-  <identifier>test</identifier>
-  <description>blah</description>
-  <version>1</version>
-  <targetVersionMin>1</targetVersionMin>
-  <targetVersionMax>2</targetVersionMax>
-</hack>
