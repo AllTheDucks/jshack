@@ -150,15 +150,6 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
 };
 
 
-///**
-// *
-// * @param {goog.events.Event!} e
-// */
-//jsh.DataService.prototype.handleSaveResponse = function(e) {
-//  console.log('response!');
-//};
-
-
 /**
  * Disposes of the DataService.
  * @override
