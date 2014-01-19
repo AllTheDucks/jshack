@@ -78,3 +78,19 @@
         <span class='{css toolbar-text}'>{$text}</span>
     </div>
 {/template}
+
+
+/**
+ * A toolbar button that opens a file dialog.
+ *
+ * @param text the text to display on the button
+ * @param iconClass the class name of the icon
+ */
+{template .fileSelectToolbarButton}
+    <div>
+        <i class='{css fa} {$iconClass} {css icon}'></i>
+        <span class='{css toolbar-text}'>{$text}</span>
+        <div class='{css toolbar-file-select-wrapper}'><input type='file' class='{css toolbar-file-select}' style='width:1;' multiple></div>
+    </div>
+{/template}
+

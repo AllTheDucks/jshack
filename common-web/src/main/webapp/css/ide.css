@@ -72,3 +72,12 @@ input[type="text"] {
     border-radius: .25em;
     padding: .25em;
 }
+
+.toolbar-file-select {
+    visibility: hidden;
+}
+
+.toolbar-file-select-wrapper {
+    display:inline-block;
+    width: 0;
+}

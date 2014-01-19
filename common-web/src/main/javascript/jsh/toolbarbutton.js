@@ -14,7 +14,7 @@ goog.require('jsh.soy.editor');
  * @param {string!} iconClass the font-awesome iconClass class
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  *
- * @extends {goog.ui.Control}
+ * @extends {goog.ui.ToolbarButton}
  * @constructor
  */
 jsh.ToolbarButton = function(text, iconClass, opt_domHelper) {
