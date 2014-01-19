@@ -59,5 +59,17 @@ jsh.ResourceListContainer.prototype.handleItemSelect = function(e) {
     this.selectedItem_.setSelected(false);
   }
   this.selectedItem_ = e.target;
+};
 
+
+/**
+ * Set the currently selected child.
+ * @param {goog.ui.Control!} child The child to set as selected.
+ */
+jsh.ResourceListContainer.prototype.setSelectedChild = function(child) {
+  if (this.selectedItem_) {
+    this.selectedItem_.setSelected(false);
+  }
+  this.selectedItem_ = child;
+  child.setSelected(true);
 };
