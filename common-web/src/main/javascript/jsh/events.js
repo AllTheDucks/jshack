@@ -8,5 +8,6 @@ goog.provide('jsh.events.EventType');
 jsh.events.EventType = {
   /** dispatched when a component enters an invalid state. */
   HACK_INVALID: 'hackinvalid',
-  HACK_VALID: 'hackvalid'
+  HACK_VALID: 'hackvalid',
+  FILES_SELECTED: 'fileselected'
 };

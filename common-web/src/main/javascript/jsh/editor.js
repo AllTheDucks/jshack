@@ -10,6 +10,7 @@ goog.require('goog.ui.ToolbarSeparator');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
 goog.require('jsh.EditorContainer');
+goog.require('jsh.FileSelectToolbarButton');
 goog.require('jsh.HackDetailsArea');
 goog.require('jsh.ResourceEditor');
 goog.require('jsh.ResourceListContainer');
@@ -17,6 +18,7 @@ goog.require('jsh.ResourceListHeader');
 goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
 goog.require('jsh.ToolbarButton');
+goog.require('jsh.events.EventType');
 goog.require('jsh.model.Hack');
 
 
@@ -80,11 +82,11 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   toolbar.addChild(new goog.ui.ToolbarSeparator(), true);
 
-  var btnUpload = new jsh.ToolbarButton('Import Resource',
+  var btnUpload = new jsh.FileSelectToolbarButton('Import Resource',
       goog.getCssName('fa-upload'));
   toolbar.addChild(btnUpload, true);
 
-  goog.events.listen(btnUpload, goog.ui.Component.EventType.ACTION,
+  goog.events.listen(btnUpload, jsh.events.EventType.FILES_SELECTED,
       this.handleImportResourceAction, false, this);
 
   var btnNew = new jsh.ToolbarButton('Create Resource',
@@ -164,6 +166,17 @@ jsh.HackEditor.prototype.handleCreateResourceAction = function() {
   var resource = new jsh.model.HackResource();
   resource.path = 'newresource.js';
   resource.mime = 'application/javascript';
+  this.addResourceListItem(resource);
+};
+
+
+/**
+ * Given a HackResource model, adds all the required UI elements to manipulate
+ * that HackResource.
+ *
+ * @param {jsh.model.HackResource!} resource the hack to add to the UI.
+ */
+jsh.HackEditor.prototype.addResourceListItem = function(resource) {
   var resItem = new jsh.ResourceListItem(resource);
   this.resourceListContainer_.addChild(resItem, true);
   goog.events.listen(resItem, goog.ui.Component.EventType.SELECT,
@@ -175,9 +188,16 @@ jsh.HackEditor.prototype.handleCreateResourceAction = function() {
 
 /**
  * Event handler for when the "Import Resource" button is clicked.
+ * @param {goog.events.Event!} e
  */
-jsh.HackEditor.prototype.handleImportResourceAction = function() {
-  alert('Use HTML5 file API to import resource.');
+jsh.HackEditor.prototype.handleImportResourceAction = function(e) {
+  //  alert(e.files[0].name + ' ' + e.files[0].type);
+  for (var i = 0, currFile; currFile = e.files[i]; i++) {
+    var resource = new jsh.model.HackResource();
+    resource.path = currFile.name;
+    resource.mime = currFile.type;
+    this.addResourceListItem(resource);
+  }
 };
 
 
