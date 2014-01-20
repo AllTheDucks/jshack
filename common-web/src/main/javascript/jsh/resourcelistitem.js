@@ -47,6 +47,9 @@ jsh.ResourceListItem.prototype.createDom = function() {
     case 'application/javascript':
       iconClass = goog.getCssName('jsh-resourcelistitem-js');
       break;
+    case 'text/html':
+      iconClass = goog.getCssName('jsh-resourcelistitem-html');
+      break;
     default:
       iconClass = goog.getCssName('jsh-resourcelistitem-default');
   }
