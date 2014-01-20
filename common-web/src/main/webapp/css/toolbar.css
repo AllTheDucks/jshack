@@ -16,6 +16,11 @@
  * Styles used by goog.ui.ToolbarRenderer.
  */
 
+.goog-toolbar-button, .goog-toolbar-menu-button {
+    color: #eee;
+    margin: 3px;
+}
+
 .goog-toolbar {
     /* Client apps may override the URL at which they serve the image. */
     /*background: #fafafa url(//ssl.gstatic.com/editor/toolbar-bg.png) repeat-x bottom left;*/
@@ -24,7 +29,7 @@
     /*font: normal 12px Arial, sans-serif;*/
     margin: 0;
     outline: none;
-    padding: 2px;
+    padding: 5px 10px 2px 10px;
     position: relative;
     zoom: 1; /* The toolbar element must have layout on IE. */
 }
@@ -34,11 +39,11 @@
  */
 
 .goog-toolbar-button {
-    margin: 0 2px;
+    margin: 3px;
     border: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    /*color: #333;*/
+    color: #eee;
     text-decoration: none;
     list-style: none;
     vertical-align: middle;
@@ -204,11 +209,11 @@
  */
 
 .goog-toolbar-menu-button {
-    margin: 0 2px;
+    margin: 3px;
     border: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    color: #333;
+    color: #eee;
     text-decoration: none;
     list-style: none;
     vertical-align: middle;
@@ -325,7 +330,7 @@
 .goog-toolbar-menu-button-hover .goog-toolbar-menu-button-outer-box,
 .goog-toolbar-menu-button-hover .goog-toolbar-menu-button-inner-box {
     /* Hover border color trumps active/open style. */
-    border-color: #a1badf !important;
+    border-color: #996329 !important;
 }
 
 /* Active/open styles. */

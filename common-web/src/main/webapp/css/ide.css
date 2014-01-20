@@ -30,13 +30,7 @@ body {
     font-size: 14px;
     padding: 2px 5px 2px 5px;
 }
-.goog-toolbar-button {
-    color: #eee;
-    margin: 3px;
-}
-.goog-toolbar {
-    padding: 5px 10px 2px 10px;
-}
+
 
 #outersplitpane > .goog-splitpane-first-container {
     border-top-right-radius: 10px;
@@ -80,4 +74,5 @@ input[type="text"] {
 .toolbar-file-select-wrapper {
     display:inline-block;
     width: 0;
+    height: 0;
 }

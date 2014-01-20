@@ -6,6 +6,7 @@ goog.require('goog.ui.MenuItem');
 goog.require('goog.ui.SplitPane');
 goog.require('goog.ui.Toolbar');
 goog.require('goog.ui.ToolbarButton');
+goog.require('goog.ui.ToolbarMenuButton');
 goog.require('goog.ui.ToolbarSeparator');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
@@ -17,7 +18,6 @@ goog.require('jsh.ResourceListContainer');
 goog.require('jsh.ResourceListHeader');
 goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
-goog.require('jsh.ToolbarButton');
 goog.require('jsh.events.EventType');
 goog.require('jsh.model.Hack');
 
@@ -68,7 +68,8 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   var toolbar = new goog.ui.Toolbar();
 
-  this.btnSave_ = new jsh.ToolbarButton('Save', goog.getCssName('fa-floppy-o'));
+  this.btnSave_ = new goog.ui.ToolbarButton(this.createButtonDOM_('Save',
+      goog.getCssName('fa-floppy-o')));
   this.btnSave_.setEnabled(false);
   toolbar.addChild(this.btnSave_, true);
   goog.events.listen(this.btnSave_, goog.ui.Component.EventType.ACTION,
@@ -76,8 +77,8 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
         this.dispatchEvent({type: jsh.HackEditor.EventTypes.SAVE});
       }, false, this);
 
-  var btnClose = new jsh.ToolbarButton('Close',
-      goog.getCssName('fa-power-off'));
+  var btnClose = new goog.ui.ToolbarButton(this.createButtonDOM_('Close',
+      goog.getCssName('fa-power-off')));
   toolbar.addChild(btnClose, true);
 
   toolbar.addChild(new goog.ui.ToolbarSeparator(), true);
@@ -89,15 +90,33 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   goog.events.listen(btnUpload, jsh.events.EventType.FILES_SELECTED,
       this.handleImportResourceAction, false, this);
 
-  var btnNew = new jsh.ToolbarButton('Create Resource',
-      goog.getCssName('fa-plus'));
+  var btnNew = new goog.ui.ToolbarMenuButton(
+      this.createButtonDOM_('Create Resource', goog.getCssName('fa-plus')));
+  var jsFileMenuItem = new goog.ui.MenuItem('Javascript File');
+  btnNew.addItem(jsFileMenuItem);
+  var htmlFileMenuItem = new goog.ui.MenuItem('HTML File');
+  btnNew.addItem(htmlFileMenuItem);
+  var cssFileMenuItem = new goog.ui.MenuItem('CSS File');
+  btnNew.addItem(cssFileMenuItem);
+
   toolbar.addChild(btnNew, true);
 
-  goog.events.listen(btnNew, goog.ui.Component.EventType.ACTION,
-      this.handleCreateResourceAction, false, this);
+  goog.events.listen(jsFileMenuItem, goog.ui.Component.EventType.ACTION,
+      function() {
+        this.createResource('newresource.js', 'application/javascript');
+      }, false, this);
+  goog.events.listen(cssFileMenuItem, goog.ui.Component.EventType.ACTION,
+      function() {
+        this.createResource('newresource.css', 'text/css');
+      }, false, this);
+  goog.events.listen(htmlFileMenuItem, goog.ui.Component.EventType.ACTION,
+      function() {
+        this.createResource('newresource.html', 'text/html');
+      }, false, this);
 
-  var btnDelete = new jsh.ToolbarButton('Delete Resource',
-      goog.getCssName('fa-minus'));
+
+  var btnDelete = new goog.ui.ToolbarButton(
+      this.createButtonDOM_('Delete Resource', goog.getCssName('fa-minus')));
   toolbar.addChild(btnDelete, true);
 
   this.addChild(toolbar, true);
@@ -153,7 +172,7 @@ jsh.HackEditor.prototype.updateEditorState = function(hack) {
   //    var resItem = new jsh.ResourceListItem(res);
   //    resourceListContainer.addChild(resItem, true);
   //    goog.events.listen(resItem, goog.ui.Component.EventType.ACTION,
-  //        this.handleResourceClick, false, this);
+  //        this.handleResourceSelect, false, this);
   //  }
 
 };
@@ -161,11 +180,13 @@ jsh.HackEditor.prototype.updateEditorState = function(hack) {
 
 /**
  * Event handler for when the "Create Resource" button is clicked.
+ * @param {string} name the name of the new resource.
+ * @param {string} type the mime type of the new resource.
  */
-jsh.HackEditor.prototype.handleCreateResourceAction = function() {
+jsh.HackEditor.prototype.createResource = function(name, type) {
   var resource = new jsh.model.HackResource();
-  resource.path = 'newresource.js';
-  resource.mime = 'application/javascript';
+  resource.path = name;
+  resource.mime = type;
   this.addResourceListItem(resource);
 };
 
@@ -180,7 +201,7 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource) {
   var resItem = new jsh.ResourceListItem(resource);
   this.resourceListContainer_.addChild(resItem, true);
   goog.events.listen(resItem, goog.ui.Component.EventType.SELECT,
-      this.handleResourceClick, false, this);
+      this.handleResourceSelect, false, this);
 
   this.resourceListContainer_.setSelectedChild(resItem);
 };
@@ -196,6 +217,7 @@ jsh.HackEditor.prototype.handleImportResourceAction = function(e) {
     var resource = new jsh.model.HackResource();
     resource.path = currFile.name;
     resource.mime = currFile.type;
+    console.log('name: ' + currFile.name + ' type: ' + currFile.type);
     this.addResourceListItem(resource);
   }
 };
@@ -245,10 +267,26 @@ jsh.HackEditor.prototype.resizeOuterSplitPane_ = function() {
 
 /**
  *
- * @param {goog.events.Event!} e the click event
+ * @param {goog.events.Event!} e the select event
  */
-jsh.HackEditor.prototype.handleResourceClick = function(e) {
-  this.showEditor(e.currentTarget.getModel());
+jsh.HackEditor.prototype.handleResourceSelect = function(e) {
+  var resourceListItem = e.currentTarget;
+  var resource = resourceListItem.getModel();
+
+  var id = resourceListItem.getId();
+  var ed = this.editorCache_[id];
+  if (ed == null) {
+    ed = this.createResourceEditor(resource);
+    this.editorCache_[id] = ed;
+    this.editorContainer_.addChild(ed, true);
+  }
+
+  this.currentEditor_.setVisible(false);
+  ed.setVisible(true);
+  this.currentEditor_ = ed;
+
+  // trigger resize on ResourceEditor
+  this.splitpane_.dispatchEvent(goog.ui.Component.EventType.CHANGE);
 };
 
 
@@ -264,23 +302,12 @@ jsh.HackEditor.prototype.showHackDetailsArea = function() {
 
 /**
  *
- * @param {jsh.model.HackResource!} resource the resource to display the editor
- * for.
+ * @param {jsh.model.HackResource} resource
+ * @return {jsh.ResourceEditor}
  */
-jsh.HackEditor.prototype.showEditor = function(resource) {
-  var ed = this.editorCache_[resource.path];
-  if (ed == null) {
-    ed = new jsh.ResourceEditor();
-    this.editorCache_[resource.path] = ed;
-    this.editorContainer_.addChild(ed, true);
-  }
-
-  this.currentEditor_.setVisible(false);
-  ed.setVisible(true);
-  this.currentEditor_ = ed;
-
-  // trigger resize on ResourceEditor
-  this.splitpane_.dispatchEvent(goog.ui.Component.EventType.CHANGE);
+jsh.HackEditor.prototype.createResourceEditor = function(resource) {
+  var ed = new jsh.ResourceEditor();
+  return ed;
 };
 
 
@@ -308,4 +335,17 @@ jsh.HackEditor.prototype.getHackModel = function() {
   hack.targetVersionMax = this.hackDetails_.hackTargetVerMaxInput.value;
 
   return hack;
+};
+
+
+/**
+ * Creates the DOM structure for a button with a font-awesome icon.
+ * @param {string} text Text to display on the button.
+ * @param {string} iconClass The font-awesome icon class.
+ * @return {Element}
+ * @private
+ */
+jsh.HackEditor.prototype.createButtonDOM_ = function(text, iconClass) {
+  return goog.soy.renderAsElement(jsh.soy.editor.toolbarButton,
+      {text: text, iconClass: iconClass});
 };
