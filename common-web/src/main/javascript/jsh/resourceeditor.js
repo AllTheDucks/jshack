@@ -4,19 +4,25 @@ goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('jsh.BaseEditor');
+goog.require('jsh.MimeTypeHelper');
 goog.require('jsh.SplitPane');
 
 
 
 /**
  *
+ * @param {jsh.model.HackResource} resource the resource to edit.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @constructor
  */
-jsh.ResourceEditor = function(opt_domHelper) {
+jsh.ResourceEditor = function(resource, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.valid = true;
+
+  /** @type {jsh.model.HackResource}
+   * @private */
+  this.resource_ = resource;
 
   /** @type {jsh.SplitPane} */
   this.splitPane_;
@@ -65,7 +71,6 @@ jsh.ResourceEditor.prototype.decorateInternal = function(element) {
   this.splitPane_.setSecondComponentStatic(true);
 
   this.addChild(this.splitPane_, true);
-
 };
 
 
@@ -84,6 +89,9 @@ jsh.ResourceEditor.prototype.enterDocument = function(element) {
   goog.events.listen(this.splitPane_, goog.ui.Component.EventType.CHANGE,
       goog.events.Event.stopPropagation, false, this);
 
+  this.hackEditor_.getAce().setValue(this.resource_.content);
+  this.hackEditor_.getAce().getSession().setMode(
+      jsh.MimeTypeHelper.getAceMode(this.resource_.mime));
 };
 
 

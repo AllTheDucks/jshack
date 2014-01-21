@@ -2,6 +2,7 @@ goog.provide('jsh.ResourceListItem');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('jsh.MimeTypeHelper');
 goog.require('jsh.ResourceListItemRenderer');
 goog.require('jsh.model.HackResource');
 
@@ -36,23 +37,8 @@ jsh.ResourceListItem.prototype.createDom = function() {
   var resource = this.getModel();
   var resourceItem = goog.dom.createDom('div', 'jsh-resourcelistitem');
 
-  var iconClass;
-  switch (resource.mime) {
-    case 'image/png':
-      iconClass = goog.getCssName('jsh-resourcelistitem-png');
-      break;
-    case 'text/css':
-      iconClass = goog.getCssName('jsh-resourcelistitem-css');
-      break;
-    case 'application/javascript':
-      iconClass = goog.getCssName('jsh-resourcelistitem-js');
-      break;
-    case 'text/html':
-      iconClass = goog.getCssName('jsh-resourcelistitem-html');
-      break;
-    default:
-      iconClass = goog.getCssName('jsh-resourcelistitem-default');
-  }
+  var iconClass = jsh.MimeTypeHelper.getIconClass(resource.mime);
+
   goog.dom.classlist.add(resourceItem, iconClass);
 
   resourceItem.appendChild(goog.dom.createDom('div',

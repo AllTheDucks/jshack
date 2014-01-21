@@ -63,7 +63,14 @@ jsh.AceEditor.prototype.enterDocument = function(element) {
  * Resize the internal Ace editor to fit the component.
  */
 jsh.AceEditor.prototype.resize = function() {
-  //  if (this.aceEditor) {
   this.aceEditor.resize();
-  //  }
+};
+
+
+/**
+ * return the actual ace editor
+ * @return {Object}
+ */
+jsh.AceEditor.prototype.getAce = function() {
+  return this.aceEditor;
 };

@@ -1,6 +1,7 @@
 goog.provide('jsh.HackEditor');
 
 goog.require('goog.dom.ViewportSizeMonitor');
+goog.require('goog.fs.FileReader');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.MenuItem');
 goog.require('goog.ui.SplitPane');
@@ -212,13 +213,18 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource) {
  * @param {goog.events.Event!} e
  */
 jsh.HackEditor.prototype.handleImportResourceAction = function(e) {
-  //  alert(e.files[0].name + ' ' + e.files[0].type);
+
   for (var i = 0, currFile; currFile = e.files[i]; i++) {
-    var resource = new jsh.model.HackResource();
-    resource.path = currFile.name;
-    resource.mime = currFile.type;
-    console.log('name: ' + currFile.name + ' type: ' + currFile.type);
-    this.addResourceListItem(resource);
+    console.log('file: ' + i);
+    var callback = goog.bind(function(file, text) {
+      console.log('ping');
+      var resource = new jsh.model.HackResource();
+      resource.path = file.name;
+      resource.mime = file.type;
+      resource.content = text;
+      this.addResourceListItem(resource);
+    }, this, currFile);
+    goog.fs.FileReader.readAsText(currFile).addCallback(callback);
   }
 };
 
@@ -306,7 +312,7 @@ jsh.HackEditor.prototype.showHackDetailsArea = function() {
  * @return {jsh.ResourceEditor}
  */
 jsh.HackEditor.prototype.createResourceEditor = function(resource) {
-  var ed = new jsh.ResourceEditor();
+  var ed = new jsh.ResourceEditor(resource);
   return ed;
 };
 
