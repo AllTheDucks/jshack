@@ -45,7 +45,7 @@ jsh.FileSelectToolbarButton.prototype.enterDocument = function() {
   goog.events.listen(this.fileSelectEl,
       goog.events.EventType.CHANGE,
       function(evt) {
-        this.dispatchEvent({type: jsh.events.EventType.FILES_SELECTED,
+        this.dispatchEvent({type: jsh.events.EventType.FILES_IMPORTED,
           files: evt.target.files});
       }, false, this);
 };

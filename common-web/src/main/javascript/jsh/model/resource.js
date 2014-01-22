@@ -26,5 +26,8 @@ jsh.model.HackResource = function() {
   this.injectionPoints;
   /** @type {Array.<jsh.model.Restriction>} */
   this.restrictions;
-
+  /** @type {string} */
+  this.content;
+  /** @type {string} */
+  this.url;
 };
