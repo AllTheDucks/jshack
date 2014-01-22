@@ -1,4 +1,15 @@
 goog.provide('jsh.MimeTypeHelper');
+goog.provide('jsh.MimeTypeHelper.DataType');
+
+
+/**
+ * Constants for data types.
+ * @enum {string}
+ */
+jsh.MimeTypeHelper.DataType = {
+  BINARY: 'binary',
+  TEXT: 'text'
+};
 
 
 /**
@@ -6,7 +17,8 @@ goog.provide('jsh.MimeTypeHelper');
  * @type {Object}
  */
 jsh.MimeTypeHelper.fallback = {
-  'iconClass': goog.getCssName('jsh-resourcelistitem-default')
+  'iconClass': goog.getCssName('jsh-resourcelistitem-default'),
+  'dataType': jsh.MimeTypeHelper.DataType.BINARY
 };
 
 
@@ -17,7 +29,8 @@ jsh.MimeTypeHelper.fallback = {
 jsh.MimeTypeHelper.mimeLookup = {
   'application/javascript': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-js'),
-    'aceMode': 'ace/mode/javascript'
+    'aceMode': 'ace/mode/javascript',
+    'dataType': jsh.MimeTypeHelper.DataType.TEXT
   },
   'text/html': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-html'),
@@ -28,7 +41,8 @@ jsh.MimeTypeHelper.mimeLookup = {
     'aceMode': 'ace/mode/css'
   },
   'text': {
-    'iconClass': goog.getCssName('jsh-resourcelistitem-text')
+    'iconClass': goog.getCssName('jsh-resourcelistitem-text'),
+    'dataType': jsh.MimeTypeHelper.DataType.TEXT
   },
   'image': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-text')
@@ -54,6 +68,16 @@ jsh.MimeTypeHelper.getIconClass = function(mimeType) {
  */
 jsh.MimeTypeHelper.getAceMode = function(mimeType) {
   return jsh.MimeTypeHelper.lookupAttribute_('aceMode', mimeType);
+};
+
+
+/**
+ * Gets the Ace Editor mode to use for this mime type.
+ * @param {string} mimeType the mime type.
+ * @return {jsh.MimeTypeHelper.DataType}
+ */
+jsh.MimeTypeHelper.getDataType = function(mimeType) {
+  return jsh.MimeTypeHelper.lookupAttribute_('dataType', mimeType);
 };
 
 
