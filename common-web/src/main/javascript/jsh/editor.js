@@ -14,11 +14,11 @@ goog.require('jsh.AceEditor');
 goog.require('jsh.EditorContainer');
 goog.require('jsh.FileSelectToolbarButton');
 goog.require('jsh.HackDetailsArea');
-goog.require('jsh.ResourceEditor');
 goog.require('jsh.ResourceListContainer');
 goog.require('jsh.ResourceListHeader');
 goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
+goog.require('jsh.TextEditor');
 goog.require('jsh.events.EventType');
 goog.require('jsh.model.Hack');
 
@@ -282,7 +282,7 @@ jsh.HackEditor.prototype.handleResourceSelect = function(e) {
   var id = resourceListItem.getId();
   var ed = this.editorCache_[id];
   if (ed == null) {
-    ed = this.createResourceEditor(resource);
+    ed = this.createTextEditor(resource);
     this.editorCache_[id] = ed;
     this.editorContainer_.addChild(ed, true);
   }
@@ -309,10 +309,10 @@ jsh.HackEditor.prototype.showHackDetailsArea = function() {
 /**
  *
  * @param {jsh.model.HackResource} resource
- * @return {jsh.ResourceEditor}
+ * @return {jsh.TextEditor}
  */
-jsh.HackEditor.prototype.createResourceEditor = function(resource) {
-  var ed = new jsh.ResourceEditor(resource);
+jsh.HackEditor.prototype.createTextEditor = function(resource) {
+  var ed = new jsh.TextEditor(resource);
   return ed;
 };
 

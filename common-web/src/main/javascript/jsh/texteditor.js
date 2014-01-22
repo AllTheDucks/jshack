@@ -1,4 +1,4 @@
-goog.provide('jsh.ResourceEditor');
+goog.provide('jsh.TextEditor');
 
 goog.require('goog.dom');
 goog.require('goog.events');
@@ -15,7 +15,7 @@ goog.require('jsh.SplitPane');
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @constructor
  */
-jsh.ResourceEditor = function(resource, opt_domHelper) {
+jsh.TextEditor = function(resource, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.valid = true;
@@ -38,13 +38,13 @@ jsh.ResourceEditor = function(resource, opt_domHelper) {
    */
   this.splitPaneHandleWidth_ = 5;
 };
-goog.inherits(jsh.ResourceEditor, jsh.BaseEditor);
+goog.inherits(jsh.TextEditor, jsh.BaseEditor);
 
 
 /**
  * @override
  */
-jsh.ResourceEditor.prototype.createDom = function() {
+jsh.TextEditor.prototype.createDom = function() {
 
   var el = this.dom_.createDom('div', {'class': 'jsh-reseditor'});
   this.decorateInternal(el);
@@ -59,7 +59,7 @@ jsh.ResourceEditor.prototype.createDom = function() {
  *    text, if any will be used as the component's label.
  * @override
  */
-jsh.ResourceEditor.prototype.decorateInternal = function(element) {
+jsh.TextEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
   this.hackEditor_ = new jsh.AceEditor();
@@ -80,7 +80,7 @@ jsh.ResourceEditor.prototype.decorateInternal = function(element) {
  * @param {Element} element The DIV element for the component
  * @override
  */
-jsh.ResourceEditor.prototype.enterDocument = function(element) {
+jsh.TextEditor.prototype.enterDocument = function(element) {
   goog.base(this, 'enterDocument');
   //TODO this is nasty.  Really shouldn't rely on the dom structure like this.
   goog.events.listen(this.getParent().getParent(),
@@ -100,9 +100,8 @@ jsh.ResourceEditor.prototype.enterDocument = function(element) {
  * changes in particular.
  * @param {!goog.events.Event} e An event.
  */
-jsh.ResourceEditor.prototype.handleParentSizeChange = function(e) {
+jsh.TextEditor.prototype.handleParentSizeChange = function(e) {
   var size = goog.style.getSize(this.getElement());
   this.splitPane_.setSize(size);
   this.hackEditor_.resize();
 };
-
