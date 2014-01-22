@@ -224,7 +224,7 @@ jsh.HackEditor.prototype.handleImportResourceAction = function(e) {
       resource.content = text;
       this.addResourceListItem(resource);
     }, this, currFile);
-    goog.fs.FileReader.readAsText(currFile).addCallback(callback);
+    goog.fs.FileReader.readAsText(currFile).addCallback(callback, null);
   }
 };
 
