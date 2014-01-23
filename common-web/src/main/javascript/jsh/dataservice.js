@@ -82,7 +82,7 @@ jsh.DataService.prototype.getHack = function(id) {
 
   var requestId = this.putRequest_(dataServiceReq);
 
-  this.xhrManager_.send(requestId, this.wsUrl_ + id, 'GET');
+  this.xhrManager_.send(requestId, this.hacksWSUrl_ + id, 'GET');
 
   return dataServiceReq.deferred;
 };
@@ -124,7 +124,9 @@ jsh.DataService.prototype.saveHack = function(hack) {
 jsh.DataService.prototype.sendFile = function(blob) {
   var dataServiceReq = new jsh.DataService.Request(
       new goog.async.Deferred(),
-      this.unpackResourceJSON);
+      function(tempFileName) {
+        console.log('Temp File Name: ' + tempFileName);
+      });
 
   var requestId = this.putRequest_(dataServiceReq);
 
@@ -197,7 +199,14 @@ jsh.DataService.prototype.handleXhrResponse_ = function(event) {
 
   var xhr = event.xhrIo;
   if (xhr.isSuccess()) {
-    request.deferred.callback(request.callback(xhr.getResponseJson()));
+    var contentType = xhr.getResponseHeader('Content-Type');
+    if (contentType == 'application/json') {
+      request.deferred.callback(request.callback(xhr.getResponseJson()));
+    } else if (contentType == 'text/plain') {
+      request.deferred.callback(request.callback(xhr.getResponseText()));
+    } else {
+      console.log('Unknown Content-Type: ' + contentType);
+    }
   } else {
     request.deferred.errback();
   }
