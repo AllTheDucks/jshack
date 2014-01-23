@@ -1,13 +1,18 @@
 package org.oscelot.jshack.ws;
 
 import org.apache.commons.io.IOUtils;
+import org.oscelot.jshack.service.JSHackDirectoryFactory;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
 
 @Path("tempfiles")
 public class TempFilesResource {
+
+    @Inject
+    public JSHackDirectoryFactory directoryFactory;
 
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
@@ -17,7 +22,7 @@ public class TempFilesResource {
         File tempFile;
         OutputStream os = null;
         try {
-        tempFile = File.createTempFile("jshack","");
+        tempFile = File.createTempFile("upload", "", directoryFactory.getAndCreateTempDir());
 
         os = new FileOutputStream(tempFile);
         IOUtils.copy(is, os);
@@ -30,8 +35,7 @@ public class TempFilesResource {
             }
         }
 
-        //todo: highly unlikely to remain as getAbsolutePath()
-        return tempFile.getAbsolutePath();
+        return tempFile.getName();
     }
 
 }

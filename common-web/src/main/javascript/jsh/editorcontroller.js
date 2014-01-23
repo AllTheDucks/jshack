@@ -76,7 +76,6 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
         var resource = new jsh.model.HackResource();
         resource.path = file.name;
         resource.mime = file.type;
-        resource.content = text;
         resource.tempFileName = tempFileName;
 
         this.hackEditor_.addResourceListItem(resource);
