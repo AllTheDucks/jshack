@@ -81,7 +81,7 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
 
         this.hackEditor_.addResourceListItem(resource);
       }, this, currFile);
-      this.dataService.sendFile(currFile).addCallback(binCallback);
+      this.dataService_.sendFile(currFile).addCallback(binCallback);
     }
   }
 };
