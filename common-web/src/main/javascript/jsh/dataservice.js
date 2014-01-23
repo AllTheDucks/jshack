@@ -28,11 +28,18 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
   this.contextRoot_ = contextRoot;
 
   /**
-   * The url of the remote service.
+   * The url of the remote service for hacks.
    * @type {string}
    * @private
    */
-  this.wsUrl_ = this.contextRoot_ + '/ws/hacks/';
+  this.hacksWSUrl_ = this.contextRoot_ + '/ws/hacks/';
+
+  /**
+   * The url of the remote service for temporary files.
+   * @type {string}
+   * @private
+   */
+  this.tempFilesWSUrl_ = this.contextRoot_ + '/ws/tempfiles/';
 
   /**
    * Used to manage all Xhr requests by this service.
@@ -66,7 +73,7 @@ goog.inherits(jsh.DataService, goog.Disposable);
 /**
  * Gets a hack from the remote service.
  * @param {string} id The id of the Hack
- * @return {jsh.async.Deferred} The hack.
+ * @return {goog.async.Deferred} The hack.
  */
 jsh.DataService.prototype.getHack = function(id) {
   var dataServiceReq = new jsh.DataService.Request(
@@ -84,7 +91,7 @@ jsh.DataService.prototype.getHack = function(id) {
 /**
  * Persist hack to server.
  * @param {jsh.model.Hack} hack the hack
- * @return {jsh.async.Deferred} The hack.
+ * @return {goog.async.Deferred} The hack.
  */
 jsh.DataService.prototype.saveHack = function(hack) {
   var dataServiceReq = new jsh.DataService.Request(
@@ -97,12 +104,32 @@ jsh.DataService.prototype.saveHack = function(hack) {
   var json = this.packHackJSON(hack);
 
   if (hack.lastUpdatedDate == null) {
-    this.xhrManager_.send(requestId, this.wsUrl_, 'POST', json,
+    this.xhrManager_.send(requestId, this.hacksWSUrl_, 'POST', json,
         {'Content-Type': 'application/json'});
   } else {
-    this.xhrManager_.send(requestId, this.wsUrl_ + hack.identifier, 'PUT', json,
-        {'Content-Type': 'application/json'});
+    this.xhrManager_.send(requestId, this.hacksWSUrl_ + hack.identifier, 'PUT',
+        json, {'Content-Type': 'application/json'});
   }
+
+  return dataServiceReq.deferred;
+};
+
+
+/**
+ * Send the file to to the server and store it temporarily.
+ * Returns the temporary file name.
+ * @param {Blob!} blob
+ * @return {goog.async.Deferred}
+ */
+jsh.DataService.prototype.sendFile = function(blob) {
+  var dataServiceReq = new jsh.DataService.Request(
+      new goog.async.Deferred(),
+      this.unpackResourceJSON);
+
+  var requestId = this.putRequest_(dataServiceReq);
+
+  this.xhrManager_.send(requestId, this.tempFilesWSUrl_, 'POST', blob,
+      {'Content-Type': 'application/octet-stream'});
 
   return dataServiceReq.deferred;
 };

@@ -1,7 +1,6 @@
 goog.provide('jsh.HackEditor');
 
 goog.require('goog.dom.ViewportSizeMonitor');
-goog.require('goog.fs.FileReader');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.MenuItem');
 goog.require('goog.ui.SplitPane');
