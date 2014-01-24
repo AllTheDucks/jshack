@@ -1,4 +1,4 @@
-goog.provide('jsh.ImageEditor');
+goog.provide('jsh.DefaultEditor');
 
 goog.require('goog.dom');
 goog.require('goog.events');
@@ -15,7 +15,7 @@ goog.require('jsh.SplitPane');
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @constructor
  */
-jsh.ImageEditor = function(resource, opt_domHelper) {
+jsh.DefaultEditor = function(resource, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.valid = true;
@@ -28,24 +28,18 @@ jsh.ImageEditor = function(resource, opt_domHelper) {
    * @type {Element}
    * @private
    */
-  this.imageElement_;
-
-  /**
-   * @type {Element}
-   * @private
-   */
-  this.pathElement_;
+  this.linkElement_;
 
 };
-goog.inherits(jsh.ImageEditor, jsh.BaseEditor);
+goog.inherits(jsh.DefaultEditor, jsh.BaseEditor);
 
 
 /**
  * @override
  */
-jsh.ImageEditor.prototype.createDom = function() {
+jsh.DefaultEditor.prototype.createDom = function() {
 
-  var el = goog.soy.renderAsElement(jsh.soy.editor.imageEditor,
+  var el = goog.soy.renderAsElement(jsh.soy.editor.defaultEditor,
       {hackName: this.hackName_, hackId: this.hackId_});
   this.decorateInternal(el);
 
@@ -59,13 +53,11 @@ jsh.ImageEditor.prototype.createDom = function() {
  *    text, if any will be used as the component's label.
  * @override
  */
-jsh.ImageEditor.prototype.decorateInternal = function(element) {
+jsh.DefaultEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  this.imageElement_ = goog.dom.getElementByClass(
-      goog.getCssName('jsh-imageeditor-image'), element);
-  this.pathElement_ = goog.dom.getElementByClass(
-      goog.getCssName('jsh-imageeditor-path'), element);
+  this.linkElement_ = goog.dom.getElementByClass(
+      goog.getCssName('jsh-defaulteditor-link'), element);
 };
 
 
@@ -75,11 +67,10 @@ jsh.ImageEditor.prototype.decorateInternal = function(element) {
  * @param {Element} element The DIV element for the component
  * @override
  */
-jsh.ImageEditor.prototype.enterDocument = function(element) {
+jsh.DefaultEditor.prototype.enterDocument = function(element) {
   goog.base(this, 'enterDocument');
 
-  this.imageElement_.src = this.resource_.tempFileName +
+  this.linkElement_.href = this.resource_.tempFileName +
       '/' + this.resource_.path;
-  goog.dom.setTextContent(this.pathElement_, this.resource_.path);
 
 };

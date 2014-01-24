@@ -101,5 +101,19 @@
 {template .imageEditor}
     <div class="jsh-imageeditor">
         <img class="jsh-imageeditor-image" />
+        <div class="jsh-imageeditor-path"></div>
+    </div>
+{/template}
+
+
+/**
+ * The Editor for displaying an resource that isn't handled by any other editor.
+ */
+{template .defaultEditor}
+    <div class="jsh-defaulteditor">
+        <div class="jsh-defaulteditor-content">
+            <div class="jsh-defaulteditor-message">Unknown content type.</div>
+            <a class="jsh-defaulteditor-link" target="blank">View the file in the browser.</a>
+        </div>
     </div>
 {/template}
