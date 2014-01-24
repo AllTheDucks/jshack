@@ -58,9 +58,7 @@ jsh.EditorController.prototype.loadHackById = function(hackId) {
  * @param {goog.events.Event} e the event
  */
 jsh.EditorController.prototype.handleFilesImported = function(e) {
-  console.log('start proc files');
   for (var i = 0, currFile; currFile = e.files[i]; i++) {
-    console.log('import file');
     if (jsh.MimeTypeHelper.getDataType(currFile.type) ==
         jsh.MimeTypeHelper.DataType.TEXT) {
       var textCallback = goog.bind(function(file, text) {
@@ -70,7 +68,7 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
         resource.content = text;
         this.hackEditor_.addResourceListItem(resource);
       }, this, currFile);
-      goog.fs.FileReader.readAsText(currFile).addCallback(textCallback, null);
+      goog.fs.FileReader.readAsText(currFile, null).addCallback(textCallback);
 
     } else {
       var binCallback = goog.bind(function(file, tempFileName) {
