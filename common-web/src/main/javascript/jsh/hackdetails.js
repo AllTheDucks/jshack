@@ -9,15 +9,15 @@ goog.require('jsh.soy.editor');
 
 
 /**
- * @param {jsh.model.Hack!} hack the hack to get the details from.
+ * The Panel which contains all the controls for editing the details of a hack.
+ *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {jsh.BaseEditor}
  * @constructor
  */
-jsh.HackDetailsArea = function(hack, opt_domHelper) {
+jsh.HackDetailsArea = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
 
-  this.setModel(hack);
   this.valid = false;
 };
 goog.inherits(jsh.HackDetailsArea, jsh.BaseEditor);
@@ -55,18 +55,15 @@ jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
 jsh.HackDetailsArea.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
   var element = this.getElement();
-  this.hackNameInput = document.
-      getElementsByName('hack.name', element)[0];
-  this.hackDescInput = document.
-      getElementsByName('hack.description', element)[0];
-  this.hackIdentifierInput = document.
-      getElementsByName('hack.identifier', element)[0];
-  this.hackVersionInput = document.
-      getElementsByName('hack.version', element)[0];
-  this.hackTargetVerMinInput = document.
-      getElementsByName('hack.targetVersionMin', element)[0];
-  this.hackTargetVerMaxInput = document.
-      getElementsByName('hack.targetVersionMax', element)[0];
+  this.hackNameInput = goog.dom.getElementByClass('hack.name', element);
+  this.hackDescInput = goog.dom.getElementByClass('hack.description', element);
+  this.hackIdentifierInput = goog.dom.getElementByClass('hack.identifier',
+      element);
+  this.hackVersionInput = goog.dom.getElementByClass('hack.version', element);
+  this.hackTargetVerMinInput = goog.dom.getElementByClass(
+      'hack.targetVersionMin', element);
+  this.hackTargetVerMaxInput = goog.dom.getElementByClass(
+      'hack.targetVersionMax', element);
 
   goog.events.listen(this.hackNameInput,
       [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,

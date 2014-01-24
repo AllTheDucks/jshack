@@ -7,8 +7,11 @@ goog.require('goog.events.EventType');
 
 
 /**
- * @param {jsh.model.Resource=} opt_resource the resource to be edited.
+ * A Closure wrapper for the Ace Editor.
+ *
+ * @param {jsh.model.HackResource=} opt_resource the resource to be edited.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {goog.ui.Component}
  * @constructor
  */
 jsh.AceEditor = function(opt_resource, opt_domHelper) {
@@ -47,10 +50,9 @@ jsh.AceEditor.prototype.decorateInternal = function(element) {
 /**
  * Executed when the Ace component is inserted into the page.
  *
- * @param {Element} element The DIV element for the component
  * @override
  */
-jsh.AceEditor.prototype.enterDocument = function(element) {
+jsh.AceEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
   if (this.editable) {
     this.aceEditor = ace.edit(this.editorElement);

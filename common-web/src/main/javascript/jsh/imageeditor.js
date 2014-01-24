@@ -10,9 +10,11 @@ goog.require('jsh.SplitPane');
 
 
 /**
+ * A resource Editor for displaying Image resources.
  *
  * @param {jsh.model.HackResource} resource the resource to edit.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {jsh.BaseEditor}
  * @constructor
  */
 jsh.ImageEditor = function(resource, opt_domHelper) {
@@ -45,8 +47,7 @@ goog.inherits(jsh.ImageEditor, jsh.BaseEditor);
  */
 jsh.ImageEditor.prototype.createDom = function() {
 
-  var el = goog.soy.renderAsElement(jsh.soy.editor.imageEditor,
-      {hackName: this.hackName_, hackId: this.hackId_});
+  var el = goog.soy.renderAsElement(jsh.soy.editor.imageEditor);
   this.decorateInternal(el);
 
 };
@@ -72,10 +73,9 @@ jsh.ImageEditor.prototype.decorateInternal = function(element) {
 /**
  * Executed when the Ace component is inserted into the page.
  *
- * @param {Element} element The DIV element for the component
  * @override
  */
-jsh.ImageEditor.prototype.enterDocument = function(element) {
+jsh.ImageEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
 
   this.imageElement_.src = this.resource_.tempFileName +

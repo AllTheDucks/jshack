@@ -28,12 +28,13 @@ goog.require('jsh.model.Hack');
 /**
  * The Main Editor component for JSHack.  Contains the splitpane and
  * coordinates interactions between the child components.
- * @param {jsh.model.Hack?} hack The hack to be edited.
+ *
+ * @param {jsh.model.Hack=} opt_hack The hack to be edited.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {goog.ui.Component}
  * @constructor
  */
-jsh.HackEditor = function(hack, opt_domHelper) {
+jsh.HackEditor = function(opt_hack, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.splitpane_ = null;
@@ -51,7 +52,7 @@ jsh.HackEditor = function(hack, opt_domHelper) {
   //TODO This needs to go somewhere else, like a constant or something
   this.splitPaneHandleWidth_ = 5;
 
-  this.setModel(hack);
+  this.setModel(opt_hack);
 
 };
 goog.inherits(jsh.HackEditor, goog.ui.Component);
@@ -227,7 +228,7 @@ jsh.HackEditor.prototype.enterDocument = function() {
   this.resourceListContainer_.setSelectedChild(this.resourceListHeader_);
 
   if (this.getModel()) {
-    this.updateEditorState(this.getModel());
+    this.updateEditorState(/** @type {jsh.model.Hack} */ (this.getModel()));
   }
 };
 
@@ -282,7 +283,7 @@ jsh.HackEditor.prototype.showHackDetailsArea = function() {
 /**
  *
  * @param {jsh.model.HackResource} resource
- * @return {jsh.TextEditor}
+ * @return {jsh.BaseEditor}
  */
 jsh.HackEditor.prototype.createEditor = function(resource) {
   var ed;
@@ -304,7 +305,7 @@ jsh.HackEditor.prototype.createEditor = function(resource) {
 
 /**
  * Returns hack model which represents the current unsaved state of the editor.
- * @return {String}
+ * @return {jsh.model.Hack}
  */
 jsh.HackEditor.prototype.getHackModel = function() {
   var hack = new jsh.model.Hack();

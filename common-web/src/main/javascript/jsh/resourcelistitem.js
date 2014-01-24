@@ -18,7 +18,7 @@ goog.require('jsh.model.HackResource');
  * @constructor
  */
 jsh.ResourceListItem = function(resource, opt_domHelper) {
-  goog.base(this, opt_domHelper);
+  goog.base(this, null, null, opt_domHelper);
 
   this.setModel(resource);
 

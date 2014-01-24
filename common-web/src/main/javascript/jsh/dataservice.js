@@ -50,7 +50,7 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
 
   /**
    * Used to manage all Xhr requests by this service.
-   * @type {goog.net.XhrManager=}
+   * @type {goog.net.XhrManager}
    * @private
    */
   this.xhrManager_ = opt_xhrManager ?
@@ -59,7 +59,7 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
 
   /**
    * Stores DataService.Requests for retrieval when the Xhr completes.
-   * @type {{jsh.DataService.Request}}
+   * @type {Object}
    * @private
    */
   this.requestMap_ = {};
@@ -97,7 +97,7 @@ jsh.DataService.prototype.getHack = function(id) {
 
 /**
  * Persist hack to server.
- * @param {jsh.model.Hack} hack the hack
+ * @param {jsh.model.Hack!} hack the hack
  * @return {goog.async.Deferred} The hack.
  */
 jsh.DataService.prototype.saveHack = function(hack) {
@@ -110,7 +110,7 @@ jsh.DataService.prototype.saveHack = function(hack) {
 
   var json = this.packHackJSON(hack);
 
-  if (hack.lastUpdatedDate == null) {
+  if (hack.lastUpdated == null) {
     this.xhrManager_.send(requestId, this.hacksWSUrl_, 'POST', json,
         {'Content-Type': 'application/json'});
   } else {
@@ -130,7 +130,7 @@ jsh.DataService.prototype.saveHack = function(hack) {
  */
 jsh.DataService.prototype.sendFile = function(blob) {
   var dataServiceReq = new jsh.DataService.Request(new goog.async.Deferred(),
-      this.resloveTempURL);
+      this.resolveTempURL);
 
   var requestId = this.putRequest_(dataServiceReq);
 
@@ -144,7 +144,7 @@ jsh.DataService.prototype.sendFile = function(blob) {
 /**
  * Converts a JSON representation of a hack to a hack model.
  * @param {Object} jsonData JSON object representing a hack.
- * @return {jsh.Hack} Hack object constructed from the jsonData.
+ * @return {jsh.model.Hack} Hack object constructed from the jsonData.
  */
 jsh.DataService.prototype.unpackHackJSON = function(jsonData) {
   var hack = new jsh.model.Hack();
@@ -164,7 +164,7 @@ jsh.DataService.prototype.unpackHackJSON = function(jsonData) {
 
 /**
  * Serializes a hack for posting to the server.
- * @param {jsh,model.Hack!} hack the hack
+ * @param {jsh.model.Hack!} hack the hack
  * @return {string}
  */
 jsh.DataService.prototype.packHackJSON = function(hack) {
@@ -188,7 +188,7 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
  * @param {string!} tempFileName
  * @return {string}
  */
-jsh.DataService.prototype.resloveTempURL = function(tempFileName) {
+jsh.DataService.prototype.resolveTempURL = function(tempFileName) {
   return this.tempFilesURL_ + tempFileName;
 };
 
@@ -220,7 +220,7 @@ jsh.DataService.prototype.handleXhrResponse_ = function(event) {
     } else if (contentType == 'text/plain') {
       response = xhr.getResponseText();
     } else {
-      console.log('Unknown Content-Type: ' + contentType);
+      window.console.log('Unknown Content-Type: ' + contentType);
       return;
     }
     var decodedResponse;
@@ -241,21 +241,21 @@ jsh.DataService.prototype.handleXhrResponse_ = function(event) {
  * Puts a DataService.Request into a map for retrieval when the Xhr
  * completes.
  * @param {jsh.DataService.Request} dataServiceReq The Request to be stored.
- * @return {number} Returns the unique id of this request.
+ * @return {string} Returns the unique id of this request.
  * @private
  */
 jsh.DataService.prototype.putRequest_ = function(dataServiceReq) {
   var requestId = this.requestCounter_++;
   this.requestMap_[requestId] = dataServiceReq;
 
-  return requestId;
+  return requestId.toString();
 };
 
 
 /**
  * Retrieves and the DataService.Request. The Request can only be retrieved
  * once.
- * @param {number} id The id of the Request to retrieve.
+ * @param {string} id The id of the Request to retrieve.
  * @return {jsh.DataService.Request}
  * @private
  */
@@ -271,7 +271,8 @@ jsh.DataService.prototype.lookupRequest_ = function(id) {
 /**
  * A pending request to the remote server.
  * @param {goog.async.Deferred} deferred the deferred for the client code
- * @param {function=} opt_callback function to convert the returned data
+ * @param {function(?)=} opt_callback function to convert the returned
+ * data
  * @constructor
  */
 jsh.DataService.Request = function(deferred, opt_callback) {

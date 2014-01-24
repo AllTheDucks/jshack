@@ -5,8 +5,10 @@ goog.require('goog.ui.Component');
 
 
 /**
+ * A Container component for all the Resource Editors.
  *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {goog.ui.Component}
  * @constructor
  */
 jsh.EditorContainer = function(opt_domHelper) {

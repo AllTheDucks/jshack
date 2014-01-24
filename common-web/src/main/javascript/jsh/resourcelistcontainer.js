@@ -5,12 +5,15 @@ goog.require('goog.ui.Container');
 
 
 /**
+ * The Container for all the resource list items on the left hand side of the
+ * editor.
  *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {goog.ui.Container}
  * @constructor
  */
 jsh.ResourceListContainer = function(opt_domHelper) {
-  goog.base(this, opt_domHelper);
+  goog.base(this, null, null, opt_domHelper);
 
   this.selectedItem_ = null;
 };

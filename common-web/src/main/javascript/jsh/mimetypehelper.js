@@ -81,7 +81,8 @@ jsh.MimeTypeHelper.mimeLookup = {
  * @return {string}
  */
 jsh.MimeTypeHelper.getIconClass = function(mimeType) {
-  return jsh.MimeTypeHelper.lookupAttribute_('iconClass', mimeType);
+  return /** @type {string} */ (jsh.MimeTypeHelper.
+      lookupAttribute_('iconClass', mimeType));
 };
 
 
@@ -91,7 +92,8 @@ jsh.MimeTypeHelper.getIconClass = function(mimeType) {
  * @return {string}
  */
 jsh.MimeTypeHelper.getAceMode = function(mimeType) {
-  return jsh.MimeTypeHelper.lookupAttribute_('aceMode', mimeType);
+  return /** @type {string} */ (jsh.MimeTypeHelper.
+      lookupAttribute_('aceMode', mimeType));
 };
 
 
@@ -101,7 +103,8 @@ jsh.MimeTypeHelper.getAceMode = function(mimeType) {
  * @return {jsh.MimeTypeHelper.DataType}
  */
 jsh.MimeTypeHelper.getDataType = function(mimeType) {
-  return jsh.MimeTypeHelper.lookupAttribute_('dataType', mimeType);
+  return /** @type {jsh.MimeTypeHelper.DataType} */ (jsh.MimeTypeHelper.
+      lookupAttribute_('dataType', mimeType));
 };
 
 
@@ -111,7 +114,8 @@ jsh.MimeTypeHelper.getDataType = function(mimeType) {
  * @return {jsh.MimeTypeHelper.EditorType}
  */
 jsh.MimeTypeHelper.getEditorType = function(mimeType) {
-  return jsh.MimeTypeHelper.lookupAttribute_('editorType', mimeType);
+  return /** @type {jsh.MimeTypeHelper.EditorType} */ (jsh.MimeTypeHelper.
+      lookupAttribute_('editorType', mimeType));
 };
 
 
@@ -132,7 +136,7 @@ jsh.MimeTypeHelper.lookupAttribute_ = function(attribute, mimeType) {
   }
 
   var genericType = mimeType.split('/')[0];
-  var lookup = jsh.MimeTypeHelper.mimeLookup[genericType];
+  lookup = jsh.MimeTypeHelper.mimeLookup[genericType];
   if (lookup) {
     var value = lookup[attribute];
     if (value) {
