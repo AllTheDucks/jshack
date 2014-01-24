@@ -28,11 +28,25 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
   this.contextRoot_ = contextRoot;
 
   /**
-   * The url of the remote service.
+   * The url of the remote service for hacks.
    * @type {string}
    * @private
    */
-  this.wsUrl_ = this.contextRoot_ + '/ws/hacks/';
+  this.hacksWSUrl_ = this.contextRoot_ + '/ws/hacks/';
+
+  /**
+   * The url of the remote service for temporary files.
+   * @type {string}
+   * @private
+   */
+  this.tempFilesWSUrl_ = this.contextRoot_ + '/ws/tempfiles/';
+
+  /**
+   * The url of the temp files servlet.
+   * @type {string}
+   * @private
+   */
+  this.tempFilesURL_ = this.contextRoot_ + '/temp/';
 
   /**
    * Used to manage all Xhr requests by this service.
@@ -66,7 +80,7 @@ goog.inherits(jsh.DataService, goog.Disposable);
 /**
  * Gets a hack from the remote service.
  * @param {string} id The id of the Hack
- * @return {jsh.async.Deferred} The hack.
+ * @return {goog.async.Deferred} The hack.
  */
 jsh.DataService.prototype.getHack = function(id) {
   var dataServiceReq = new jsh.DataService.Request(
@@ -75,7 +89,7 @@ jsh.DataService.prototype.getHack = function(id) {
 
   var requestId = this.putRequest_(dataServiceReq);
 
-  this.xhrManager_.send(requestId, this.wsUrl_ + id, 'GET');
+  this.xhrManager_.send(requestId, this.hacksWSUrl_ + id, 'GET');
 
   return dataServiceReq.deferred;
 };
@@ -84,7 +98,7 @@ jsh.DataService.prototype.getHack = function(id) {
 /**
  * Persist hack to server.
  * @param {jsh.model.Hack} hack the hack
- * @return {jsh.async.Deferred} The hack.
+ * @return {goog.async.Deferred} The hack.
  */
 jsh.DataService.prototype.saveHack = function(hack) {
   var dataServiceReq = new jsh.DataService.Request(
@@ -97,12 +111,31 @@ jsh.DataService.prototype.saveHack = function(hack) {
   var json = this.packHackJSON(hack);
 
   if (hack.lastUpdatedDate == null) {
-    this.xhrManager_.send(requestId, this.wsUrl_, 'POST', json,
+    this.xhrManager_.send(requestId, this.hacksWSUrl_, 'POST', json,
         {'Content-Type': 'application/json'});
   } else {
-    this.xhrManager_.send(requestId, this.wsUrl_ + hack.identifier, 'PUT', json,
-        {'Content-Type': 'application/json'});
+    this.xhrManager_.send(requestId, this.hacksWSUrl_ + hack.identifier, 'PUT',
+        json, {'Content-Type': 'application/json'});
   }
+
+  return dataServiceReq.deferred;
+};
+
+
+/**
+ * Send the file to to the server and store it temporarily.
+ * Returns the temporary file name.
+ * @param {Blob!} blob
+ * @return {goog.async.Deferred}
+ */
+jsh.DataService.prototype.sendFile = function(blob) {
+  var dataServiceReq = new jsh.DataService.Request(new goog.async.Deferred(),
+      this.resloveTempURL);
+
+  var requestId = this.putRequest_(dataServiceReq);
+
+  this.xhrManager_.send(requestId, this.tempFilesWSUrl_, 'POST', blob,
+      {'Content-Type': blob.type});
 
   return dataServiceReq.deferred;
 };
@@ -151,6 +184,16 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
 
 
 /**
+ *
+ * @param {string!} tempFileName
+ * @return {string}
+ */
+jsh.DataService.prototype.resloveTempURL = function(tempFileName) {
+  return this.tempFilesURL_ + tempFileName;
+};
+
+
+/**
  * Disposes of the DataService.
  * @override
  */
@@ -170,7 +213,24 @@ jsh.DataService.prototype.handleXhrResponse_ = function(event) {
 
   var xhr = event.xhrIo;
   if (xhr.isSuccess()) {
-    request.deferred.callback(request.callback(xhr.getResponseJson()));
+    var contentType = xhr.getResponseHeader('Content-Type');
+    var response;
+    if (contentType == 'application/json') {
+      response = xhr.getResponseJson();
+    } else if (contentType == 'text/plain') {
+      response = xhr.getResponseText();
+    } else {
+      console.log('Unknown Content-Type: ' + contentType);
+      return;
+    }
+    var decodedResponse;
+    if (request.callback) {
+      var boundCallback = goog.bind(request.callback, this);
+      decodedResponse = boundCallback(response);
+    } else {
+      decodedResponse = response;
+    }
+    request.deferred.callback(decodedResponse);
   } else {
     request.deferred.errback();
   }
@@ -211,10 +271,10 @@ jsh.DataService.prototype.lookupRequest_ = function(id) {
 /**
  * A pending request to the remote server.
  * @param {goog.async.Deferred} deferred the deferred for the client code
- * @param {function} callback function to convert the returned data
+ * @param {function=} opt_callback function to convert the returned data
  * @constructor
  */
-jsh.DataService.Request = function(deferred, callback) {
+jsh.DataService.Request = function(deferred, opt_callback) {
   this.deferred = deferred;
-  this.callback = callback;
+  this.callback = opt_callback;
 };

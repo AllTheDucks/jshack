@@ -1,6 +1,5 @@
 package org.oscelot.jshack.ws;
 
-import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.service.HackManager;
 

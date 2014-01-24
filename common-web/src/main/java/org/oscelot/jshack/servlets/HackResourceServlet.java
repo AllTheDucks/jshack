@@ -37,7 +37,7 @@ public class HackResourceServlet extends HttpServlet {
         } catch(Exception e) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } finally {
-            if(is == null) {
+            if(is != null) {
                 is.close();
             }
         }

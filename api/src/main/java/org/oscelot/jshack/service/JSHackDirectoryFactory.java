@@ -1,5 +1,7 @@
 package org.oscelot.jshack.service;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 
 /**
@@ -42,7 +44,11 @@ public abstract class JSHackDirectoryFactory {
         return new File(this.getAndCreateHacksDir(), hackId);
     }
 
-    private File getOrCreateSubDir(String subDirName, File parent) {
+    public File getAndCreateTempDir() {
+        return getOrCreateSubDir("jshack", FileUtils.getTempDirectory());
+    }
+
+    public static File getOrCreateSubDir(String subDirName, File parent) {
         File dir = new File(parent, subDirName);
         if(!dir.exists()) {
             dir.mkdir();
