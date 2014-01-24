@@ -10,9 +10,12 @@ goog.require('jsh.SplitPane');
 
 
 /**
+ * The editor for displaying binary resources that the JS Hack editor isn't able
+ * to handle.
  *
  * @param {jsh.model.HackResource} resource the resource to edit.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {jsh.BaseEditor}
  * @constructor
  */
 jsh.DefaultEditor = function(resource, opt_domHelper) {
@@ -39,8 +42,7 @@ goog.inherits(jsh.DefaultEditor, jsh.BaseEditor);
  */
 jsh.DefaultEditor.prototype.createDom = function() {
 
-  var el = goog.soy.renderAsElement(jsh.soy.editor.defaultEditor,
-      {hackName: this.hackName_, hackId: this.hackId_});
+  var el = goog.soy.renderAsElement(jsh.soy.editor.defaultEditor);
   this.decorateInternal(el);
 
 };
@@ -64,10 +66,9 @@ jsh.DefaultEditor.prototype.decorateInternal = function(element) {
 /**
  * Executed when the Ace component is inserted into the page.
  *
- * @param {Element} element The DIV element for the component
  * @override
  */
-jsh.DefaultEditor.prototype.enterDocument = function(element) {
+jsh.DefaultEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
 
   this.linkElement_.href = this.resource_.tempFileName +

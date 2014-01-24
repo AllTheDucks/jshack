@@ -21,7 +21,7 @@ jsh.FileSelectToolbarButton = function(text, iconClass, opt_domHelper) {
   var el = goog.soy.renderAsElement(jsh.soy.editor.fileSelectToolbarButton,
       {text: text, iconClass: iconClass});
 
-  goog.base(this, el, opt_domHelper);
+  goog.base(this, el, null, opt_domHelper);
 };
 goog.inherits(jsh.FileSelectToolbarButton, goog.ui.ToolbarButton);
 
@@ -45,7 +45,8 @@ jsh.FileSelectToolbarButton.prototype.enterDocument = function() {
   goog.events.listen(this.fileSelectEl,
       goog.events.EventType.CHANGE,
       function(evt) {
-        this.dispatchEvent({type: jsh.events.EventType.FILES_IMPORTED,
-          files: evt.target.files});
+        var fileEvt = new goog.events.Event(jsh.events.EventType.FILES_IMPORTED,
+            evt.target);
+        this.dispatchEvent(fileEvt);
       }, false, this);
 };

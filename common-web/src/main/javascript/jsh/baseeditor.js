@@ -6,8 +6,10 @@ goog.require('goog.style');
 
 
 /**
+ * The Base Editor class that all resource editors inherit from.
  *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {goog.ui.Component}
  * @constructor
  */
 jsh.BaseEditor = function(opt_domHelper) {
@@ -35,7 +37,7 @@ jsh.BaseEditor.prototype.setVisible = function(visible, opt_force) {
       goog.ui.Component.EventType.SHOW : goog.ui.Component.EventType.HIDE))) {
     var element = this.getElement();
     if (element) {
-      goog.style.showElement(element, visible);
+      goog.style.setElementShown(element, visible);
     }
     this.visible_ = visible;
     return true;

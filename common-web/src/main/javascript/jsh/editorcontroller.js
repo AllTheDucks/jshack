@@ -13,6 +13,7 @@ goog.require('jsh.model.Hack');
 
 /**
  * Creates an {@link jsh.EditorController}
+ *
  * @param {jsh.HackEditor} hackEditor the hack editor.
  * @param {jsh.DataService} dataService the data service.
  * @constructor
@@ -58,7 +59,8 @@ jsh.EditorController.prototype.loadHackById = function(hackId) {
  * @param {goog.events.Event} e the event
  */
 jsh.EditorController.prototype.handleFilesImported = function(e) {
-  for (var i = 0, currFile; currFile = e.files[i]; i++) {
+  var files = /** @type {Array.<File>} */ (e.target.files);
+  for (var i = 0, currFile; currFile = files[i]; i++) {
     if (jsh.MimeTypeHelper.getDataType(currFile.type) ==
         jsh.MimeTypeHelper.DataType.TEXT) {
       var textCallback = goog.bind(function(file, text) {
@@ -68,7 +70,8 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
         resource.content = text;
         this.hackEditor_.addResourceListItem(resource);
       }, this, currFile);
-      goog.fs.FileReader.readAsText(currFile, null).addCallback(textCallback);
+      goog.fs.FileReader.readAsText(currFile, 'UTF-8').
+          addCallback(textCallback);
 
     } else {
       var binCallback = goog.bind(function(file, tempFileName) {

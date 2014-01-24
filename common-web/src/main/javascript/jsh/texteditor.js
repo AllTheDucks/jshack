@@ -10,9 +10,11 @@ goog.require('jsh.SplitPane');
 
 
 /**
+ * The main editor for text type resources.  Code, etc.
  *
  * @param {jsh.model.HackResource} resource the resource to edit.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {jsh.BaseEditor}
  * @constructor
  */
 jsh.TextEditor = function(resource, opt_domHelper) {
@@ -77,10 +79,9 @@ jsh.TextEditor.prototype.decorateInternal = function(element) {
 /**
  * Executed when the Ace component is inserted into the page.
  *
- * @param {Element} element The DIV element for the component
  * @override
  */
-jsh.TextEditor.prototype.enterDocument = function(element) {
+jsh.TextEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
   //TODO this is nasty.  Really shouldn't rely on the dom structure like this.
   goog.events.listen(this.getParent().getParent(),

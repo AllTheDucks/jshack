@@ -11,18 +11,18 @@ goog.require('jsh.model.HackResource');
  * A component which renders the title and id of the hack at the top of the
  * resource list.
  *
- * @param {string?} hackName the name of the hack.
- * @param {string?} hackId the id of the hack.
+ * @param {string=} opt_hackName the name of the hack.
+ * @param {string=} opt_hackId the id of the hack.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  *
  * @extends {goog.ui.Control}
  * @constructor
  */
-jsh.ResourceListHeader = function(hackName, hackId, opt_domHelper) {
-  goog.base(this, opt_domHelper);
+jsh.ResourceListHeader = function(opt_hackName, opt_hackId, opt_domHelper) {
+  goog.base(this, null, null, opt_domHelper);
 
-  this.hackId_ = hackId;
-  this.hackName_ = hackName;
+  this.hackId_ = opt_hackId;
+  this.hackName_ = opt_hackName;
 
   this.setSupportedState(goog.ui.Component.State.SELECTED, true);
   this.setAutoStates(goog.ui.Component.State.SELECTED, true);

@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Contains the SplitPane component
+ * @suppress {visibility}
+ */
+
 goog.provide('jsh.SplitPane');
 
 goog.require('goog.ui.SplitPane');
@@ -53,7 +58,7 @@ jsh.SplitPane.prototype.enterDocument = function() {
           this.staticComponentAwareHandleDoubleClick_);
 
   if (this.secondComponentStatic_) {
-    this.secondComponentSize_ = this.initialSize_;
+    this.secondComponentSize_ = this.initialSize_ ? this.initialSize_ : 0;
     this.setFirstComponentSize();
   }
 };
@@ -129,6 +134,7 @@ jsh.SplitPane.prototype.setSecondComponentStatic = function(isstatic) {
 
 /**
  * Snap the container to the left or top on a Double-click.
+ *
  * @private
  */
 jsh.SplitPane.prototype.staticComponentAwareSnapIt_ = function() {

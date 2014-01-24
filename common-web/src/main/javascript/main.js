@@ -21,7 +21,9 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
   var controller = new jsh.EditorController(editor, dataService);
 
   var uri = new goog.Uri(window.location);
-  var hackId = uri.getQueryData().get('hackid');
+
+
+  var hackId = /** @type {string} */(uri.getQueryData().get('hackid'));
 
   if (hackId) {
     controller.loadHackById(hackId);
