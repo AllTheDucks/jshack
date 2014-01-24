@@ -42,6 +42,13 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
   this.tempFilesWSUrl_ = this.contextRoot_ + '/ws/tempfiles/';
 
   /**
+   * The url of the temp files servlet.
+   * @type {string}
+   * @private
+   */
+  this.tempFilesURL_ = this.contextRoot_ + '/temp/';
+
+  /**
    * Used to manage all Xhr requests by this service.
    * @type {goog.net.XhrManager=}
    * @private
@@ -122,16 +129,13 @@ jsh.DataService.prototype.saveHack = function(hack) {
  * @return {goog.async.Deferred}
  */
 jsh.DataService.prototype.sendFile = function(blob) {
-  var dataServiceReq = new jsh.DataService.Request(
-      new goog.async.Deferred(),
-      function(tempFileName) {
-        console.log('Temp File Name: ' + tempFileName);
-      });
+  var dataServiceReq = new jsh.DataService.Request(new goog.async.Deferred(),
+      this.resloveTempURL);
 
   var requestId = this.putRequest_(dataServiceReq);
 
   this.xhrManager_.send(requestId, this.tempFilesWSUrl_, 'POST', blob,
-      {'Content-Type': 'application/octet-stream'});
+      {'Content-Type': blob.type});
 
   return dataServiceReq.deferred;
 };
@@ -180,6 +184,16 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
 
 
 /**
+ *
+ * @param {string!} tempFileName
+ * @return {string}
+ */
+jsh.DataService.prototype.resloveTempURL = function(tempFileName) {
+  return this.tempFilesURL_ + tempFileName;
+};
+
+
+/**
  * Disposes of the DataService.
  * @override
  */
@@ -200,13 +214,23 @@ jsh.DataService.prototype.handleXhrResponse_ = function(event) {
   var xhr = event.xhrIo;
   if (xhr.isSuccess()) {
     var contentType = xhr.getResponseHeader('Content-Type');
+    var response;
     if (contentType == 'application/json') {
-      request.deferred.callback(request.callback(xhr.getResponseJson()));
+      response = xhr.getResponseJson();
     } else if (contentType == 'text/plain') {
-      request.deferred.callback(request.callback(xhr.getResponseText()));
+      response = xhr.getResponseText();
     } else {
       console.log('Unknown Content-Type: ' + contentType);
+      return;
     }
+    var decodedResponse;
+    if (request.callback) {
+      var boundCallback = goog.bind(request.callback, this);
+      decodedResponse = boundCallback(response);
+    } else {
+      decodedResponse = response;
+    }
+    request.deferred.callback(decodedResponse);
   } else {
     request.deferred.errback();
   }
@@ -247,10 +271,10 @@ jsh.DataService.prototype.lookupRequest_ = function(id) {
 /**
  * A pending request to the remote server.
  * @param {goog.async.Deferred} deferred the deferred for the client code
- * @param {function} callback function to convert the returned data
+ * @param {function=} opt_callback function to convert the returned data
  * @constructor
  */
-jsh.DataService.Request = function(deferred, callback) {
+jsh.DataService.Request = function(deferred, opt_callback) {
   this.deferred = deferred;
-  this.callback = callback;
+  this.callback = opt_callback;
 };

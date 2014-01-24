@@ -1,6 +1,7 @@
 goog.provide('jsh.EditorController');
 
 goog.require('goog.events');
+goog.require('goog.fs.FileReader');
 goog.require('jsh.DataService');
 goog.require('jsh.HackEditor');
 goog.require('jsh.MimeTypeHelper');

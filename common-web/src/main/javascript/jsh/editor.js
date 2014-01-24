@@ -10,9 +10,11 @@ goog.require('goog.ui.ToolbarMenuButton');
 goog.require('goog.ui.ToolbarSeparator');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
+goog.require('jsh.DefaultEditor');
 goog.require('jsh.EditorContainer');
 goog.require('jsh.FileSelectToolbarButton');
 goog.require('jsh.HackDetailsArea');
+goog.require('jsh.ImageEditor');
 goog.require('jsh.ResourceListContainer');
 goog.require('jsh.ResourceListHeader');
 goog.require('jsh.ResourceListItem');
@@ -253,7 +255,7 @@ jsh.HackEditor.prototype.handleResourceSelect = function(e) {
   var id = resourceListItem.getId();
   var ed = this.editorCache_[id];
   if (ed == null) {
-    ed = this.createTextEditor(resource);
+    ed = this.createEditor(resource);
     this.editorCache_[id] = ed;
     this.editorContainer_.addChild(ed, true);
   }
@@ -282,8 +284,20 @@ jsh.HackEditor.prototype.showHackDetailsArea = function() {
  * @param {jsh.model.HackResource} resource
  * @return {jsh.TextEditor}
  */
-jsh.HackEditor.prototype.createTextEditor = function(resource) {
-  var ed = new jsh.TextEditor(resource);
+jsh.HackEditor.prototype.createEditor = function(resource) {
+  var ed;
+  switch (jsh.MimeTypeHelper.getEditorType(resource.mime)) {
+    case jsh.MimeTypeHelper.EditorType.TEXT:
+      ed = new jsh.TextEditor(resource);
+      break;
+
+    case jsh.MimeTypeHelper.EditorType.IMAGE:
+      ed = new jsh.ImageEditor(resource);
+      break;
+
+    default:
+      ed = new jsh.DefaultEditor(resource);
+  }
   return ed;
 };
 

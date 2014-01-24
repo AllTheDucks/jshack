@@ -48,7 +48,7 @@ public abstract class JSHackDirectoryFactory {
         return getOrCreateSubDir("jshack", FileUtils.getTempDirectory());
     }
 
-    private File getOrCreateSubDir(String subDirName, File parent) {
+    public static File getOrCreateSubDir(String subDirName, File parent) {
         File dir = new File(parent, subDirName);
         if(!dir.exists()) {
             dir.mkdir();

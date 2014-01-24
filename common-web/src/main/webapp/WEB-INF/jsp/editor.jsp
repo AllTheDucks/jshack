@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="css/menuseparator.css">
     <link rel="stylesheet" href="css/flatmenubutton.css">
     <link rel="stylesheet" href="css/resourcelist.css">
+    <link rel="stylesheet" href="css/imageeditor.css">
+    <link rel="stylesheet" href="css/defaulteditor.css">
     <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
 
 

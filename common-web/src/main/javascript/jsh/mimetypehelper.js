@@ -13,12 +13,24 @@ jsh.MimeTypeHelper.DataType = {
 
 
 /**
+ * Constants for editor types.
+ * @enum {string}
+ */
+jsh.MimeTypeHelper.EditorType = {
+  TEXT: 'text',
+  IMAGE: 'image',
+  DEFAULT: 'default'
+};
+
+
+/**
  *
  * @type {Object}
  */
 jsh.MimeTypeHelper.fallback = {
   'iconClass': goog.getCssName('jsh-resourcelistitem-default'),
-  'dataType': jsh.MimeTypeHelper.DataType.BINARY
+  'dataType': jsh.MimeTypeHelper.DataType.BINARY,
+  'editorType': jsh.MimeTypeHelper.EditorType.DEFAULT
 };
 
 
@@ -30,7 +42,8 @@ jsh.MimeTypeHelper.mimeLookup = {
   'application/javascript': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-js'),
     'aceMode': 'ace/mode/javascript',
-    'dataType': jsh.MimeTypeHelper.DataType.TEXT
+    'dataType': jsh.MimeTypeHelper.DataType.TEXT,
+    'editorType': jsh.MimeTypeHelper.EditorType.TEXT
   },
   'text/html': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-html'),
@@ -40,12 +53,23 @@ jsh.MimeTypeHelper.mimeLookup = {
     'iconClass': goog.getCssName('jsh-resourcelistitem-css'),
     'aceMode': 'ace/mode/css'
   },
+  'image/png': {
+    'iconClass': goog.getCssName('jsh-resourcelistitem-png')
+  },
+  'image/gif': {
+    'iconClass': goog.getCssName('jsh-resourcelistitem-gif')
+  },
+  'image/jpeg': {
+    'iconClass': goog.getCssName('jsh-resourcelistitem-jpg')
+  },
   'text': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-text'),
-    'dataType': jsh.MimeTypeHelper.DataType.TEXT
+    'dataType': jsh.MimeTypeHelper.DataType.TEXT,
+    'editorType': jsh.MimeTypeHelper.EditorType.TEXT
   },
   'image': {
-    'iconClass': goog.getCssName('jsh-resourcelistitem-text')
+    'iconClass': goog.getCssName('jsh-resourcelistitem-text'),
+    'editorType': jsh.MimeTypeHelper.EditorType.IMAGE
   }
 };
 
@@ -72,12 +96,22 @@ jsh.MimeTypeHelper.getAceMode = function(mimeType) {
 
 
 /**
- * Gets the Ace Editor mode to use for this mime type.
+ * Gets the data type for this mime type.
  * @param {string} mimeType the mime type.
  * @return {jsh.MimeTypeHelper.DataType}
  */
 jsh.MimeTypeHelper.getDataType = function(mimeType) {
   return jsh.MimeTypeHelper.lookupAttribute_('dataType', mimeType);
+};
+
+
+/**
+ * Gets the Editor Type to use for this mime type.
+ * @param {string} mimeType the mime type.
+ * @return {jsh.MimeTypeHelper.EditorType}
+ */
+jsh.MimeTypeHelper.getEditorType = function(mimeType) {
+  return jsh.MimeTypeHelper.lookupAttribute_('editorType', mimeType);
 };
 
 
