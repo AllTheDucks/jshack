@@ -59,6 +59,17 @@ goog.inherits(jsh.HackEditor, goog.ui.Component);
 
 
 /**
+ * Creates the div in which the Hack editor is placed
+ *
+ * @override
+ */
+jsh.HackEditor.prototype.createDom = function() {
+  var el = goog.dom.createDom('div', goog.getCssName('ide'));
+  this.decorateInternal(el);
+};
+
+
+/**
  * Decorates an existing HTML DIV element as a SampleComponent.
  *
  * @param {Element} element The DIV element to decorate. The element's
@@ -208,7 +219,6 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource) {
  * @override
  */
 jsh.HackEditor.prototype.enterDocument = function() {
-  goog.base(this, 'enterDocument');
   this.resizeOuterSplitPane_();
   goog.events.listen(this.viewSizeMonitor_,
       goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
@@ -230,6 +240,9 @@ jsh.HackEditor.prototype.enterDocument = function() {
   if (this.getModel()) {
     this.updateEditorState(/** @type {jsh.model.Hack} */ (this.getModel()));
   }
+
+  goog.base(this, 'enterDocument');
+
 };
 
 

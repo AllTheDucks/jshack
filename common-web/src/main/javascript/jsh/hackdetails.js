@@ -55,15 +55,15 @@ jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
 jsh.HackDetailsArea.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
   var element = this.getElement();
-  this.hackNameInput = goog.dom.getElementByClass('hack.name', element);
-  this.hackDescInput = goog.dom.getElementByClass('hack.description', element);
-  this.hackIdentifierInput = goog.dom.getElementByClass('hack.identifier',
+  this.hackNameInput = goog.dom.getElementByClass('hack-name', element);
+  this.hackDescInput = goog.dom.getElementByClass('hack-description', element);
+  this.hackIdentifierInput = goog.dom.getElementByClass('hack-identifier',
       element);
-  this.hackVersionInput = goog.dom.getElementByClass('hack.version', element);
+  this.hackVersionInput = goog.dom.getElementByClass('hack-version', element);
   this.hackTargetVerMinInput = goog.dom.getElementByClass(
-      'hack.targetVersionMin', element);
+      'hack-targetVersionMin', element);
   this.hackTargetVerMaxInput = goog.dom.getElementByClass(
-      'hack.targetVersionMax', element);
+      'hack-targetVersionMax', element);
 
   goog.events.listen(this.hackNameInput,
       [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,

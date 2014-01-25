@@ -1,5 +1,8 @@
+goog.require('atd.ui.ModalUiContainer');
 goog.require('goog.Uri');
+goog.require('goog.ui.Component');
 goog.require('jsh.EditorController');
+goog.require('jsh.FileDropArea');
 goog.require('jsh.HackEditor');
 goog.require('jsh.model.Hack');
 goog.require('jsh.model.HackResource');
@@ -10,11 +13,11 @@ var splitPaneHandleWidth = 5;
 
 goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
 
-  var mainEl = goog.dom.createDom('div', 'ide');
-  goog.dom.appendChild(document.body, mainEl);
-
+  var fileDropArea = new jsh.FileDropArea();
   var editor = new jsh.HackEditor();
-  editor.decorate(mainEl);
+  var modalUiContainer = new atd.ui.ModalUiContainer(editor);
+
+  modalUiContainer.render(document.body);
 
   var dataService = new jsh.DataService('/jshack-test-web');
 
@@ -28,5 +31,7 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
   if (hackId) {
     controller.loadHackById(hackId);
   }
+
+  modalUiContainer.showDialog(fileDropArea);
 
 });
