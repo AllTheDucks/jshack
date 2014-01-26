@@ -3,6 +3,7 @@ goog.provide('jsh.FileSelectToolbarButton');
 
 goog.require('goog.soy');
 goog.require('goog.ui.ToolbarButton');
+goog.require('jsh.events.FileImportEvent');
 goog.require('jsh.soy.editor');
 
 
@@ -45,8 +46,7 @@ jsh.FileSelectToolbarButton.prototype.enterDocument = function() {
   goog.events.listen(this.fileSelectEl,
       goog.events.EventType.CHANGE,
       function(evt) {
-        var fileEvt = new goog.events.Event(jsh.events.EventType.FILES_IMPORTED,
-            evt.target);
+        var fileEvt = new jsh.events.FileImportEvent(evt.target.files);
         this.dispatchEvent(fileEvt);
       }, false, this);
 };

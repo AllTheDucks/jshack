@@ -56,10 +56,10 @@ jsh.EditorController.prototype.loadHackById = function(hackId) {
 
 /**
  * Handle when files are selected for importing.
- * @param {goog.events.Event} e the event
+ * @param {jsh.events.FileImportEvent} e the event
  */
 jsh.EditorController.prototype.handleFilesImported = function(e) {
-  var files = /** @type {Array.<File>} */ (e.target.files);
+  var files = /** @type {Array.<File>} */ (e.files);
   for (var i = 0, currFile; currFile = files[i]; i++) {
     if (jsh.MimeTypeHelper.getDataType(currFile.type) ==
         jsh.MimeTypeHelper.DataType.TEXT) {

@@ -21,6 +21,7 @@ goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
 goog.require('jsh.TextEditor');
 goog.require('jsh.events.EventType');
+goog.require('jsh.events.FileImportEvent');
 goog.require('jsh.model.Hack');
 
 
@@ -240,6 +241,14 @@ jsh.HackEditor.prototype.enterDocument = function() {
   if (this.getModel()) {
     this.updateEditorState(/** @type {jsh.model.Hack} */ (this.getModel()));
   }
+
+  var handler = new goog.events.FileDropHandler(this.getElement(), true);
+  goog.events.listen(handler, goog.events.FileDropHandler.EventType.DROP,
+      function(e) {
+        var files = e.getBrowserEvent().dataTransfer.files;
+        var fileEvent = new jsh.events.FileImportEvent(files);
+        this.dispatchEvent(fileEvent);
+      }, false, this);
 
   goog.base(this, 'enterDocument');
 

@@ -106,3 +106,4 @@ atd.ui.ModalUiContainer.prototype.hideDialog = function() {
         goog.getCssName('atd-modal-ui-app-blur'));
   }
 };
+

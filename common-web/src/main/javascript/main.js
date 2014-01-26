@@ -1,5 +1,6 @@
 goog.require('atd.ui.ModalUiContainer');
 goog.require('goog.Uri');
+goog.require('goog.events.FileDropHandler');
 goog.require('goog.ui.Component');
 goog.require('jsh.EditorController');
 goog.require('jsh.FileDropArea');
@@ -32,6 +33,5 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
     controller.loadHackById(hackId);
   }
 
-  modalUiContainer.showDialog(fileDropArea);
 
 });
