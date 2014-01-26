@@ -21,6 +21,7 @@ goog.require('jsh.ResourceListItem');
 goog.require('jsh.SplitPane');
 goog.require('jsh.TextEditor');
 goog.require('jsh.events.EventType');
+goog.require('jsh.events.FileImportEvent');
 goog.require('jsh.model.Hack');
 
 
@@ -56,6 +57,17 @@ jsh.HackEditor = function(opt_hack, opt_domHelper) {
 
 };
 goog.inherits(jsh.HackEditor, goog.ui.Component);
+
+
+/**
+ * Creates the div in which the Hack editor is placed
+ *
+ * @override
+ */
+jsh.HackEditor.prototype.createDom = function() {
+  var el = goog.dom.createDom('div', goog.getCssName('ide'));
+  this.decorateInternal(el);
+};
 
 
 /**
@@ -208,7 +220,6 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource) {
  * @override
  */
 jsh.HackEditor.prototype.enterDocument = function() {
-  goog.base(this, 'enterDocument');
   this.resizeOuterSplitPane_();
   goog.events.listen(this.viewSizeMonitor_,
       goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
@@ -230,6 +241,17 @@ jsh.HackEditor.prototype.enterDocument = function() {
   if (this.getModel()) {
     this.updateEditorState(/** @type {jsh.model.Hack} */ (this.getModel()));
   }
+
+  var handler = new goog.events.FileDropHandler(this.getElement(), true);
+  goog.events.listen(handler, goog.events.FileDropHandler.EventType.DROP,
+      function(e) {
+        var files = e.getBrowserEvent().dataTransfer.files;
+        var fileEvent = new jsh.events.FileImportEvent(files);
+        this.dispatchEvent(fileEvent);
+      }, false, this);
+
+  goog.base(this, 'enterDocument');
+
 };
 
 
