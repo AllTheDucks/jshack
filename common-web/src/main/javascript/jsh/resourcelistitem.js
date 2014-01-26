@@ -2,6 +2,7 @@ goog.provide('jsh.ResourceListItem');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('goog.style');
 goog.require('jsh.MimeTypeHelper');
 goog.require('jsh.ResourceListItemRenderer');
 goog.require('jsh.model.HackResource');
@@ -19,6 +20,12 @@ goog.require('jsh.model.HackResource');
  */
 jsh.ResourceListItem = function(resource, opt_domHelper) {
   goog.base(this, null, null, opt_domHelper);
+
+  /** @type {Element} */
+  this.textEl_;
+
+  /** @type {Element} */
+  this.nameInput_;
 
   this.setModel(resource);
 
@@ -38,13 +45,16 @@ jsh.ResourceListItem.prototype.createDom = function() {
   var resourceItem = goog.dom.createDom('div', 'jsh-resourcelistitem');
 
   var iconClass = jsh.MimeTypeHelper.getIconClass(resource.mime);
+  this.textEl_ = goog.dom.createDom('div', { 'class': 'text' }, resource.path);
+  this.nameInput_ = goog.dom.createDom('input', { 'class': 'nameInput' ,
+    'style': 'display:none;', 'value': resource.path});
 
   goog.dom.classlist.add(resourceItem, iconClass);
 
   resourceItem.appendChild(goog.dom.createDom('div',
       { 'class': 'icon' }));
-  resourceItem.appendChild(goog.dom.createDom('div',
-      { 'class': 'text' }, resource.path));
+  resourceItem.appendChild(this.textEl_);
+  resourceItem.appendChild(this.nameInput_);
 
   this.decorateInternal(resourceItem);
 };
@@ -59,7 +69,23 @@ jsh.ResourceListItem.prototype.createDom = function() {
  */
 jsh.ResourceListItem.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
-
+  goog.events.listen(this.textEl_, goog.events.EventType.MOUSEDOWN,
+      function(e) {
+        goog.style.setElementShown(this.nameInput_, true);
+        goog.style.setElementShown(this.textEl_, false);
+        this.nameInput_.click();
+        e.stopPropagation();
+      }, false, this);
+  goog.events.listen(this.nameInput_,
+      [goog.events.EventType.MOUSEDOWN, goog.events.EventType.MOUSEUP],
+      function(e) {
+        e.stopPropagation();
+      }, false, this);
+  goog.events.listen(this.textEl_,
+      [goog.events.EventType.MOUSEUP],
+      function(e) {
+        e.stopPropagation();
+      }, false, this);
 };
 
 

@@ -23,7 +23,7 @@ repositories {
 
 glovr {
     jsRoot = 'src/main/javascript/'
-    mode = 'ADVANCED'
+    mode = 'SIMPLE'
     externs = ['src/main/javascript-externs/ace.js']
     options = [
         'test-template': new File('common-web/src/test/resources/test-template.soy').getAbsolutePath(),
