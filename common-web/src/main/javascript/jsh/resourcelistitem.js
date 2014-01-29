@@ -2,6 +2,7 @@ goog.provide('jsh.ResourceListItem');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('goog.dom.selection');
 goog.require('goog.style');
 goog.require('jsh.MimeTypeHelper');
 goog.require('jsh.ResourceListItemRenderer');
@@ -26,6 +27,11 @@ jsh.ResourceListItem = function(resource, opt_domHelper) {
 
   /** @type {Element} */
   this.nameInput_;
+
+  /** @type {goog.events.KeyHandler}
+   * @private
+   */
+  this.keyHandler_;
 
   this.setModel(resource);
 
@@ -69,23 +75,72 @@ jsh.ResourceListItem.prototype.createDom = function() {
  */
 jsh.ResourceListItem.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
-  goog.events.listen(this.textEl_, goog.events.EventType.MOUSEDOWN,
+};
+
+
+/**
+ * Called when the Control is known to be in the document.
+ * @override
+ */
+jsh.ResourceListItem.prototype.enterDocument = function() {
+  goog.base(this, 'enterDocument');
+  goog.events.listen(this.textEl_, goog.events.EventType.MOUSEUP,
       function(e) {
-        goog.style.setElementShown(this.nameInput_, true);
-        goog.style.setElementShown(this.textEl_, false);
-        this.nameInput_.click();
-        e.stopPropagation();
+        if (this.isSelected()) {
+          this.setNameEditable();
+          e.stopPropagation();
+        }
       }, false, this);
+
+  goog.events.listen(this.nameInput_, goog.events.EventType.BLUR,
+      this.setNameUneditable, false, this);
+
+  this.keyHandler_ = new goog.events.KeyHandler(this.nameInput_);
+
   goog.events.listen(this.nameInput_,
-      [goog.events.EventType.MOUSEDOWN, goog.events.EventType.MOUSEUP],
+      [goog.events.EventType.MOUSEUP, goog.events.EventType.MOUSEDOWN],
       function(e) {
         e.stopPropagation();
       }, false, this);
-  goog.events.listen(this.textEl_,
-      [goog.events.EventType.MOUSEUP],
+
+  goog.events.listen(this.keyHandler_, goog.events.KeyHandler.EventType.KEY,
       function(e) {
-        e.stopPropagation();
+        if (e.keyCode == goog.events.KeyCodes.ENTER) {
+          this.setNameUneditable();
+        }
       }, false, this);
+};
+
+
+/**
+ * Sets the name editable. This should only be called if the ResourceItem is
+ * already selected.
+ */
+jsh.ResourceListItem.prototype.setNameEditable = function() {
+
+  goog.style.setElementShown(this.nameInput_, true);
+  this.nameInput_.focus();
+  goog.style.setElementShown(this.textEl_, false);
+  goog.dom.selection.setStart(this.nameInput_, 0);
+  var nameVal = this.nameInput_.value;
+  var dotLocation = nameVal.lastIndexOf('.');
+  goog.dom.selection.setEnd(this.nameInput_,
+      dotLocation === -1 ? this.nameInput_.value.length : dotLocation);
+
+};
+
+
+/**
+ * Sets the name to its read-only state, and stores the modified value back
+ * into the model.
+ */
+jsh.ResourceListItem.prototype.setNameUneditable = function() {
+  goog.style.setElementShown(this.nameInput_, false);
+  goog.style.setElementShown(this.textEl_, true);
+  var resource = this.getModel();
+  var newName = this.nameInput_.value;
+  this.textEl_.innerText = newName;
+  resource.path = newName;
 };
 
 

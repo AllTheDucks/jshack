@@ -15,6 +15,10 @@ goog.require('goog.ui.Container');
 jsh.ResourceListContainer = function(opt_domHelper) {
   goog.base(this, null, null, opt_domHelper);
 
+  /**
+   * @type {jsh.ResourceListItem}
+   * @private
+   */
   this.selectedItem_ = null;
 };
 goog.inherits(jsh.ResourceListContainer, goog.ui.Container);
@@ -61,7 +65,7 @@ jsh.ResourceListContainer.prototype.handleItemSelect = function(e) {
   if (this.selectedItem_) {
     this.selectedItem_.setSelected(false);
   }
-  this.selectedItem_ = e.target;
+  this.selectedItem_ = /** @type {jsh.ResourceListItem} */(e.target);
 };
 
 
@@ -73,6 +77,16 @@ jsh.ResourceListContainer.prototype.setSelectedChild = function(child) {
   if (this.selectedItem_) {
     this.selectedItem_.setSelected(false);
   }
-  this.selectedItem_ = child;
+  this.selectedItem_ = /** @type {jsh.ResourceListItem} */ (child);
   child.setSelected(true);
+};
+
+
+/**
+ * Set the currently selected child.
+ * @param {goog.ui.Control!} child The child to set as selected.
+ * @return {jsh.ResourceListItem}
+ */
+jsh.ResourceListContainer.prototype.getSelectedChild = function(child) {
+  return this.selectedItem_;
 };
