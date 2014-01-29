@@ -2,6 +2,7 @@ goog.provide('jsh.ResourceListHeader');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('jsh.ResourceListBaseItem');
 goog.require('jsh.ResourceListItemRenderer');
 goog.require('jsh.model.HackResource');
 
@@ -15,20 +16,16 @@ goog.require('jsh.model.HackResource');
  * @param {string=} opt_hackId the id of the hack.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  *
- * @extends {goog.ui.Control}
+ * @extends {jsh.ResourceListBaseItem}
  * @constructor
  */
 jsh.ResourceListHeader = function(opt_hackName, opt_hackId, opt_domHelper) {
-  goog.base(this, null, null, opt_domHelper);
+  goog.base(this, opt_domHelper);
 
   this.hackId_ = opt_hackId;
   this.hackName_ = opt_hackName;
-
-  this.setSupportedState(goog.ui.Component.State.SELECTED, true);
-  this.setAutoStates(goog.ui.Component.State.SELECTED, true);
-  this.setDispatchTransitionEvents(goog.ui.Component.State.SELECTED, true);
 };
-goog.inherits(jsh.ResourceListHeader, goog.ui.Control);
+goog.inherits(jsh.ResourceListHeader, jsh.ResourceListBaseItem);
 
 
 /**
@@ -76,6 +73,21 @@ jsh.ResourceListHeader.prototype.setHackIdentifier = function(identifier) {
 };
 
 
-// Register the default renderer for goog.ui.Controls.
-goog.ui.registry.setDefaultRenderer(jsh.ResourceListHeader,
-    jsh.ResourceListItemRenderer);
+/**
+ * Returns if the item can be renamed. False for the header.
+ * @returns {boolean}
+ * @override
+ */
+jsh.ResourceListHeader.prototype.isRenameable = function() {
+  return false;
+}
+
+
+/**
+ * Returns if the item can be deleted. False for the header.
+ * @returns {boolean}
+ * @override
+ */
+jsh.ResourceListHeader.prototype.isDeleteable = function() {
+  return false;
+}
