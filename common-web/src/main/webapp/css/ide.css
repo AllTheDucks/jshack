@@ -128,3 +128,7 @@ input[type="text"] {
     -moz-opacity: 0.7;
     opacity: .6;
 }
+
+.close-btn {
+    float: right;
+}

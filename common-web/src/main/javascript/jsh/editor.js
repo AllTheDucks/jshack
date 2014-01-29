@@ -92,9 +92,6 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
         this.dispatchEvent({type: jsh.events.EventType.SAVE});
       }, false, this);
 
-  var btnClose = new goog.ui.ToolbarButton(this.createButtonDOM_('Close',
-      goog.getCssName('fa-power-off')));
-  toolbar.addChild(btnClose, true);
 
   toolbar.addChild(new goog.ui.ToolbarSeparator(), true);
 
@@ -104,7 +101,7 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
 
   var btnNew = new goog.ui.ToolbarMenuButton(
-      this.createButtonDOM_('Create Resource', goog.getCssName('fa-plus')));
+      this.createButtonDOM_('Create Resource', goog.getCssName('fa-file-o')));
   var jsFileMenuItem = new goog.ui.MenuItem('Javascript File');
   btnNew.addItem(jsFileMenuItem);
   var htmlFileMenuItem = new goog.ui.MenuItem('HTML File');
@@ -129,10 +126,28 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
 
   var btnDelete = new goog.ui.ToolbarButton(
-      this.createButtonDOM_('Delete Resource', goog.getCssName('fa-minus')));
+      this.createButtonDOM_('Delete Resource', goog.getCssName('fa-trash-o')));
   toolbar.addChild(btnDelete, true);
 
+  var btnRename = new goog.ui.ToolbarButton(
+      this.createButtonDOM_('Rename Resource', goog.getCssName('fa-pencil')));
+  toolbar.addChild(btnRename, true);
+  goog.events.listen(btnRename, goog.ui.Component.EventType.ACTION,
+      function() {
+        var resItem = this.resourceListContainer_.getSelectedChild();
+        if (resItem && resItem.setNameEditable) {
+          resItem.setNameEditable();
+        }
+      }, false, this);
+
   this.addChild(toolbar, true);
+
+
+  var btnClose = new goog.ui.ToolbarButton(this.createButtonDOM_('Close',
+      goog.getCssName('fa-power-off')));
+  toolbar.addChild(btnClose, true);
+  goog.dom.classlist.add(btnClose.getElement(), goog.getCssName('close-btn'));
+
 
   this.resourceListContainer_ = new jsh.ResourceListContainer();
 
@@ -212,6 +227,7 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource) {
       this.handleResourceSelect, false, this);
 
   this.resourceListContainer_.setSelectedChild(resItem);
+  resItem.setNameEditable();
 };
 
 
