@@ -75,19 +75,19 @@ jsh.ResourceListHeader.prototype.setHackIdentifier = function(identifier) {
 
 /**
  * Returns if the item can be renamed. False for the header.
- * @returns {boolean}
+ * @return {boolean}
  * @override
  */
 jsh.ResourceListHeader.prototype.isRenameable = function() {
   return false;
-}
+};
 
 
 /**
  * Returns if the item can be deleted. False for the header.
- * @returns {boolean}
+ * @return {boolean}
  * @override
  */
 jsh.ResourceListHeader.prototype.isDeleteable = function() {
   return false;
-}
+};

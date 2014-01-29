@@ -132,7 +132,7 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   goog.events.listen(this.btnDelete_, goog.ui.Component.EventType.ACTION,
       function() {
         var resItem = this.resourceListContainer_.getSelectedChild();
-        if(resItem && resItem.isDeleteable()) {
+        if (resItem && resItem.isDeleteable()) {
           this.resourceListContainer_.removeChild(resItem, true);
         }
       }, false, this);

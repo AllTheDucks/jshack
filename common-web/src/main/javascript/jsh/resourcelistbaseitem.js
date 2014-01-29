@@ -3,6 +3,7 @@ goog.provide('jsh.ResourceListBaseItem');
 goog.require('jsh.ResourceListItemRenderer');
 
 
+
 /**
  * A component which is the base for all items added to the resource list.
  *
@@ -27,17 +28,17 @@ goog.ui.registry.setDefaultRenderer(jsh.ResourceListBaseItem,
 
 /**
  * Returns if the item can be renamed. True unless overridden by a child.
- * @returns {boolean}
+ * @return {boolean}
  */
 jsh.ResourceListBaseItem.prototype.isRenameable = function() {
   return true;
-}
+};
 
 
 /**
  * Returns if the item can be deleted. True unless overridden by a child.
- * @returns {boolean}
+ * @return {boolean}
  */
 jsh.ResourceListBaseItem.prototype.isDeleteable = function() {
   return true;
-}
+};
