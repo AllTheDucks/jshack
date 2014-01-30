@@ -125,17 +125,25 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
       }, false, this);
 
 
-  var btnDelete = new goog.ui.ToolbarButton(
+  this.btnDelete_ = new goog.ui.ToolbarButton(
       this.createButtonDOM_('Delete Resource', goog.getCssName('fa-trash-o')));
-  toolbar.addChild(btnDelete, true);
+  toolbar.addChild(this.btnDelete_, true);
 
-  var btnRename = new goog.ui.ToolbarButton(
-      this.createButtonDOM_('Rename Resource', goog.getCssName('fa-pencil')));
-  toolbar.addChild(btnRename, true);
-  goog.events.listen(btnRename, goog.ui.Component.EventType.ACTION,
+  goog.events.listen(this.btnDelete_, goog.ui.Component.EventType.ACTION,
       function() {
         var resItem = this.resourceListContainer_.getSelectedChild();
-        if (resItem && resItem.setNameEditable) {
+        if (resItem && resItem.isDeleteable()) {
+          this.resourceListContainer_.removeChild(resItem, true);
+        }
+      }, false, this);
+
+  this.btnRename_ = new goog.ui.ToolbarButton(
+      this.createButtonDOM_('Rename Resource', goog.getCssName('fa-pencil')));
+  toolbar.addChild(this.btnRename_, true);
+  goog.events.listen(this.btnRename_, goog.ui.Component.EventType.ACTION,
+      function() {
+        var resItem = this.resourceListContainer_.getSelectedChild();
+        if (resItem && resItem.isRenameable()) {
           resItem.setNameEditable();
         }
       }, false, this);
@@ -250,6 +258,14 @@ jsh.HackEditor.prototype.enterDocument = function() {
       jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_INVALID,
       function() {
         this.btnSave_.setEnabled(false);
+      }, false, this);
+
+  goog.events.listen(this.resourceListContainer_,
+      goog.ui.Component.EventType.SELECT,
+      function(e) {
+        var resItem = e.target;
+        this.btnDelete_.setEnabled(resItem.isDeleteable());
+        this.btnRename_.setEnabled(resItem.isRenameable());
       }, false, this);
 
   this.resourceListContainer_.setSelectedChild(this.resourceListHeader_);

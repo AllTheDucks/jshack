@@ -5,6 +5,7 @@ goog.require('goog.dom.classlist');
 goog.require('goog.dom.selection');
 goog.require('goog.style');
 goog.require('jsh.MimeTypeHelper');
+goog.require('jsh.ResourceListBaseItem');
 goog.require('jsh.ResourceListItemRenderer');
 goog.require('jsh.model.HackResource');
 
@@ -16,11 +17,11 @@ goog.require('jsh.model.HackResource');
  * @param {jsh.model.HackResource} resource a resource in the hack.
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  *
- * @extends {goog.ui.Control}
+ * @extends {jsh.ResourceListBaseItem}
  * @constructor
  */
 jsh.ResourceListItem = function(resource, opt_domHelper) {
-  goog.base(this, null, null, opt_domHelper);
+  goog.base(this, opt_domHelper);
 
   /** @type {Element} */
   this.textEl_;
@@ -34,12 +35,8 @@ jsh.ResourceListItem = function(resource, opt_domHelper) {
   this.keyHandler_;
 
   this.setModel(resource);
-
-  this.setSupportedState(goog.ui.Component.State.SELECTED, true);
-  this.setAutoStates(goog.ui.Component.State.SELECTED, true);
-  this.setDispatchTransitionEvents(goog.ui.Component.State.SELECTED, true);
 };
-goog.inherits(jsh.ResourceListItem, goog.ui.Control);
+goog.inherits(jsh.ResourceListItem, jsh.ResourceListBaseItem);
 
 
 /**
@@ -142,8 +139,3 @@ jsh.ResourceListItem.prototype.setNameUneditable = function() {
   this.textEl_.innerText = newName;
   resource.path = newName;
 };
-
-
-// Register the default renderer for goog.ui.Controls.
-goog.ui.registry.setDefaultRenderer(jsh.ResourceListItem,
-    jsh.ResourceListItemRenderer);
