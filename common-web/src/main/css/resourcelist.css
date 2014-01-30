@@ -1,0 +1,81 @@
+.jsh-resourcelistarea {
+    padding: 10px;
+    border-radius: 0 10px 0 0;
+    background-color: #191919;
+    height: 100%;
+}
+
+.jsh-resourcelistheader-hackname {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.jsh-resourcelistheader-hackid {
+    font-size: 12px;
+}
+.jsh-resourcelistheader-hackid:before {
+    content: '(';
+}
+.jsh-resourcelistheader-hackid:after {
+    content: ')';
+}
+
+.jsh-resourcelistitem, .jsh-resourcelistheader {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+}
+
+.jsh-resourcelistitem-hover {
+    border: 1px solid #996329;
+    border-radius: .25em;
+}
+
+.jsh-resourcelistitem-selected {
+    background-color: gray !important;
+    border-radius: .25em;
+}
+
+.jsh-resourcelistitem > .text {
+    display: inline;
+    vertical-align: middle;
+}
+
+.jsh-resourcelistitem > .icon {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.jsh-resourcelistitem-gif > .icon {
+    background-image: url(../images/icons/image-gif.png);
+}
+
+.jsh-resourcelistitem-jpg > .icon {
+    background-image: url(../images/icons/image-jpeg.png);
+}
+
+.jsh-resourcelistitem-png > .icon {
+    background-image: url(../images/icons/image-png.png);
+}
+
+.jsh-resourcelistitem-css > .icon {
+    background-image: url(../images/icons/text-css.png);
+}
+
+.jsh-resourcelistitem-html > .icon {
+    background-image: url(../images/icons/text-html.png);
+}
+
+.jsh-resourcelistitem-js > .icon {
+    background-image: url(../images/icons/text-x-javascript.png);
+}
+
+.jsh-resourcelistitem-default > .icon {
+    background-image: url(../images/icons/unknown.png);
+}

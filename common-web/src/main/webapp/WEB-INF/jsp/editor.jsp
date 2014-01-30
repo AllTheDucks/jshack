@@ -5,23 +5,17 @@
 <head>
 
     <c:choose>
-        <c:when test="${actionBean.dev}"><script src="http://localhost:9810/compile?id=jshack-common-web"></script></c:when>
-        <c:otherwise><script src="js/main.js"></script></c:otherwise>
+        <c:when test="${actionBean.dev}">
+            <script src="http://localhost:9810/compile?id=jshack-common-web"></script>
+            <link rel="stylesheet" href="http://localhost:9810/css/jshack-common-web/"/>
+
+        </c:when>
+        <c:otherwise>
+            <script src="js/main.js"></script>
+            <link rel="stylesheet" href="css/main.css"/>
+        </c:otherwise>
     </c:choose>
     <script src="js/ace/ace.js"></script>
-    <link rel="stylesheet" href="css/ide.css"/>
-    <link rel="stylesheet" href="css/tabbar.css"/>
-    <link rel="stylesheet" href="css/tab.css"/>
-    <link rel="stylesheet" href="css/splitpane.css"/>
-    <link rel="stylesheet" href="css/toolbar.css"/>
-    <link rel="stylesheet" href="css/menubutton.css">
-    <link rel="stylesheet" href="css/menu.css">
-    <link rel="stylesheet" href="css/menuitem.css">
-    <link rel="stylesheet" href="css/menuseparator.css">
-    <link rel="stylesheet" href="css/flatmenubutton.css">
-    <link rel="stylesheet" href="css/resourcelist.css">
-    <link rel="stylesheet" href="css/imageeditor.css">
-    <link rel="stylesheet" href="css/defaulteditor.css">
     <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
 
 

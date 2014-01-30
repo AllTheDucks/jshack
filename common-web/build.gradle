@@ -1,9 +1,10 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            url "http://repo.alltheducks.com/"
-        }
+        mavenLocal()
+//        maven {
+//            url "http://repo.alltheducks.com/"
+//        }
     }
     dependencies {
         classpath group: 'com.alltheducks', name: 'glovr', version: '1.0-SNAPSHOT'
@@ -28,7 +29,9 @@ glovr {
     options = [
         'test-template': new File('common-web/src/test/resources/test-template.soy').getAbsolutePath(),
         'level': 'VERBOSE',
-        'treat-warnings-as-errors': true
+        'treat-warnings-as-errors': true,
+        'css-allowed-non-standard-functions': 'blur',
+        'css-allowed-unrecognized-properties': ['-ie-filter', '-moz-filter', '-o-filter']
     ]
     paths = new File('common-web/src/main/soy').getAbsolutePath()
 }
