@@ -1,0 +1,53 @@
+/* NOTE: A bug in Safari 3 requires these css definitions to be in here.
+       Do not move these to a seperate file without testing safari 3! */
+
+/* These are recommended styles for the default splitpane */
+.goog-splitpane {
+    /*position: absolute;*/
+    /*top:0;*/
+    /*bottom: 0;*/
+    /*right: 0;*/
+    /*left: 0;*/
+    /*height: 200px;*/
+    /*width: 300px;*/
+    overflow: hidden;
+}
+
+.goog-splitpane-handle {
+    background: #292b2d;
+    position: absolute;
+}
+
+.goog-splitpane-handle-horizontal {
+    cursor: col-resize;
+}
+
+.goog-splitpane-handle-vertical {
+    cursor: row-resize;
+}
+
+.goog-splitpane-first-container,
+.goog-splitpane-second-container {
+    /*border: 5px solid black;*/
+    overflow: hidden;
+    position: absolute;
+}
+
+#outersplitpane .goog-splitpane-first-container {
+    overflow: auto;
+}
+
+/*#outersplitpane .goog-splitpane-first-container {*/
+    /*border-right: 1px solid #333;*/
+/*}*/
+
+/*#innersplitpane .goog-splitpane-first-container {*/
+    /*border: none;*/
+    /*border-left: 1px solid #333;*/
+    /*border-bottom: 1px solid #333;*/
+/*}*/
+/*#innersplitpane .goog-splitpane-second-container {*/
+    /*border: none;*/
+    /*border-left: 1px solid #333;*/
+    /*border-top: 1px solid #333;*/
+/*}*/
