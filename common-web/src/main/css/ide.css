@@ -133,3 +133,29 @@ input[type="text"] {
 .close-btn {
     float: right;
 }
+
+.required-input {
+    background-color: #d45252;
+    padding: .25em .7em;
+    position: relative;
+    font-weight: bold;
+    margin-left:1em;
+    line-height:1.5em;
+    border-radius:.15em;
+
+}
+
+.required-input::before {
+    content: "\25C0"; /* left point triangle in escaped unicode */
+    color: #d45252;
+    position: absolute;
+    top:1px;     left:-.7em;
+}
+
+.hack-description {
+    height: 4em;
+}
+
+.hack-description, .hack-name {
+    width: 30em;
+}

@@ -34,11 +34,17 @@
   <table>
     <tbody><tr>
       <td>Identifier: </td>
-      <td><input class="hack-identifier" type="text" placeholder="hackid"></td>
+      <td>
+        <input class="hack-identifier" type="text" placeholder="hackid">
+        <span class="required-input" style="display:none;">Required</span>
+      </td>
     </tr>
     <tr>
       <td>Hack Name:</td>
-      <td><input class="hack-name" type="text" placeholder="Human Readable Name"></td>
+      <td>
+        <input class="hack-name" type="text" placeholder="Human Readable Name">
+        <span class="required-input" style="display:none;">Required</span>
+      </td>
     </tr>
   </tbody></table>
   <h2>Extra Information</h2>
@@ -50,7 +56,7 @@
     </tr>
     <tr>
       <td>Description:</td>
-      <td><input class="hack-description" type="text" placeholder="A Description of the hack"></td>
+      <td><textarea class="hack-description" placeholder="A Description of the hack"></textarea></td>
     </tr>
     <tr>
       <td>Min Bb Version:</td>

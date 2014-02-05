@@ -85,11 +85,17 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
 
   this.btnSave_ = new goog.ui.ToolbarButton(this.createButtonDOM_('Save',
       goog.getCssName('fa-floppy-o')));
-  this.btnSave_.setEnabled(false);
   toolbar.addChild(this.btnSave_, true);
   goog.events.listen(this.btnSave_, goog.ui.Component.EventType.ACTION,
       function() {
-        this.dispatchEvent({type: jsh.events.EventType.SAVE});
+        if (this.hackDetails_.isValid()) {
+          this.hackDetails_.validateFields();
+          this.dispatchEvent({type: jsh.events.EventType.SAVE});
+        } else {
+          this.resourceListContainer_.
+              setSelectedChild(this.resourceListHeader_);
+          this.hackDetails_.validateFields();
+        }
       }, false, this);
 
 
@@ -248,17 +254,6 @@ jsh.HackEditor.prototype.enterDocument = function() {
   goog.events.listen(this.viewSizeMonitor_,
       goog.events.EventType.RESIZE, this.resizeOuterSplitPane_, false, this);
 
-  goog.events.listen(this.hackDetails_,
-      jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_VALID,
-      function() {
-        this.btnSave_.setEnabled(true);
-      }, false, this);
-
-  goog.events.listen(this.hackDetails_,
-      jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_INVALID,
-      function() {
-        this.btnSave_.setEnabled(false);
-      }, false, this);
 
   goog.events.listen(this.resourceListContainer_,
       goog.ui.Component.EventType.SELECT,
