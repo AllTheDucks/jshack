@@ -66,47 +66,52 @@ jsh.HackDetailsArea.prototype.enterDocument = function() {
       'hack-targetVersionMax', element);
 
   goog.events.listen(this.hackNameInput,
-      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
-        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
-  goog.events.listen(this.hackDescInput,
-      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
-        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
+      goog.events.EventType.BLUR, function() {
+        this.validateRequiredField_(this.hackNameInput);
+      }, false, this);
   goog.events.listen(this.hackIdentifierInput,
-      [goog.events.EventType.KEYUP, goog.events.EventType.PASTE,
-        goog.events.EventType.CUT], this.onRequiredInputChange, false, this);
+      goog.events.EventType.BLUR, function() {
+        this.validateRequiredField_(this.hackIdentifierInput);
+      }, false, this);
 };
 
 
 /**
- *
- * @param {goog.events.Event!} e the event.
+ * Checks whether all the hackdetails are valid.
+ * @return {boolean}
  */
-jsh.HackDetailsArea.prototype.onRequiredInputChange = function(e) {
+jsh.HackDetailsArea.prototype.isValid = function() {
   var idVal = this.hackIdentifierInput.value.trim();
   var nameVal = this.hackNameInput.value.trim();
-  var newStateValid = (idVal && idVal !== '' && nameVal && nameVal !== '');
+  var isValid = (idVal && (idVal !== '') && nameVal && (nameVal !== ''));
 
-  if (!this.valid && newStateValid) {
-    this.dispatchEvent({type:
-          jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_VALID});
-  } else if (this.valid && !newStateValid) {
-    this.dispatchEvent({type:
-          jsh.HackDetailsArea.EventType.REQUIRED_DETAILS_INVALID});
-  }
-  this.valid = newStateValid;
+  return isValid;
 };
 
 
 /**
- * Events fired by the HackDetailsArea in response to input by the user.
- *
- * @enum {string}
+ * Validates all the fields and toggles and visual identifier for the user.
  */
-jsh.HackDetailsArea.EventType = {
-  /** Dispatched after the required details have become valid. */
-  REQUIRED_DETAILS_VALID: 'detailsvalid',
+jsh.HackDetailsArea.prototype.validateFields = function() {
+  this.validateRequiredField_(this.hackIdentifierInput);
+  this.validateRequiredField_(this.hackNameInput);
+};
 
-  /** Dispatched after the required details have become invalid. */
-  REQUIRED_DETAILS_INVALID: 'detailsinvalid'
+
+/**
+ * Validates a specific form fields and toggles the visual identifier.
+ * @param {Element!} element The form field element to validate.
+ * @private
+ */
+jsh.HackDetailsArea.prototype.validateRequiredField_ = function(element) {
+  var val = element.value.trim();
+
+  var visualIdentifer = goog.dom.getNextElementSibling(element);
+
+  if (val === '') {
+    goog.style.setElementShown(visualIdentifer, true);
+  } else {
+    goog.style.setElementShown(visualIdentifer, false);
+  }
 };
 
