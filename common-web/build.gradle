@@ -1,10 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
-//        maven {
-//            url "http://repo.alltheducks.com/"
-//        }
+        maven {
+            url "http://repo.alltheducks.com/"
+        }
     }
     dependencies {
         classpath group: 'com.alltheducks', name: 'glovr', version: '1.0-SNAPSHOT'
