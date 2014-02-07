@@ -1,6 +1,7 @@
 goog.provide('jsh.HackDetailsArea');
 
 goog.require('goog.dom');
+goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('jsh.BaseEditor');
@@ -109,9 +110,11 @@ jsh.HackDetailsArea.prototype.validateRequiredField_ = function(element) {
   var visualIdentifer = goog.dom.getNextElementSibling(element);
 
   if (val === '') {
-    goog.style.setElementShown(visualIdentifer, true);
+    goog.dom.classlist.add(visualIdentifer,
+        goog.getCssName('required-input-show'));
   } else {
-    goog.style.setElementShown(visualIdentifer, false);
+    goog.dom.classlist.remove(visualIdentifer,
+        goog.getCssName('required-input-show'));
   }
 };
 
