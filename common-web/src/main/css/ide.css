@@ -143,6 +143,16 @@ input[type="text"] {
     line-height:1.5em;
     border-radius:.15em;
 
+    opacity: 0;
+    -moz-opacity: 0;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+}
+
+.required-input-show {
+    opacity: 1;
+    -moz-opacity: 1;
 }
 
 .required-input::before {

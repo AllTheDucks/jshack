@@ -94,7 +94,12 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
         } else {
           this.resourceListContainer_.
               setSelectedChild(this.resourceListHeader_);
-          this.hackDetails_.validateFields();
+          //Forgive me, for I have sinned... The timeout forces the browser to
+          //render the HackDetails component prior to validating the fields,
+          //otherwise the CSS transition will not work.
+          setTimeout(goog.bind(function() {
+            this.hackDetails_.validateFields();
+          }, this), 0);
         }
       }, false, this);
 
