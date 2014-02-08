@@ -229,19 +229,57 @@ jsh.HackEditor.prototype.createResource = function(name, type) {
 
 
 /**
- * Given a HackResource model, adds all the required UI elements to manipulate
- * that HackResource.
+ * Add a resource to the end without ensuring order, selection or renaming.
  *
  * @param {jsh.model.HackResource!} resource the hack to add to the UI.
+ * @return {jsh.ResourceListItem}
+ * @private
  */
-jsh.HackEditor.prototype.addResourceListItem = function(resource) {
+jsh.HackEditor.prototype.addResourceListItem_ = function(resource) {
   var resItem = new jsh.ResourceListItem(resource);
   this.resourceListContainer_.addChild(resItem, true);
   goog.events.listen(resItem, goog.ui.Component.EventType.SELECT,
       this.handleResourceSelect, false, this);
+  return resItem;
+};
+
+
+/**
+ * Given a HackResource model, adds all the required UI elements to manipulate
+ * that HackResource.
+ *
+ * @param {jsh.model.HackResource!} resource the hack to add to the UI.
+ * @param {boolean=} opt_rename set the resource list item name editable.
+ */
+jsh.HackEditor.prototype.addResourceListItem = function(resource, opt_rename) {
+  var resItem = this.addResourceListItem_(resource);
 
   this.resourceListContainer_.setSelectedChild(resItem);
-  resItem.setNameEditable();
+  this.resourceListContainer_.sortChildren();
+
+  if (opt_rename !== false) {
+    resItem.setNameEditable();
+  }
+};
+
+
+/**
+ * Given a list of HackResource models, adds all the required UI elements to
+ * manipulate the HackResources.
+ *
+ * @param {Array.<jsh.model.HackResource>!} resources the resources to add.
+ */
+jsh.HackEditor.prototype.addResourceListItems = function(resources) {
+  for (var i = 0; i < resources.length; i++) {
+    var resItem = resources[i];
+    if (resItem) {
+      this.addResourceListItem_(resItem);
+    }
+  }
+
+  var lastItem = resources[resources.length - 1];
+  this.resourceListContainer_.setSelectedChild(lastItem);
+  this.resourceListContainer_.sortChildren();
 };
 
 

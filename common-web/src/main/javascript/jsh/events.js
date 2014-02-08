@@ -10,5 +10,8 @@ jsh.events.EventType = {
   HACK_INVALID: 'hackinvalid',
   HACK_VALID: 'hackvalid',
   FILES_IMPORTED: 'filesimported',
-  SAVE: 'save'
+  SAVE: 'save',
+  RESOURCE_RENAMED: 'resourcerenamed',
+  RESOURCE_NAME_EDITABLE: 'resourcenameeditable',
+  RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable'
 };

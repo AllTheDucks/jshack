@@ -42,3 +42,13 @@ jsh.ResourceListBaseItem.prototype.isRenameable = function() {
 jsh.ResourceListBaseItem.prototype.isDeleteable = function() {
   return true;
 };
+
+
+/**
+ * Returns the value that this resource item should be sorted on, or
+ * null if it should remain static. Defaults to null.
+ * @return {?string}
+ */
+jsh.ResourceListBaseItem.prototype.getSortKey = function() {
+  return null;
+};

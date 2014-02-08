@@ -1,5 +1,6 @@
 goog.provide('jsh.ResourceListContainer');
 
+goog.require('goog.array');
 goog.require('goog.ui.Container');
 
 
@@ -42,6 +43,9 @@ jsh.ResourceListContainer.prototype.enterDocument = function() {
 
   this.getHandler().listen(this, goog.ui.Component.EventType.SELECT,
       this.handleItemSelect);
+
+  this.getHandler().listen(this, jsh.events.EventType.RESOURCE_NAME_UNEDITABLE,
+      this.sortChildren);
 };
 
 
@@ -136,4 +140,44 @@ jsh.ResourceListContainer.prototype.selectNextChild = function() {
  */
 jsh.ResourceListContainer.prototype.selectPrevChild = function() {
   this.setSelectedChildByIndex(this.getSelectedIndex() - 1);
+};
+
+
+/**
+ * Sorts the resource list.
+ */
+jsh.ResourceListContainer.prototype.sortChildren = function() {
+  var selectedChild = this.getSelectedChild();
+
+  var children = /** @type {Array.<jsh.ResourceListBaseItem>} */
+      (this.removeChildren(true));
+  goog.array.sort(children, jsh.ResourceListContainer.sortChildrenCompare_);
+  for (var i = 0; i < children.length; i++) {
+    this.addChild(children[i], true);
+  }
+
+  if (selectedChild) {
+    this.setSelectedChild(selectedChild);
+  }
+};
+
+
+/**
+ *
+ * @param {jsh.ResourceListBaseItem} left
+ * @param {jsh.ResourceListBaseItem} right
+ * @return {?}
+ * @private
+ */
+jsh.ResourceListContainer.sortChildrenCompare_ = function(left, right) {
+  var leftSort = left.getSortKey();
+  var rightSort = right.getSortKey();
+
+  if (leftSort == null) {
+    return -1;
+  } else if (rightSort == null) {
+    return 1;
+  } else {
+    return goog.string.numerateCompare(leftSort, rightSort);
+  }
 };

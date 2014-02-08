@@ -3,10 +3,12 @@ goog.provide('jsh.ResourceListItem');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
 goog.require('goog.dom.selection');
+goog.require('goog.events.Event');
 goog.require('goog.style');
 goog.require('jsh.MimeTypeHelper');
 goog.require('jsh.ResourceListBaseItem');
 goog.require('jsh.ResourceListItemRenderer');
+goog.require('jsh.events.EventType');
 goog.require('jsh.model.HackResource');
 
 
@@ -124,6 +126,8 @@ jsh.ResourceListItem.prototype.setNameEditable = function() {
   goog.dom.selection.setEnd(this.nameInput_,
       dotLocation === -1 ? this.nameInput_.value.length : dotLocation);
 
+  this.dispatchEvent(new goog.events.Event(
+      jsh.events.EventType.RESOURCE_NAME_EDITABLE));
 };
 
 
@@ -136,6 +140,24 @@ jsh.ResourceListItem.prototype.setNameUneditable = function() {
   goog.style.setElementShown(this.textEl_, true);
   var resource = this.getModel();
   var newName = this.nameInput_.value;
+  var oldName = resource.path;
   this.textEl_.innerText = newName;
   resource.path = newName;
+
+  this.dispatchEvent(new goog.events.Event(
+      jsh.events.EventType.RESOURCE_NAME_UNEDITABLE));
+  if (newName != oldName) {
+    this.dispatchEvent(new goog.events.Event(
+        jsh.events.EventType.RESOURCE_RENAMED));
+  }
+};
+
+
+/**
+ * Returns the value that this resource item should be sorted on.
+ * @return {?string}
+ * @override
+ */
+jsh.ResourceListItem.prototype.getSortKey = function() {
+  return /** @type {?string} */(this.getModel().path);
 };

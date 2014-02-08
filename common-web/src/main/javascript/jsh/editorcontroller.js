@@ -1,5 +1,6 @@
 goog.provide('jsh.EditorController');
 
+goog.require('goog.async.DeferredList');
 goog.require('goog.events');
 goog.require('goog.fs.FileReader');
 goog.require('jsh.DataService');
@@ -59,6 +60,7 @@ jsh.EditorController.prototype.loadHackById = function(hackId) {
  * @param {jsh.events.FileImportEvent} e the event
  */
 jsh.EditorController.prototype.handleFilesImported = function(e) {
+  var deferredArray = [];
   var files = /** @type {Array.<File>} */ (e.files);
   for (var i = 0, currFile; currFile = files[i]; i++) {
     if (jsh.MimeTypeHelper.getDataType(currFile.type) ==
@@ -68,21 +70,32 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
         resource.path = file.name;
         resource.mime = file.type;
         resource.content = text;
-        this.hackEditor_.addResourceListItem(resource);
+        return resource;
       }, this, currFile);
-      goog.fs.FileReader.readAsText(currFile, 'UTF-8').
+      var deferred = goog.fs.FileReader.readAsText(currFile, 'UTF-8').
           addCallback(textCallback);
-
+      deferredArray.push(deferred);
     } else {
       var binCallback = goog.bind(function(file, tempFileName) {
         var resource = new jsh.model.HackResource();
         resource.path = file.name;
         resource.mime = file.type;
         resource.tempFileName = tempFileName;
-
-        this.hackEditor_.addResourceListItem(resource);
+        return resource;
       }, this, currFile);
-      this.dataService_.sendFile(currFile).addCallback(binCallback);
+      var deferred = this.dataService_.sendFile(currFile)
+          .addCallback(binCallback);
+      deferredArray.push(deferred);
     }
   }
+
+  var deferredList = new goog.async.DeferredList(deferredArray);
+  var completeCallback = goog.bind(function(results) {
+    var resources = goog.array.map(results, function(result, index, results) {
+      //if successful, return the result;
+      return result[0] ? result[1] : null;
+    }, this);
+    this.hackEditor_.addResourceListItems(resources);
+  }, this);
+  deferredList.addCallback(completeCallback);
 };
