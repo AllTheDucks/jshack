@@ -1,14 +1,31 @@
-.jsh-imageeditor {
-    background-image: url(../images/imageeditorbg.gif);
-    background-color: #191919;
-    background-repeat: repeat;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 10px 0 0 0;
+
+@if (PROD_MODE) {
+    .jsh-imageeditor {
+        background-image: url(../images/imageeditorbg.gif);
+        background-color: #191919;
+        background-repeat: repeat;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 10px 0 0 0;
+    }
+} @else {
+
+    .jsh-imageeditor {
+        background-image: url(http://localhost:8080/jshack-test-web/images/imageeditorbg.gif);
+        background-color: #191919;
+        background-repeat: repeat;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 10px 0 0 0;
+    }
 }
+
 
 .jsh-imageeditor-image {
     margin: auto;
