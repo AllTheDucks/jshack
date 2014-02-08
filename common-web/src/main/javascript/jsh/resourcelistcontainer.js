@@ -63,7 +63,7 @@ jsh.ResourceListContainer.prototype.decorateInternal = function(element) {
  */
 jsh.ResourceListContainer.prototype.handleItemSelect = function(e) {
   var item = /** @type {jsh.ResourceListBaseItem} */(e.target);
-  if(item) {
+  if (item) {
     this.setSelectedChild(item, false);
   }
 };
@@ -72,12 +72,12 @@ jsh.ResourceListContainer.prototype.handleItemSelect = function(e) {
 /**
  * Set the currently selected child.
  * @param {jsh.ResourceListBaseItem!} child The child to set as selected
- * @param {boolean=} reselect Set the item as selected.
+ * @param {boolean=} opt_reselect Set the item as selected.
  */
 jsh.ResourceListContainer.prototype.setSelectedChild =
-    function(child, reselect) {
-      var index = /** @type {number} */(this.indexOfChild(child));
-      this.setSelectedChildByIndex(index, reselect);
+    function(child, opt_reselect) {
+  var index = /** @type {number} */(this.indexOfChild(child));
+  this.setSelectedChildByIndex(index, opt_reselect);
 };
 
 
@@ -86,7 +86,8 @@ jsh.ResourceListContainer.prototype.setSelectedChild =
  * @return {jsh.ResourceListBaseItem}
  */
 jsh.ResourceListContainer.prototype.getSelectedChild = function() {
-  var index = /** @type {jsh.ResourceListBaseItem}*/(this.getChildAt(this.selectedItemIndex_));
+  var index = /** @type {jsh.ResourceListBaseItem}*/
+      (this.getChildAt(this.selectedItemIndex_));
   return index;
 };
 
@@ -94,39 +95,45 @@ jsh.ResourceListContainer.prototype.getSelectedChild = function() {
 /**
  * Sets the currently selected child, by index.
  * @param {number} index The index of the item to select
- * @param {boolean=} reselect Set the item as selected.
+ * @param {boolean=} opt_reselect Set the item as selected.
  */
 jsh.ResourceListContainer.prototype.setSelectedChildByIndex =
-    function(index, reselect) {
-      var child = this.getChildAt(index);
-      if(child) {
-        var selectedItem = this.getSelectedChild();
-        if (selectedItem) {
-          selectedItem.setSelected(false);
-        }
-        this.selectedItemIndex_ = index;
+    function(index, opt_reselect) {
+  var child = this.getChildAt(index);
+  if (child) {
+    var selectedItem = this.getSelectedChild();
+    if (selectedItem) {
+      selectedItem.setSelected(false);
+    }
+    this.selectedItemIndex_ = index;
 
-        if(reselect !== false) {
-          child.setSelected(true);
-        }
-      }
+    if (opt_reselect !== false) {
+      child.setSelected(true);
+    }
+  }
 };
 
 
 /**
  * Gets the index of the currently selected child.
- * @returns {number}
+ * @return {number}
  */
 jsh.ResourceListContainer.prototype.getSelectedIndex = function() {
   return this.selectedItemIndex_;
 };
 
 
+/**
+ * Selects the next child in the list.
+ */
 jsh.ResourceListContainer.prototype.selectNextChild = function() {
-  this.setSelectedChildByIndex(this.getSelectedIndex()+1);
-}
+  this.setSelectedChildByIndex(this.getSelectedIndex() + 1);
+};
 
 
+/**
+ * Selects the previous child in the list.
+ */
 jsh.ResourceListContainer.prototype.selectPrevChild = function() {
-  this.setSelectedChildByIndex(this.getSelectedIndex()-1);
-}
+  this.setSelectedChildByIndex(this.getSelectedIndex() - 1);
+};
