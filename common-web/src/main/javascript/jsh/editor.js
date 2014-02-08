@@ -141,12 +141,7 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
   toolbar.addChild(this.btnDelete_, true);
 
   goog.events.listen(this.btnDelete_, goog.ui.Component.EventType.ACTION,
-      function() {
-        var resItem = this.resourceListContainer_.getSelectedChild();
-        if (resItem && resItem.isDeleteable()) {
-          this.resourceListContainer_.removeChild(resItem, true);
-        }
-      }, false, this);
+      this.deleteSelectedResource, false, this);
 
   this.btnRename_ = new goog.ui.ToolbarButton(
       this.createButtonDOM_('Rename Resource', goog.getCssName('fa-pencil')));
@@ -385,4 +380,24 @@ jsh.HackEditor.prototype.getHackModel = function() {
 jsh.HackEditor.prototype.createButtonDOM_ = function(text, iconClass) {
   return goog.soy.renderAsElement(jsh.soy.editor.toolbarButton,
       {text: text, iconClass: iconClass});
+};
+
+
+/**
+ * Deletes the resource, if it's deleteable, that is currenty the selection
+ * in the resource list container.
+ */
+jsh.HackEditor.prototype.deleteSelectedResource = function() {
+  var resItem = this.resourceListContainer_.getSelectedChild();
+
+  if (resItem && resItem.isDeleteable()) {
+    var id = resItem.getId();
+    var ed = this.editorCache_[id];
+    if (ed != null) {
+      delete this.editorCache_[id];
+      this.editorContainer_.removeChild(ed, true);
+    }
+    this.resourceListContainer_.selectPrevChild();
+    this.resourceListContainer_.removeChild(resItem, true);
+  }
 };

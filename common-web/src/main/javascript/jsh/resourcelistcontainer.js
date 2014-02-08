@@ -16,10 +16,10 @@ jsh.ResourceListContainer = function(opt_domHelper) {
   goog.base(this, null, null, opt_domHelper);
 
   /**
-   * @type {jsh.ResourceListItem}
+   * @type {number}
    * @private
    */
-  this.selectedItem_ = null;
+  this.selectedItemIndex_ = -1;
 };
 goog.inherits(jsh.ResourceListContainer, goog.ui.Container);
 
@@ -62,31 +62,71 @@ jsh.ResourceListContainer.prototype.decorateInternal = function(element) {
  * @param {goog.events.Event!} e The event.
  */
 jsh.ResourceListContainer.prototype.handleItemSelect = function(e) {
-  if (this.selectedItem_) {
-    this.selectedItem_.setSelected(false);
+  var item = /** @type {jsh.ResourceListBaseItem} */(e.target);
+  if(item) {
+    this.setSelectedChild(item, false);
   }
-  this.selectedItem_ = /** @type {jsh.ResourceListItem} */(e.target);
 };
 
 
 /**
  * Set the currently selected child.
- * @param {goog.ui.Control!} child The child to set as selected.
+ * @param {jsh.ResourceListBaseItem!} child The child to set as selected
+ * @param {boolean=} reselect Set the item as selected.
  */
-jsh.ResourceListContainer.prototype.setSelectedChild = function(child) {
-  if (this.selectedItem_) {
-    this.selectedItem_.setSelected(false);
-  }
-  this.selectedItem_ = /** @type {jsh.ResourceListItem} */ (child);
-  child.setSelected(true);
+jsh.ResourceListContainer.prototype.setSelectedChild =
+    function(child, reselect) {
+      var index = /** @type {number} */(this.indexOfChild(child));
+      this.setSelectedChildByIndex(index, reselect);
 };
 
 
 /**
  * Set the currently selected child.
- * @param {goog.ui.Control!} child The child to set as selected.
- * @return {jsh.ResourceListItem}
+ * @return {jsh.ResourceListBaseItem}
  */
-jsh.ResourceListContainer.prototype.getSelectedChild = function(child) {
-  return this.selectedItem_;
+jsh.ResourceListContainer.prototype.getSelectedChild = function() {
+  var index = /** @type {jsh.ResourceListBaseItem}*/(this.getChildAt(this.selectedItemIndex_));
+  return index;
 };
+
+
+/**
+ * Sets the currently selected child, by index.
+ * @param {number} index The index of the item to select
+ * @param {boolean=} reselect Set the item as selected.
+ */
+jsh.ResourceListContainer.prototype.setSelectedChildByIndex =
+    function(index, reselect) {
+      var child = this.getChildAt(index);
+      if(child) {
+        var selectedItem = this.getSelectedChild();
+        if (selectedItem) {
+          selectedItem.setSelected(false);
+        }
+        this.selectedItemIndex_ = index;
+
+        if(reselect !== false) {
+          child.setSelected(true);
+        }
+      }
+};
+
+
+/**
+ * Gets the index of the currently selected child.
+ * @returns {number}
+ */
+jsh.ResourceListContainer.prototype.getSelectedIndex = function() {
+  return this.selectedItemIndex_;
+};
+
+
+jsh.ResourceListContainer.prototype.selectNextChild = function() {
+  this.setSelectedChildByIndex(this.getSelectedIndex()+1);
+}
+
+
+jsh.ResourceListContainer.prototype.selectPrevChild = function() {
+  this.setSelectedChildByIndex(this.getSelectedIndex()-1);
+}
