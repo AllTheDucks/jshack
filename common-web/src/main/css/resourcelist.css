@@ -51,31 +51,60 @@
     vertical-align: middle;
     margin-right: 5px;
 }
+@if (PROD_MODE) {
+    .jsh-resourcelistitem-gif > .icon {
+        background-image: url(../images/icons/image-gif.png);
+    }
 
-.jsh-resourcelistitem-gif > .icon {
-    background-image: url(../images/icons/image-gif.png);
-}
+    .jsh-resourcelistitem-jpg > .icon {
+        background-image: url(../images/icons/image-jpeg.png);
+    }
 
-.jsh-resourcelistitem-jpg > .icon {
-    background-image: url(../images/icons/image-jpeg.png);
-}
+    .jsh-resourcelistitem-png > .icon {
+        background-image: url(../images/icons/image-png.png);
+    }
 
-.jsh-resourcelistitem-png > .icon {
-    background-image: url(../images/icons/image-png.png);
-}
+    .jsh-resourcelistitem-css > .icon {
+        background-image: url(../images/icons/text-css.png);
+    }
 
-.jsh-resourcelistitem-css > .icon {
-    background-image: url(../images/icons/text-css.png);
-}
+    .jsh-resourcelistitem-html > .icon {
+        background-image: url(../images/icons/text-html.png);
+    }
 
-.jsh-resourcelistitem-html > .icon {
-    background-image: url(../images/icons/text-html.png);
-}
+    .jsh-resourcelistitem-js > .icon {
+        background-image: url(../images/icons/text-x-javascript.png);
+    }
 
-.jsh-resourcelistitem-js > .icon {
-    background-image: url(../images/icons/text-x-javascript.png);
-}
+    .jsh-resourcelistitem-default > .icon {
+        background-image: url(../images/icons/unknown.png);
+    }
+} @else {
+  .jsh-resourcelistitem-gif > .icon {
+        background-image: url(http://localhost:8080/jshack-test-web/images/icons/image-gif.png);
+    }
 
-.jsh-resourcelistitem-default > .icon {
-    background-image: url(../images/icons/unknown.png);
+    .jsh-resourcelistitem-jpg > .icon {
+        background-image: url(http://localhost:8080/jshack-test-web/images/icons/image-jpeg.png);
+    }
+
+    .jsh-resourcelistitem-png > .icon {
+        background-image: url(http://localhost:8080/jshack-test-web/images/icons/image-png.png);
+    }
+
+    .jsh-resourcelistitem-css > .icon {
+        background-image: url(http://localhost:8080/jshack-test-web/images/icons/text-css.png);
+    }
+
+    .jsh-resourcelistitem-html > .icon {
+        background-image: url(http://localhost:8080/jshack-test-web/images/icons/text-html.png);
+    }
+
+    .jsh-resourcelistitem-js > .icon {
+        background-image: url(http://localhost:8080/jshack-test-web/images/icons/text-x-javascript.png);
+    }
+
+    .jsh-resourcelistitem-default > .icon {
+        background-image: url(http://localhost:8080/jshack-test-web/images/icons/unknown.png);
+    }
 }
