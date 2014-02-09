@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+//        mavenLocal()
         maven {
             url "http://repo.alltheducks.com/"
         }
@@ -25,11 +26,12 @@ glovr {
     jsRoot = 'src/main/javascript/'
     mode = 'SIMPLE'
     externs = ['src/main/javascript-externs/ace.js']
+    cssDefines = ['PROD_MODE']
     options = [
         'test-template': new File('common-web/src/test/resources/test-template.soy').getAbsolutePath(),
         'level': 'VERBOSE',
         'treat-warnings-as-errors': true,
-        'css-allowed-non-standard-functions': 'blur',
+        'css-allowed-non-standard-functions': ['blur'],
         'css-allowed-unrecognized-properties': ['-ie-filter', '-moz-filter', '-o-filter']
     ]
     paths = new File('common-web/src/main/soy').getAbsolutePath()
