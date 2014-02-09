@@ -429,6 +429,7 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
   var resItem = this.resourceListContainer_.getSelectedChild();
 
   if (resItem && resItem.isDeleteable()) {
+    var hackResource = resItem.getModel();
     var id = resItem.getId();
     var ed = this.editorCache_[id];
     if (ed != null) {
@@ -437,5 +438,8 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
     }
     this.resourceListContainer_.selectPrevChild();
     this.resourceListContainer_.removeChild(resItem, true);
+
+    this.dispatchEvent(new goog.events.Event(
+        jsh.events.EventType.RESOURCE_DELETED, hackResource));
   }
 };

@@ -1,12 +1,12 @@
 package org.oscelot.jshack.ws;
 
-import org.apache.commons.io.IOUtils;
 import org.oscelot.jshack.service.TempFileService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Path("tempfiles")
 public class TempFilesResource {
@@ -19,6 +19,12 @@ public class TempFilesResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String createTempFile(InputStream is, @HeaderParam("Content-Type") String contentType) throws IOException {
         return tempFileService.persistTempFile(is, contentType);
+    }
+
+    @DELETE
+    @Path("{filename}")
+    public void deleteTempFile(@PathParam("filename") String filename) {
+        tempFileService.deleteTempFile(filename);
     }
 
 }

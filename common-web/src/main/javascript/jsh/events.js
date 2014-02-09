@@ -13,5 +13,6 @@ jsh.events.EventType = {
   SAVE: 'save',
   RESOURCE_RENAMED: 'resourcerenamed',
   RESOURCE_NAME_EDITABLE: 'resourcenameeditable',
-  RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable'
+  RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable',
+  RESOURCE_DELETED: 'resourcedeleted'
 };

@@ -142,6 +142,24 @@ jsh.DataService.prototype.sendFile = function(blob) {
 
 
 /**
+ * Sends a request to the server to delete a temporary file.
+ * @param {string} path Path of the temp file.
+ * @return {goog.async.Deferred}
+ */
+jsh.DataService.prototype.deleteFile = function(path) {
+  var dataServiceReq = new jsh.DataService.Request(new goog.async.Deferred(),
+      this.resolveTempURL);
+
+  var requestId = this.putRequest_(dataServiceReq);
+
+  var filename = goog.string.remove(path, this.tempFilesURL_);
+  this.xhrManager_.send(requestId, this.tempFilesWSUrl_ + filename, 'DELETE');
+
+  return dataServiceReq.deferred;
+};
+
+
+/**
  * Converts a JSON representation of a hack to a hack model.
  * @param {Object} jsonData JSON object representing a hack.
  * @return {jsh.model.Hack} Hack object constructed from the jsonData.
@@ -220,8 +238,7 @@ jsh.DataService.prototype.handleXhrResponse_ = function(event) {
     } else if (contentType == 'text/plain') {
       response = xhr.getResponseText();
     } else {
-      window.console.log('Unknown Content-Type: ' + contentType);
-      return;
+      response = null;
     }
     var decodedResponse;
     if (request.callback) {
