@@ -5,6 +5,7 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('jsh.BaseEditor');
 goog.require('jsh.MimeTypeHelper');
+goog.require('jsh.ResourceRestrictions');
 goog.require('jsh.SplitPane');
 
 
@@ -65,7 +66,7 @@ jsh.TextEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
   this.hackEditor_ = new jsh.AceEditor();
-  this.resourceProperties_ = new goog.ui.Component();
+  this.resourceProperties_ = new jsh.ResourceRestrictions();
   this.splitPane_ = new jsh.SplitPane(this.hackEditor_,
       this.resourceProperties_, goog.ui.SplitPane.Orientation.VERTICAL);
   this.splitPane_.setInitialSize(50);

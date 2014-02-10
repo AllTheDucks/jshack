@@ -147,3 +147,32 @@
   <div class="ide-overlay-children"></div>
 </div>
 {/template}
+
+
+/**
+ * The Panel which contains all the controls for editing where and when a
+ * resource will be injected.
+ */
+{template .resourceRestrictions}
+<div>
+    <span id="enable" class="goog-checkbox-checked goog-checkbox" aria-checked="true" role="checkbox" tabindex="0" aria-labelledby="enable.lbl" style="-webkit-user-select: none;"></span>
+      Inject this resource directly into page.   (The contents of this file will automatically be wrapped in a <b>&lt;style&gt;</b> tag.)
+      <br>
+      <br>
+    <div>
+      <div id="formatButton" class="goog-css3-menu-button goog-inline-block goog-css3-button" title="Format" aria-expanded="false" role="button" tabindex="0" aria-haspopup="true" style="-webkit-user-select: none;"><div class="goog-inline-block "><div class="goog-css3-button-caption goog-inline-block"><!-- These elements will become the button's caption. -->
+                            <div class="icon format-icon goog-inline-block"></div>
+                            <span style="vertical-align:middle">Add Injection Point</span>
+                            <!-- This DIV will be auto-decorated with a menu. --></div><div class="goog-css3-button-dropdown goog-inline-block"></div></div></div><br>
+                            <i>This resource currently has no injection points specified. It won't be injected anywhere.</i>
+    </div>
+    <br>
+    <div>
+      <div id="formatButton" class="goog-css3-menu-button goog-inline-block goog-css3-button" title="Format" aria-expanded="false" role="button" tabindex="0" aria-haspopup="true" style="-webkit-user-select: none;"><div class="goog-inline-block "><div class="goog-css3-button-caption goog-inline-block"><!-- These elements will become the button's caption. -->
+                            <div class="icon format-icon goog-inline-block"></div>
+                            <span style="vertical-align:middle">Add Restriction</span>
+                            <!-- This DIV will be auto-decorated with a menu. --></div><div class="goog-css3-button-dropdown goog-inline-block"></div></div></div><br>
+                            <i>This resource currently has no restrictions specified.  It will be injected in <b>every page</b> for the specified injection points.</i>
+    </div>
+</div>
+{/template}
