@@ -111,6 +111,6 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
 jsh.EditorController.prototype.handleResourceDelete = function(e) {
   var deletedResource = /** @type {?jsh.model.HackResource} */(e.target);
   if (deletedResource && deletedResource.tempFileName) {
-    this.dataService_.deleteFile(deletedResource.tempFileName);
+    this.dataService_.deleteFiles([deletedResource.tempFileName]);
   }
 };

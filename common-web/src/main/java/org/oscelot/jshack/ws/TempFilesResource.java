@@ -1,5 +1,6 @@
 package org.oscelot.jshack.ws;
 
+import org.oscelot.jshack.model.FileGroup;
 import org.oscelot.jshack.service.TempFileService;
 
 import javax.inject.Inject;
@@ -22,9 +23,11 @@ public class TempFilesResource {
     }
 
     @DELETE
-    @Path("{filename}")
-    public void deleteTempFile(@PathParam("filename") String filename) {
-        tempFileService.deleteTempFile(filename);
+    @Consumes("application/json")
+    public void deleteTempFile(FileGroup fileGroup) {
+        for(String file : fileGroup.getFilenames()) {
+            tempFileService.deleteTempFile(file);
+        }
     }
 
 }
