@@ -86,4 +86,8 @@
         <mime-type>text/css</mime-type>
     </mime-mapping>
 
+    <listener>
+        <listener-class>org.oscelot.jshack.service.TempFileServletContextListener</listener-class>
+    </listener>
+
 </web-app>
