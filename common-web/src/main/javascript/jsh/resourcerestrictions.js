@@ -2,6 +2,8 @@ goog.provide('jsh.ResourceRestrictions');
 
 goog.require('goog.dom');
 goog.require('goog.events');
+goog.require('goog.ui.Checkbox');
+goog.require('jsh.CheckSwitchRenderer');
 goog.require('jsh.soy.editor');
 
 
@@ -39,5 +41,11 @@ jsh.ResourceRestrictions.prototype.createDom = function() {
  */
 jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
+
+  var cbel = goog.dom.getElementByClass('jsh-checkswitch', element);
+
+  var cb = new goog.ui.Checkbox(goog.ui.Checkbox.State.CHECKED, null,
+      new jsh.CheckSwitchRenderer());
+  cb.decorate(cbel);
 
 };
