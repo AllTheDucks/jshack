@@ -57,6 +57,12 @@ jsh.AceEditor.prototype.enterDocument = function() {
   if (this.editable) {
     this.aceEditor = ace.edit(this.editorElement);
     this.aceEditor.setTheme('ace/theme/clouds_midnight');
+
+    jsh.AceEditor.enableAutoComplete();
+    this.aceEditor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: true
+    });
   }
 };
 
@@ -76,3 +82,32 @@ jsh.AceEditor.prototype.resize = function() {
 jsh.AceEditor.prototype.getAce = function() {
   return this.aceEditor;
 };
+
+
+/**
+ * @type {?ace.RequiredObject}
+ * @private
+ */
+jsh.AceEditor.langTools_ = null;
+
+
+/**
+ * Enables the auto complete features of the Ace editor.
+ */
+jsh.AceEditor.enableAutoComplete = function() {
+  if (jsh.AceEditor.langTools_ == null) {
+    jsh.AceEditor.langTools_ = ace.require('ace/ext/language_tools');
+  }
+};
+
+
+/**
+ * @param {{getCompletions: function(ace.AceEditor, ace.AceSession, number,
+ * string, function(Object, Array.<{name: string, value:string, score: number,
+ * meta: string}>))}!} completer
+ */
+jsh.AceEditor.addCompleter = function(completer) {
+  jsh.AceEditor.enableAutoComplete();
+  jsh.AceEditor.langTools_.addCompleter(completer);
+};
+

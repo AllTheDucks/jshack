@@ -16,6 +16,7 @@
         </c:otherwise>
     </c:choose>
     <script src="js/ace/ace.js"></script>
+    <script src="js/ace/ext-language_tools.js"></script>
     <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
 
 
