@@ -172,6 +172,8 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
       goog.ui.Component.EventType.SELECT,
       this.showHackDetailsArea, false, this);
 
+  jsh.AceEditor.addCompleter(this.getResourceCompleter());
+
   this.editorContainer_ = new jsh.EditorContainer();
 
   this.hackDetails_ = new jsh.HackDetailsArea();
@@ -438,4 +440,77 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
     this.resourceListContainer_.selectPrevChild();
     this.resourceListContainer_.removeChild(resItem, true);
   }
+};
+
+
+/**
+ * Gets and AceEditor auto completer for the resources in this editor.
+ * @return {{getCompletions: function(ace.AceEditor, ace.AceSession, number,
+ * string, function(Object, Array.<{name: string, value:string, score: number,
+ * meta: string}>))}}
+ */
+jsh.HackEditor.prototype.getResourceCompleter = function() {
+  /*todo: don't autocomplete resource references into files
+  that are not injected */
+  return {
+    'getCompletions': goog.bind(
+        function(editor, session, pos, prefix, callback) {
+      var items = goog.array.reduce(
+          this.resourceListContainer_.getChildIds(),
+          /**
+           *
+           * @param {Array.<{name: string, value:string, score: number,
+           * meta: string}>} accumulation
+           * @param {string} childId
+           * @param {number} index
+           * @param {Array.<{name: string, value:string, score: number,
+           * meta: string}>} array
+           * @return {Array.<{name: string, value:string, score: number,
+           * meta: string}>}
+           */
+          function(accumulation, childId, index, array) {
+            var lowerprefix = prefix.toLowerCase();;
+            var selectedResource = /** @type {jsh.model.HackResource} */
+                (this.resourceListContainer_.getSelectedChild().getModel());
+
+            var item = this.resourceListContainer_.getChild(childId);
+            if (!item) {
+              return accumulation;
+            }
+
+            var model = item.getModel();
+            if (!model || !model.path || selectedResource.path == model.path) {
+              return accumulation;
+            }
+
+            var score;
+            if (prefix.length === 0
+                || goog.string.startsWith(model.path.toLowerCase(),
+                lowerprefix)) {
+              score = 100;
+            } else if (goog.string.contains(model.path.toLowerCase(),
+                lowerprefix)) {
+              score = 99;
+            } else {
+              return accumulation;
+            }
+
+            var value = jsh.MimeTypeHelper.getAutoCompletePattern(
+                selectedResource.mime, model.mime, model.path);
+            if(!value) {
+              return accumulation;
+            }
+
+            var completion = {
+              'name': model.path,
+              'value': value,
+              'score': score,
+              'meta': 'resource'
+            };
+            accumulation.push(completion);
+            return accumulation;
+          }, [], this);
+      callback(null, items);
+    }, this)
+  };
 };
