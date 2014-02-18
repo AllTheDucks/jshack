@@ -3,7 +3,10 @@ goog.provide('jsh.ResourceRestrictions');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.ui.Checkbox');
+goog.require('goog.ui.Component');
 goog.require('jsh.CheckSwitchRenderer');
+goog.require('jsh.InjectionPointPane');
+goog.require('jsh.RestrictionPane');
 goog.require('jsh.soy.editor');
 
 
@@ -18,6 +21,10 @@ goog.require('jsh.soy.editor');
  */
 jsh.ResourceRestrictions = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  this.injectCheckbox = null;
+  this.injectionPointPane = null;
+  this.restrictionPane = null;
 };
 goog.inherits(jsh.ResourceRestrictions, goog.ui.Component);
 
@@ -26,7 +33,6 @@ goog.inherits(jsh.ResourceRestrictions, goog.ui.Component);
  * @override
  */
 jsh.ResourceRestrictions.prototype.createDom = function() {
-
   var el = goog.soy.renderAsElement(jsh.soy.editor.resourceRestrictions);
   this.decorateInternal(el);
 };
@@ -42,10 +48,42 @@ jsh.ResourceRestrictions.prototype.createDom = function() {
 jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  var cbel = goog.dom.getElementByClass('jsh-checkswitch', element);
+  var cbel = goog.dom.getElementByClass('inject-checkbox', element);
+  this.injectCheckbox = new goog.ui.Checkbox();
+  this.injectCheckbox.decorate(cbel);
+  this.injectCheckbox.setLabel(goog.dom.getParentElement(cbel));
 
-  var cb = new goog.ui.Checkbox(goog.ui.Checkbox.State.CHECKED, null,
-      new jsh.CheckSwitchRenderer());
-  cb.decorate(cbel);
+  this.injectionPointPane = new jsh.InjectionPointPane();
+  this.addChild(this.injectionPointPane, true);
 
+  this.restrictionPane = new jsh.RestrictionPane();
+  this.addChild(this.restrictionPane, true);
+
+  goog.events.listen(this.injectCheckbox, goog.ui.Component.EventType.CHANGE,
+      this.handleInjectCheckboxChange, false, this);
+  this.handleInjectCheckboxChange();
+
+  goog.events.listen(this.injectionPointPane,
+      goog.ui.Component.EventType.CHANGE,
+      this.handleInjectionPointsChanged, false, this);
+  this.handleInjectionPointsChanged();
 };
+
+
+/**
+ * Handles the change of state for the checkbox indicating that the resource
+ * should be injected.
+ */
+jsh.ResourceRestrictions.prototype.handleInjectCheckboxChange = function() {
+  goog.style.setElementShown(this.injectionPointPane.getElement(),
+      this.injectCheckbox.isChecked());
+}
+
+
+/**
+ *
+ */
+jsh.ResourceRestrictions.prototype.handleInjectionPointsChanged = function() {
+  goog.style.setElementShown(this.restrictionPane.getElement(),
+      this.injectionPointPane.hasChildren());
+}

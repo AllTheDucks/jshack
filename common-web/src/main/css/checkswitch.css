@@ -39,8 +39,8 @@
     text-align: center;
     line-height: 22px;
     font-weight: 100;
-    color: #ffffff;
-    text-shadow: -1px -1px 0 rgba(0,0,0,0.15);
+    color: #000000;
+    /*text-shadow: -1px -1px 0 rgba(0,0,0,0.15);*/
     float: left;
 }
 
@@ -51,13 +51,13 @@
 .jsh-checkswitch-checkedlabel {
     position: relative;
     border-radius: 2px 0 0 2px;
-    background: #63C663;
+    background: #c8ffc8;
 }
 
 .jsh-checkswitch-uncheckedlabel {
     position: relative;
     border-radius: 0 2px 2px 0;
-    background: #aaaaaa;
+    background: #ffc8c8;
 }
 
 .jsh-checkswitch-handle {

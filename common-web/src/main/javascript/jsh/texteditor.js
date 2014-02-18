@@ -69,7 +69,7 @@ jsh.TextEditor.prototype.decorateInternal = function(element) {
   this.resourceProperties_ = new jsh.ResourceRestrictions();
   this.splitPane_ = new jsh.SplitPane(this.hackEditor_,
       this.resourceProperties_, goog.ui.SplitPane.Orientation.VERTICAL);
-  this.splitPane_.setInitialSize(50);
+  this.splitPane_.setInitialSize(250);
   this.splitPane_.setHandleSize(this.splitPaneHandleWidth_);
   this.splitPane_.setSecondComponentStatic(true);
 
