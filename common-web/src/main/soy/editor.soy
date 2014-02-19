@@ -169,19 +169,9 @@
 {template .injectionPointPane}
     <div class="{css jsh-injection-point-pane} {css jsh-resource-restriction-pane}">
         <hr>
-        <div id="formatButton" class="goog-css3-menu-button goog-inline-block goog-css3-button" title="Format" aria-expanded="false" role="button" tabindex="0" aria-haspopup="true" style="-webkit-user-select: none;">
-            <div class="goog-inline-block ">
-                <div class="goog-css3-button-caption goog-inline-block">
-                    <!-- These elements will become the button's caption. -->
-                    <div class="icon format-icon goog-inline-block"></div>
-                    <span style="vertical-align:middle">Add Injection Point</span>
-                    <!-- This DIV will be auto-decorated with a menu. -->
-                </div>
-                <div class="goog-css3-button-dropdown goog-inline-block"></div>
-            </div>
-        </div>
-        <br>
+        <div class="{css jsh-injection-point-button}"></div>
         <div class="{css jsh-empty-notice}">This resource currently has no injection points specified. It won't be injected anywhere.</div>
+        <div class="{css jsh-injection-point-pane-content}"></div>
     </div>
 {/template}
 

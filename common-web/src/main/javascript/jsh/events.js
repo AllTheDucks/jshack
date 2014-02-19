@@ -13,5 +13,7 @@ jsh.events.EventType = {
   SAVE: 'save',
   RESOURCE_RENAMED: 'resourcerenamed',
   RESOURCE_NAME_EDITABLE: 'resourcenameeditable',
-  RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable'
+  RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable',
+  INJECTION_POINT_ADDED: 'injectionpointadded',
+  INJECTION_POINT_REMOVED: 'injectionpointremoved'
 };

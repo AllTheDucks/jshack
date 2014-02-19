@@ -7,6 +7,7 @@ goog.require('goog.ui.Component');
 goog.require('jsh.CheckSwitchRenderer');
 goog.require('jsh.InjectionPointPane');
 goog.require('jsh.RestrictionPane');
+goog.require('jsh.model.injectionPoint');
 goog.require('jsh.soy.editor');
 
 
@@ -55,18 +56,21 @@ jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
 
   this.injectionPointPane = new jsh.InjectionPointPane();
   this.addChild(this.injectionPointPane, true);
-
   this.restrictionPane = new jsh.RestrictionPane();
-  this.addChild(this.restrictionPane, true);
 
+  this.addChild(this.restrictionPane, true);
   goog.events.listen(this.injectCheckbox, goog.ui.Component.EventType.CHANGE,
       this.handleInjectCheckboxChange, false, this);
-  this.handleInjectCheckboxChange();
 
+  this.handleInjectCheckboxChange();
   goog.events.listen(this.injectionPointPane,
       goog.ui.Component.EventType.CHANGE,
       this.handleInjectionPointsChanged, false, this);
+
   this.handleInjectionPointsChanged();
+
+  this.injectionPointPane.addInjectionPoint(
+      jsh.model.injectionPoint.LearningSystemPage);
 };
 
 
@@ -77,13 +81,14 @@ jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
 jsh.ResourceRestrictions.prototype.handleInjectCheckboxChange = function() {
   goog.style.setElementShown(this.injectionPointPane.getElement(),
       this.injectCheckbox.isChecked());
-}
+};
 
 
 /**
- *
+ * Handles items being added to the injections point list, to show the
+ * restrictions pane
  */
 jsh.ResourceRestrictions.prototype.handleInjectionPointsChanged = function() {
   goog.style.setElementShown(this.restrictionPane.getElement(),
       this.injectionPointPane.hasChildren());
-}
+};
