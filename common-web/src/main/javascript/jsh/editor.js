@@ -377,6 +377,7 @@ jsh.HackEditor.prototype.createEditor = function(resource) {
   switch (jsh.MimeTypeHelper.getEditorType(resource.mime)) {
     case jsh.MimeTypeHelper.EditorType.TEXT:
       ed = new jsh.TextEditor(resource);
+      ed.bindResize(this.splitpane_);
       break;
 
     case jsh.MimeTypeHelper.EditorType.IMAGE:
