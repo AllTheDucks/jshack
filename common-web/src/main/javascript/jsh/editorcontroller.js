@@ -30,6 +30,9 @@ jsh.EditorController = function(hackEditor, dataService) {
 
   goog.events.listen(this.hackEditor_, jsh.events.EventType.FILES_IMPORTED,
       this.handleFilesImported, false, this);
+
+  goog.events.listen(this.hackEditor_, jsh.events.EventType.RESOURCE_DELETED,
+      this.handleResourceDelete, false, this);
 };
 
 
@@ -98,4 +101,16 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
     this.hackEditor_.addResourceListItems(resources);
   }, this);
   deferredList.addCallback(completeCallback);
+};
+
+
+/**
+ *
+ * @param {Event} e
+ */
+jsh.EditorController.prototype.handleResourceDelete = function(e) {
+  var deletedResource = /** @type {?jsh.model.HackResource} */(e.target);
+  if (deletedResource && deletedResource.tempFileName) {
+    this.dataService_.deleteFiles([deletedResource.tempFileName]);
+  }
 };

@@ -15,6 +15,7 @@ public abstract class JSHackDirectoryFactory {
 
     public static final String HACKS_DIR_NAME = "hacks";
     public static final String WORKING_DIR_NAME = "working";
+    public static final String TEMP_DIR_NAME = "temp";
     public static final String ARCHIVE_DIR_NAME = "archive";
     public static final String CONFIG_DIR_NAME = "config";
 
@@ -45,7 +46,7 @@ public abstract class JSHackDirectoryFactory {
     }
 
     public File getAndCreateTempDir() {
-        return getOrCreateSubDir("jshack", FileUtils.getTempDirectory());
+        return getOrCreateSubDir(TEMP_DIR_NAME, getRootConfigDir());
     }
 
     public static File getOrCreateSubDir(String subDirName, File parent) {
