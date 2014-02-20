@@ -8,6 +8,7 @@ goog.require('goog.ui.Toolbar');
 goog.require('goog.ui.ToolbarButton');
 goog.require('goog.ui.ToolbarMenuButton');
 goog.require('goog.ui.ToolbarSeparator');
+goog.require('goog.ui.ToolbarToggleButton');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('jsh.AceEditor');
 goog.require('jsh.DefaultEditor');
@@ -54,6 +55,8 @@ jsh.HackEditor = function(opt_hack, opt_domHelper) {
   this.splitPaneHandleWidth_ = 5;
 
   this.setModel(opt_hack);
+
+  this.btnWordWrap_ = null;
 
 };
 goog.inherits(jsh.HackEditor, goog.ui.Component);
@@ -153,6 +156,16 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
           resItem.setNameEditable();
         }
       }, false, this);
+
+  toolbar.addChild(new goog.ui.ToolbarSeparator(), true);
+
+  this.btnWordWrap_ = new goog.ui.ToolbarToggleButton(
+      this.createButtonDOM_('Word Wrap', goog.getCssName('fa-exchange')));
+
+  goog.events.listen(this.btnWordWrap_, goog.ui.Component.EventType.ACTION,
+      this.refreshWordWrap, false, this);
+
+  toolbar.addChild(this.btnWordWrap_, true);
 
   this.addChild(toolbar, true);
 
@@ -348,6 +361,7 @@ jsh.HackEditor.prototype.handleResourceSelect = function(e) {
     ed = this.createEditor(resource);
     this.editorCache_[id] = ed;
     this.editorContainer_.addChild(ed, true);
+    this.refreshWordWrapOnEditor_(ed);
     if (ed.resize) {
       goog.events.listen(this.splitpane_, goog.ui.Component.EventType.CHANGE,
           function() {
@@ -525,3 +539,38 @@ jsh.HackEditor.prototype.getResourceCompleter = function() {
         }, this)
   };
 };
+
+
+/**
+ * Returns if word wrap should be on in the text editors based on the state of
+ * the word wrap button.
+ * @return {boolean}
+ */
+jsh.HackEditor.prototype.getWordWrapEnabled = function() {
+  return this.btnWordWrap_.hasState(goog.ui.Component.State.CHECKED);
+};
+
+
+/**
+ * Sets the correct word wrap state onto the specified editor.
+ * @param {jsh.BaseEditor} ed
+ * @private
+ */
+jsh.HackEditor.prototype.refreshWordWrapOnEditor_ = function(ed) {
+  if (ed && ed.wordWrap) {
+    ed.wordWrap(this.getWordWrapEnabled());
+  }
+};
+
+
+/**
+ * Ses the correct word wrap state on all of the resource editors.
+ */
+jsh.HackEditor.prototype.refreshWordWrap = function() {
+  this.resourceListContainer_.forEachChild(function(child, index) {
+    window.console.log(child.getId());
+    var ed = this.editorCache_[child.getId()];
+    this.refreshWordWrapOnEditor_(ed);
+  }, this);
+};
+

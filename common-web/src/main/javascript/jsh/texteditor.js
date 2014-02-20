@@ -95,10 +95,20 @@ jsh.TextEditor.prototype.enterDocument = function() {
 /**
  * Handler for when the parent component changes. We're interested in size
  * changes in particular.
- * @param {!goog.events.Event} e An event.
  */
-jsh.TextEditor.prototype.resize = function(e) {
+jsh.TextEditor.prototype.resize = function() {
   var size = goog.style.getSize(this.getElement());
   this.splitPane_.setSize(size);
   this.hackEditor_.resize();
+  //Hack to force the rerender of the ace editor. Needed for the word wrap.
+  this.hackEditor_.getAce().setValue(this.hackEditor_.getAce().getValue());
+};
+
+
+/**
+ * Enabled or disables word wrapping in the ace editor.
+ * @param {boolean} wrap
+ */
+jsh.TextEditor.prototype.wordWrap = function(wrap) {
+  this.hackEditor_.getAce().getSession().setUseWrapMode(wrap);
 };

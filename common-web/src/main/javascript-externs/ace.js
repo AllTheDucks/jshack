@@ -84,3 +84,8 @@ ace.AceSession.prototype.setValue = function(value) {};
  * @return {string}
  */
 ace.AceSession.prototype.getValue = function() {};
+
+/**
+ * @param {boolean} wrap
+ */
+ace.AceSession.prototype.setUseWrapMode = function(wrap) {};
