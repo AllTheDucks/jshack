@@ -27,31 +27,32 @@ jsh.MimeTypeHelper.EditorType = {
  *
  * @type {Object}
  */
-jsh.MimeTypeHelper.fallback = {
-  'iconClass': goog.getCssName('jsh-resourcelistitem-default'),
-  'dataType': jsh.MimeTypeHelper.DataType.BINARY,
-  'editorType': jsh.MimeTypeHelper.EditorType.DEFAULT
-};
-
-
-/**
- *
- * @type {Object}
- */
 jsh.MimeTypeHelper.mimeLookup = {
   'application/javascript': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-js'),
     'aceMode': 'ace/mode/javascript',
     'dataType': jsh.MimeTypeHelper.DataType.TEXT,
-    'editorType': jsh.MimeTypeHelper.EditorType.TEXT
+    'editorType': jsh.MimeTypeHelper.EditorType.TEXT,
+    'autoCompletePattern': {
+      'application/javascript': 'require(###path###);'
+    }
   },
   'text/html': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-html'),
-    'aceMode': 'ace/mode/html'
+    'aceMode': 'ace/mode/html',
+    'autoCompletePattern': {
+      'application/javascript':
+          '<script src="###path###" type="text/javascript"></script>',
+      'text/css': '<link href="###path###" rel="stylesheet">',
+      'image': '<img src="###path###" />'
+    }
   },
   'text/css': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-css'),
-    'aceMode': 'ace/mode/css'
+    'aceMode': 'ace/mode/css',
+    'autoCompletePattern': {
+      'text/css': '@import url("###path###");'
+    }
   },
   'image/png': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-png')
@@ -65,11 +66,19 @@ jsh.MimeTypeHelper.mimeLookup = {
   'text': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-text'),
     'dataType': jsh.MimeTypeHelper.DataType.TEXT,
-    'editorType': jsh.MimeTypeHelper.EditorType.TEXT
+    'editorType': jsh.MimeTypeHelper.EditorType.TEXT,
+    'autoCompletePattern': {
+      '*': '###path###'
+    }
   },
   'image': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-text'),
     'editorType': jsh.MimeTypeHelper.EditorType.IMAGE
+  },
+  '*' : {
+    'iconClass': goog.getCssName('jsh-resourcelistitem-default'),
+    'dataType': jsh.MimeTypeHelper.DataType.BINARY,
+    'editorType': jsh.MimeTypeHelper.EditorType.DEFAULT
   }
 };
 
@@ -120,6 +129,34 @@ jsh.MimeTypeHelper.getEditorType = function(mimeType) {
 
 
 /**
+ * Gets the pattern for auto completing a resource.
+ * @param {string} editorMimeType Mime type of the editor.
+ * @param {string} resourceMimeType Mime type of the resource.
+ * @param {string} path The path of the resource.
+ * @return {?string}
+ */
+jsh.MimeTypeHelper.getAutoCompletePattern = function(editorMimeType,
+                                            resourceMimeType, path) {
+  var lookup = jsh.MimeTypeHelper.lookupAttribute_('autoCompletePattern',
+      editorMimeType);
+  var pattern = lookup[resourceMimeType];
+  if (!pattern) {
+    var genericType = resourceMimeType.split('/')[0];
+    pattern = lookup[genericType];
+    if (!pattern) {
+      pattern = lookup['*'];
+      if (!pattern) {
+        return null;
+      }
+    }
+  }
+
+  var ref = '${resources[\'' + path + '\']}';
+  return pattern.replace('###path###', ref);
+};
+
+
+/**
  * Lookup an attribute for a given mime type.
  * @param {string} attribute the attribute to lookup.
  * @param {string} mimeType the mime type.
@@ -144,5 +181,7 @@ jsh.MimeTypeHelper.lookupAttribute_ = function(attribute, mimeType) {
     }
   }
 
-  return jsh.MimeTypeHelper.fallback[attribute];
+  lookup = jsh.MimeTypeHelper.mimeLookup['*'];
+  return lookup[attribute];
 };
+

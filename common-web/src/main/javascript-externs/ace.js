@@ -5,7 +5,7 @@
 
 /**
  * @param {string} path
- * @return {RequiredObject}
+ * @return {ace.RequiredObject}
  */
 function require(path) {}
 
@@ -13,12 +13,17 @@ function require(path) {}
  * @class
  * @constructor
  */
-var RequiredObject;
+ace.RequiredObject;
 
 /**
  * @type {function (new:Object)}
  */
-RequiredObject.prototype.Mode;
+ace.RequiredObject.prototype.Mode;
+
+/**
+ * @param {Object} completer
+ */
+ace.RequiredObject.prototype.addCompleter = function(completer) {};
 
 /**
  * @namespace
@@ -53,6 +58,11 @@ ace.AceEditor.prototype.setReadOnly = function(readOnly) {};
 ace.AceEditor.prototype.getSession = function() {};
 
 ace.AceEditor.prototype.resize = function() {};
+
+/**
+ * @param {Object} options
+ */
+ace.AceEditor.prototype.setOptions = function(options) {};
 
 /**
  * @class
