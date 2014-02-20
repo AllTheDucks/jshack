@@ -83,10 +83,6 @@ jsh.TextEditor.prototype.decorateInternal = function(element) {
  */
 jsh.TextEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  //TODO this is nasty.  Really shouldn't rely on the dom structure like this.
-  goog.events.listen(this.getParent().getParent(),
-      goog.ui.Component.EventType.CHANGE,
-      this.handleParentSizeChange, false, this);
   goog.events.listen(this.splitPane_, goog.ui.Component.EventType.CHANGE,
       goog.events.Event.stopPropagation, false, this);
 
@@ -101,7 +97,7 @@ jsh.TextEditor.prototype.enterDocument = function() {
  * changes in particular.
  * @param {!goog.events.Event} e An event.
  */
-jsh.TextEditor.prototype.handleParentSizeChange = function(e) {
+jsh.TextEditor.prototype.resize = function(e) {
   var size = goog.style.getSize(this.getElement());
   this.splitPane_.setSize(size);
   this.hackEditor_.resize();
