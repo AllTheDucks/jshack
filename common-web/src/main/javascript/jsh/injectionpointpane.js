@@ -209,12 +209,29 @@ jsh.InjectionPointPane.prototype.removeInjectionPoints =
 
 
 /**
- *
+ * Shows or hides the message about no injection points, based on the
+ * state of the list.
  * @private
  */
 jsh.InjectionPointPane.prototype.refreshEmptyNotice_ = function() {
-  goog.style.setElementShown(this.emptyNotice_,
-      (this.injectionPoints_.length == 0));
+  goog.style.setElementShown(this.emptyNotice_, this.hasInjectionPoints());
+};
+
+
+/**
+ * Does the list have any injection points in it?
+ * @return {boolean}
+ */
+jsh.InjectionPointPane.prototype.hasInjectionPoints = function() {
+  return this.injectionPoints_.length == 0;
+};
+
+
+/**
+ * Removes all the injection points from the list.
+ */
+jsh.InjectionPointPane.prototype.resetInjectionPoints = function() {
+  this.removeInjectionPoints(goog.array.clone(this.injectionPoints_));
 };
 
 

@@ -64,13 +64,11 @@ jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
 
   this.handleInjectCheckboxChange();
   goog.events.listen(this.injectionPointPane,
-      goog.ui.Component.EventType.CHANGE,
+      [jsh.events.EventType.INJECTION_POINT_ADDED,
+        jsh.events.EventType.INJECTION_POINT_REMOVED],
       this.handleInjectionPointsChanged, false, this);
 
   this.handleInjectionPointsChanged();
-
-  this.injectionPointPane.addInjectionPoint(
-      jsh.model.injectionPoint.LearningSystemPage);
 };
 
 
@@ -79,8 +77,12 @@ jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
  * should be injected.
  */
 jsh.ResourceRestrictions.prototype.handleInjectCheckboxChange = function() {
-  goog.style.setElementShown(this.injectionPointPane.getElement(),
-      this.injectCheckbox.isChecked());
+  var checked = this.injectCheckbox.isChecked();
+  goog.style.setElementShown(this.injectionPointPane.getElement(), checked);
+
+  if (!checked) {
+    this.injectionPointPane.resetInjectionPoints();
+  }
 };
 
 
@@ -90,5 +92,5 @@ jsh.ResourceRestrictions.prototype.handleInjectCheckboxChange = function() {
  */
 jsh.ResourceRestrictions.prototype.handleInjectionPointsChanged = function() {
   goog.style.setElementShown(this.restrictionPane.getElement(),
-      this.injectionPointPane.hasChildren());
+      !this.injectionPointPane.hasInjectionPoints());
 };
