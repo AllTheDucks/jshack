@@ -346,6 +346,12 @@ jsh.HackEditor.prototype.handleResourceSelect = function(e) {
     ed = this.createEditor(resource);
     this.editorCache_[id] = ed;
     this.editorContainer_.addChild(ed, true);
+    if (ed.resize) {
+      goog.events.listen(this.splitpane_, goog.ui.Component.EventType.CHANGE,
+          function() {
+            this.resize();
+          }, false, ed);
+    }
   }
 
   this.currentEditor_.setVisible(false);
