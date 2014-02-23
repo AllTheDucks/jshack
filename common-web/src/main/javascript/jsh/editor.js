@@ -239,6 +239,7 @@ jsh.HackEditor.prototype.createResource = function(name, type) {
   var resource = new jsh.model.HackResource();
   resource.path = name;
   resource.mime = type;
+  resource.content = jsh.MimeTypeHelper.getDefaultContent(type);
   this.addResourceListItem(resource);
 };
 

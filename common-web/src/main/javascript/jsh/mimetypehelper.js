@@ -35,7 +35,14 @@ jsh.MimeTypeHelper.mimeLookup = {
     'editorType': jsh.MimeTypeHelper.EditorType.TEXT,
     'autoCompletePattern': {
       'application/javascript': 'require(###path###);'
-    }
+    },
+    'defaultContent': '\/* This snippet binds a function to the ' +
+        '\"dom:loaded\" event.\n' +
+        'You can put your own javascript into the function, or replace\n' +
+        'the entire snippet. *\/\n' +
+        'Event.observe(document,\'dom:loaded\', function() {\n' +
+        '    //Your javascript goes here. \n' +
+        '});\n'
   },
   'text/html': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-html'),
@@ -45,7 +52,16 @@ jsh.MimeTypeHelper.mimeLookup = {
           '<script src="###path###" type="text/javascript"></script>',
       'text/css': '<link href="###path###" rel="stylesheet">',
       'image': '<img src="###path###" />'
-    }
+    },
+    'defaultContent': '<!-- This snippet binds a function to the ' +
+        '\"dom:loaded\" event.\n' +
+        'You can put your own javascript into the function, or replace\n' +
+        'the entire snippet. -->\n' +
+        '<script type=\'text/javascript\'>\n' +
+        '    Event.observe(document,\'dom:loaded\', function() {\n' +
+        '        //Your javascript goes here. \n' +
+        '    });\n' +
+        '</script>\n'
   },
   'text/css': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-css'),
@@ -125,6 +141,17 @@ jsh.MimeTypeHelper.getDataType = function(mimeType) {
 jsh.MimeTypeHelper.getEditorType = function(mimeType) {
   return /** @type {jsh.MimeTypeHelper.EditorType} */ (jsh.MimeTypeHelper.
       lookupAttribute_('editorType', mimeType));
+};
+
+
+/**
+ * Gets the Default Content to use for this mime type.
+ * @param {string} mimeType the mime type.
+ * @return {string}
+ */
+jsh.MimeTypeHelper.getDefaultContent = function(mimeType) {
+  return /** @type {string} */ (jsh.MimeTypeHelper.
+      lookupAttribute_('defaultContent', mimeType));
 };
 
 
