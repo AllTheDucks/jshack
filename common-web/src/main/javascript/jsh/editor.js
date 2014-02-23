@@ -461,7 +461,8 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
     var selectedIndex = this.resourceListContainer_.getSelectedIndex();
     this.resourceListContainer_.removeChild(resItem, true);
     if (selectedIndex >= this.resourceListContainer_.getChildCount()) {
-      this.resourceListContainer_.setSelectedChildByIndex(selectedIndex - 1, true);
+      this.resourceListContainer_.setSelectedChildByIndex(selectedIndex - 1,
+          true);
     } else {
       this.resourceListContainer_.setSelectedChildByIndex(selectedIndex, true);
     }
