@@ -63,12 +63,6 @@ jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
       this.handleInjectCheckboxChange, false, this);
 
   this.handleInjectCheckboxChange();
-  goog.events.listen(this.injectionPointPane,
-      [jsh.events.EventType.INJECTION_POINT_ADDED,
-        jsh.events.EventType.INJECTION_POINT_REMOVED],
-      this.handleInjectionPointsChanged, false, this);
-
-  this.handleInjectionPointsChanged();
 };
 
 
@@ -78,19 +72,7 @@ jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
  */
 jsh.ResourceRestrictions.prototype.handleInjectCheckboxChange = function() {
   var checked = this.injectCheckbox.isChecked();
-  goog.style.setElementShown(this.injectionPointPane.getElement(), checked);
 
-  if (!checked) {
-    this.injectionPointPane.resetInjectionPoints();
-  }
-};
-
-
-/**
- * Handles items being added to the injections point list, to show the
- * restrictions pane
- */
-jsh.ResourceRestrictions.prototype.handleInjectionPointsChanged = function() {
-  goog.style.setElementShown(this.restrictionPane.getElement(),
-      !this.injectionPointPane.hasInjectionPoints());
+  this.injectionPointPane.setEnabled(checked);
+  this.restrictionPane.setEnabled(checked);
 };

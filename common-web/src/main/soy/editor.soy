@@ -157,7 +157,7 @@
 <div>
     <div>
         <span id="enable" class="inject-checkbox goog-checkbox-unchecked goog-checkbox" aria-checked="true" role="checkbox" tabindex="0" aria-labelledby="enable.lbl" style="-webkit-user-select: none;"></span>
-        <span>Inject this resource directly into page.   (The contents of this file will automatically be wrapped in a <b>&lt;style&gt;</b> tag.)</span>
+        <span>Inject this resource directly into page.</span>
     </div>
 </div>
 {/template}
@@ -177,30 +177,13 @@
 
 
 /**
- * Component for adding restrictions to an injected resource.
+ * Component for selecting injection points.
  */
 {template .restrictionPane}
     <div class="{css jsh-restriction-pane} {css jsh-resource-restriction-pane}">
         <hr>
-        <div id="formatButton" class="goog-css3-menu-button goog-inline-block goog-css3-button" title="Format" aria-expanded="false" role="button" tabindex="0" aria-haspopup="true" style="-webkit-user-select: none;">
-            <div class="goog-inline-block ">
-                <div class="goog-css3-button-caption goog-inline-block">
-                    <!-- These elements will become the button's caption. -->
-                    <div class="icon format-icon goog-inline-block"></div>
-                    <span style="vertical-align:middle">Add Restriction</span>
-                    <!-- This DIV will be auto-decorated with a menu. -->
-                </div>
-                <div class="goog-css3-button-dropdown goog-inline-block"></div>
-            </div>
-        </div>
-        <br>
+        <div class="{css jsh-restriction-button}"></div>
         <div class="{css jsh-empty-notice}">This resource currently has no restrictions specified.  It will be injected in <b>every page</b> for the specified injection points.</div>
-        <div class="jsh-checkswitch jsh-checkswitch-checked">
-            <div class="jsh-checkswitch-inner">
-                <div class="jsh-checkswitch-checkedlabel">is</div>
-                <div class="jsh-checkswitch-handle"></div>
-                <div class="jsh-checkswitch-uncheckedlabel">is not</div>
-            </div>
-        </div>
+        <div class="{css jsh-restriction-pane-content}"></div>
     </div>
 {/template}

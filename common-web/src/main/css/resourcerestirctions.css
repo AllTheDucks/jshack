@@ -1,15 +1,7 @@
 .jsh-resource-restriction-pane hr {
-    width: 90%;
-    border: 0;
-    height: 1px;
-    /* @alternate */
-    background-image: -webkit-linear-gradient(left, rgba(200,200,200,0), rgba(200,200,200,0.75), rgba(200,200,200,0));
-    /* @alternate */
-    background-image:    -moz-linear-gradient(left, rgba(200,200,200,0), rgba(200,200,200,0.75), rgba(200,200,200,0));
-    /* @alternate */
-    background-image:     -ms-linear-gradient(left, rgba(200,200,200,0), rgba(200,200,200,0.75), rgba(200,200,200,0));
-    /* @alternate */
-    background-image:      -o-linear-gradient(left, rgba(200,200,200,0), rgba(200,200,200,0.75), rgba(200,200,200,0));
+    border: none;
+    border-bottom: 1px solid gray;
+    margin-right: 1em;
 }
 
 .jsh-resource-restriction-pane .jsh-empty-notice {

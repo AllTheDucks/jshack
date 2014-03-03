@@ -57,6 +57,12 @@ jsh.InjectionPointPane = function(opt_injectionPoints, opt_domHelper) {
    */
   this.emptyNotice_ = null;
 
+
+  /**
+    * @type {goog.ui.MenuButton}
+    */
+  this.injectionPointMenuButton_;
+
   /**
    * @type {goog.ui.Menu}
    * @private
@@ -106,10 +112,10 @@ jsh.InjectionPointPane.prototype.decorateInternal = function(element) {
   this.injectionPoints_ = [];
   this.addInjectionPoints(prepopulatedPoints);
 
-  var button = new goog.ui.MenuButton('Add Injection Point',
+  this.injectionPointMenuButton_ = new goog.ui.MenuButton('Add Injection Point',
       this.injectionPointMenu_);
-  button.render(goog.dom.getElementByClass('jsh-injection-point-button',
-      element));
+  this.injectionPointMenuButton_.render(goog.dom.getElementByClass(
+      'jsh-injection-point-button', element));
 };
 
 
@@ -235,6 +241,18 @@ jsh.InjectionPointPane.prototype.resetInjectionPoints = function() {
 };
 
 
+/**
+ *
+ * @param {boolean} enabled
+ */
+jsh.InjectionPointPane.prototype.setEnabled = function(enabled) {
+  this.injectionPointMenuButton_.setEnabled(enabled);
+  this.injectionPointList_.forEachChild(function(item, i) {
+    item.setEnabled(enabled);
+  }, this);
+};
+
+
 
 /**
  * Item in the list of selected injection points.
@@ -252,6 +270,9 @@ jsh.InjectionPointPaneItem = function(injectionPoint, opt_domHelper) {
    * @type {jsh.model.injectionPoint}
    */
   this.injectionPoint = injectionPoint;
+
+  /** @type {goog.ui.Button} */
+  this.removeBtn_;
 };
 goog.inherits(jsh.InjectionPointPaneItem, goog.ui.Component);
 
@@ -277,13 +298,23 @@ jsh.InjectionPointPaneItem.prototype.decorateInternal = function(element) {
 
   goog.dom.setTextContent(element, this.injectionPoint.toString());
 
-  var removeBtn = new goog.ui.Button('Remove');
-  this.addChild(removeBtn, true);
+  this.removeBtn_ = new goog.ui.Button('Remove');
+  this.addChild(this.removeBtn_, true);
 
-  goog.events.listen(removeBtn, goog.ui.Component.EventType.ACTION, function() {
-    this.dispatchEvent(new goog.events.Event(
-        jsh.events.EventType.INJECTION_POINT_REMOVED, this));
-  }, true, this);
+  goog.events.listen(this.removeBtn_, goog.ui.Component.EventType.ACTION,
+      function() {
+        this.dispatchEvent(new goog.events.Event(
+            jsh.events.EventType.INJECTION_POINT_REMOVED, this));
+      }, true, this);
+};
+
+
+/**
+ *
+ * @param {boolean} enabled
+ */
+jsh.InjectionPointPaneItem.prototype.setEnabled = function(enabled) {
+  this.removeBtn_.setEnabled(enabled);
 };
 
 

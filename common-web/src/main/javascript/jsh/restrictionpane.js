@@ -3,6 +3,7 @@ goog.provide('jsh.RestrictionPane');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.ui.Component');
+goog.require('jsh.model.restrictionType');
 goog.require('jsh.soy.editor');
 
 
@@ -16,6 +17,29 @@ goog.require('jsh.soy.editor');
  */
 jsh.RestrictionPane = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  /**
+   * @type {goog.ui.MenuButton}
+   */
+  this.restrictionMenuButton_;
+
+  /**
+   * @type {goog.ui.Menu}
+   * @private
+   */
+  this.restrictionMenu_ = null;
+
+  /**
+   *  @type {goog.ui.Component}
+   *  @private
+   */
+  this.restrictionList_ = null;
+
+  /**
+   * @type {Element}
+   * @private
+   */
+  this.emptyNotice_ = null;
 };
 goog.inherits(jsh.RestrictionPane, goog.ui.Component);
 
@@ -39,9 +63,37 @@ jsh.RestrictionPane.prototype.createDom = function() {
 jsh.RestrictionPane.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  var cbel = goog.dom.getElementByClass('jsh-checkswitch', element);
+  var listEl = goog.dom.getElementByClass('jsh-restriction-pane-content',
+      element);
+  this.restrictionList_ = new goog.ui.Component();
+  this.restrictionList_.render(listEl);
 
-  var cb = new goog.ui.Checkbox(goog.ui.Checkbox.State.CHECKED, null,
-      new jsh.CheckSwitchRenderer());
-  cb.decorate(cbel);
+  this.emptyNotice_ = goog.dom.getElementByClass('jsh-empty-notice', element);
+
+  this.restrictionMenu_ = new goog.ui.Menu();
+
+  this.restrictionMenuButton_ = new goog.ui.MenuButton('Add Restriction',
+      this.restrictionMenu_);
+  for (var key in jsh.model.restrictionType) {
+    var value = jsh.model.restrictionType[key];
+    this.restrictionMenu_.addChild(new goog.ui.MenuItem(value), true);
+  }
+
+  this.restrictionMenuButton_.render(goog.dom.getElementByClass(
+      'jsh-restriction-button', element));
+
+  //  var cbel = goog.dom.getElementByClass('jsh-checkswitch', element);
+  //
+  //  var cb = new goog.ui.Checkbox(goog.ui.Checkbox.State.CHECKED, null,
+  //      new jsh.CheckSwitchRenderer());
+  //  cb.decorate(cbel);
+};
+
+
+/**
+ * Sets the enabled status of this component.
+ * @param {boolean} enabled
+ */
+jsh.RestrictionPane.prototype.setEnabled = function(enabled) {
+  this.restrictionMenuButton_.setEnabled(enabled);
 };
