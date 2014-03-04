@@ -3,6 +3,8 @@ goog.provide('jsh.RestrictionPane');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.ui.Component');
+goog.require('jsh.RestrictionEditor');
+goog.require('jsh.RestrictionTypeHelper');
 goog.require('jsh.model.restrictionType');
 goog.require('jsh.soy.editor');
 
@@ -33,7 +35,7 @@ jsh.RestrictionPane = function(opt_domHelper) {
    *  @type {goog.ui.Component}
    *  @private
    */
-  this.restrictionList_ = null;
+  this.restrictionEditors_ = null;
 
   /**
    * @type {Element}
@@ -65,8 +67,8 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
 
   var listEl = goog.dom.getElementByClass('jsh-restriction-pane-content',
       element);
-  this.restrictionList_ = new goog.ui.Component();
-  this.restrictionList_.render(listEl);
+  this.restrictionEditors_ = new goog.ui.Component();
+  this.restrictionEditors_.render(listEl);
 
   this.emptyNotice_ = goog.dom.getElementByClass('jsh-empty-notice', element);
 
@@ -75,8 +77,13 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
   this.restrictionMenuButton_ = new goog.ui.MenuButton('Add Restriction',
       this.restrictionMenu_);
   for (var key in jsh.model.restrictionType) {
-    var value = jsh.model.restrictionType[key];
-    this.restrictionMenu_.addChild(new goog.ui.MenuItem(value), true);
+    var restrictionType = /** @type {jsh.model.restrictionType} */(key);
+    var label = jsh.RestrictionTypeHelper.getMenuLabel(restrictionType);
+    var menuItem = new goog.ui.MenuItem(label);
+    this.restrictionMenu_.addChild(menuItem, true);
+
+    goog.events.listen(menuItem, goog.ui.Component.EventType.ACTION,
+        goog.bind(this.addRestriction_, this, restrictionType));
   }
 
   this.restrictionMenuButton_.render(goog.dom.getElementByClass(
@@ -96,4 +103,15 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
  */
 jsh.RestrictionPane.prototype.setEnabled = function(enabled) {
   this.restrictionMenuButton_.setEnabled(enabled);
+};
+
+
+/**
+ * Adds the restriction editor to the component.
+ * @param {jsh.model.restrictionType!} type
+ * @private
+ */
+jsh.RestrictionPane.prototype.addRestriction_ = function(type) {
+  var editor = jsh.RestrictionTypeHelper.getEditor(type);
+  this.restrictionEditors_.addChild(editor, true);
 };
