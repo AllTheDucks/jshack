@@ -98,6 +98,18 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
 
 
 /**
+ * Called when the Control is known to be in the document.
+ * @override
+ */
+jsh.RestrictionPane.prototype.enterDocument = function() {
+  goog.base(this, 'enterDocument');
+  goog.events.listen(this, jsh.events.EventType.REMOVE, function(e) {
+    this.removeRestriction_(/** @type {goog.ui.Component} */(e.target));
+  }, false, this);
+};
+
+
+/**
  * Sets the enabled status of this component.
  * @param {boolean} enabled
  */
@@ -114,4 +126,26 @@ jsh.RestrictionPane.prototype.setEnabled = function(enabled) {
 jsh.RestrictionPane.prototype.addRestriction_ = function(type) {
   var editor = jsh.RestrictionTypeHelper.getEditor(type);
   this.restrictionEditors_.addChild(editor, true);
+  this.refreshEmptyNotice_();
+};
+
+
+/**
+ * Removes the specified editor.
+ * @param {goog.ui.Component!} editor The editor to be removed
+ * @private
+ */
+jsh.RestrictionPane.prototype.removeRestriction_ = function(editor) {
+  this.removeChild(editor);
+  this.refreshEmptyNotice_();
+};
+
+
+/**
+ * Shows or hides the message about no injection points, based on the
+ * state of the list.
+ * @private
+ */
+jsh.RestrictionPane.prototype.refreshEmptyNotice_ = function() {
+  goog.style.setElementShown(this.emptyNotice_, this.hasChildren());
 };

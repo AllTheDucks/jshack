@@ -14,6 +14,16 @@
     margin: 0.5em 0.5em 0.5em 0;
     border: 1px solid #808080;
     border-radius: 0.5em;
-    padding: 1em;
     box-shadow: 0.25em 0.25em 0.1em #111111;
+    background-color: #191919;
+}
+
+.jsh-restriction-editor-content {
+    padding: 0.5em;
+}
+
+.jsh-restriction-editor-content-close-button {
+    text-align: right;
+    background: #808080;
+    padding: 0.25em;
 }

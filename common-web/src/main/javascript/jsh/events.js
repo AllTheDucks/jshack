@@ -15,5 +15,6 @@ jsh.events.EventType = {
   RESOURCE_NAME_EDITABLE: 'resourcenameeditable',
   RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable',
   INJECTION_POINT_ADDED: 'injectionpointadded',
-  INJECTION_POINT_REMOVED: 'injectionpointremoved'
+  INJECTION_POINT_REMOVED: 'injectionpointremoved',
+  REMOVE: 'remove'
 };
