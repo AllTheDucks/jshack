@@ -1,6 +1,8 @@
 goog.provide('jsh.CourseAvailabilityRestrictionEditor');
 
-goog.require('goog.ui.Checkbox');
+goog.require('atd.ToggleButtonGroup');
+goog.require('goog.ui.Css3ButtonRenderer');
+goog.require('goog.ui.ToggleButton');
 
 
 
@@ -13,12 +15,6 @@ goog.require('goog.ui.Checkbox');
  */
 jsh.CourseAvailabilityRestrictionEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
-
-  /**
-   * @type {goog.ui.Checkbox}
-   * @private
-   */
-  this.availabileCheckbox_ = null;
 };
 goog.inherits(jsh.CourseAvailabilityRestrictionEditor, jsh.RestrictionEditor);
 
@@ -44,9 +40,11 @@ jsh.CourseAvailabilityRestrictionEditor.prototype.decorateInternal =
     function(element) {
   this.setElementInternal(element);
 
-  this.availabileCheckbox_ = new goog.ui.Checkbox();
-  this.availabileCheckbox_.setLabel(goog.dom.getElementByClass(
-      goog.getCssName('jsh-course-availability-restriction-editor'), element));
-  this.availabileCheckbox_.render(goog.dom.getElementByClass(
-      goog.getCssName('jsh-course-availability-checkbox'), element));
+  var optionsEl = goog.dom.getElementByClass(
+      'jsh-course-availability-restriction-editor-options', element);
+  var renderer = goog.ui.Css3ButtonRenderer.getInstance();
+  var group = new atd.ToggleButtonGroup();
+  group.addChild(new goog.ui.ToggleButton('Availabile', renderer), true);
+  group.addChild(new goog.ui.ToggleButton('Unavailable', renderer), true);
+  group.render(optionsEl);
 };
