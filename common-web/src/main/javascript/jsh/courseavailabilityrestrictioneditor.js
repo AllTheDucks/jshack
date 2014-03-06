@@ -44,7 +44,7 @@ jsh.CourseAvailabilityRestrictionEditor.prototype.decorateInternal =
       'jsh-course-availability-restriction-editor-options', element);
   var renderer = goog.ui.Css3ButtonRenderer.getInstance();
   var group = new atd.ToggleButtonGroup();
-  group.addChild(new goog.ui.ToggleButton('Availabile', renderer), true);
+  group.addChild(new goog.ui.ToggleButton('Available', renderer), true);
   group.addChild(new goog.ui.ToggleButton('Unavailable', renderer), true);
   group.render(optionsEl);
 };

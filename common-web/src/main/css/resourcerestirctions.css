@@ -15,15 +15,21 @@
     border: 1px solid #808080;
     border-radius: 0.5em;
     box-shadow: 0.25em 0.25em 0.1em #111111;
-    background-color: #191919;
+    background-color: #808080;
 }
 
 .jsh-restriction-editor-content {
     padding: 0.5em;
+    background-color: #191919;
+    border-radius: 0.5em;
 }
 
 .jsh-restriction-editor-content-close-button {
     text-align: right;
-    background: #808080;
     padding: 0.25em;
+}
+
+.jsh-course-availability-restriction-editor .jsh-label {
+    margin-bottom: 0.5em;
+    text-align: center;
 }

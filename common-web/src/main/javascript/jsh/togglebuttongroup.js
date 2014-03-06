@@ -1,5 +1,6 @@
 goog.provide('atd.ToggleButtonGroup');
 
+goog.require('goog.dom.classlist');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.Container');
 
@@ -35,6 +36,10 @@ atd.ToggleButtonGroup.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
   goog.events.listen(this, goog.ui.Component.EventType.ACTION,
       this.handleChildChecked_, false, this);
+
+  //todo: This more than likely isn't the best way to add this class.
+  goog.dom.classlist.add(this.getElement(),
+      goog.getCssName('atd-toggle-button-group'));
 };
 
 
