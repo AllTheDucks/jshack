@@ -88,8 +88,25 @@ atd.ToggleButtonGroup.prototype.addChildAt = function(child, index, opt_render)
 
 
 /**
- *
- * @param {number} index
+ * @inheritDoc
+ */
+atd.ToggleButtonGroup.prototype.removeChildAt =
+    function(index, opt_render) {
+  var returnVal = goog.base(this, 'removeChildAt', index, opt_render);
+
+  this.setCollapsed_(index - 1);
+  // right neighbour now that the child has been removed
+  this.setCollapsed_(index);
+
+  return returnVal;
+};
+
+
+/**
+ * Calculates and sets the correct collapsed sides of the child button at the
+ * given index.
+ * @param {number} index The index of the button which should have it's sides
+ * collapsed.
  * @private
  */
 atd.ToggleButtonGroup.prototype.setCollapsed_ = function(index) {
