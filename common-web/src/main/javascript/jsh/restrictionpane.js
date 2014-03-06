@@ -103,9 +103,10 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
  */
 jsh.RestrictionPane.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  goog.events.listen(this, jsh.events.EventType.REMOVE, function(e) {
-    this.removeRestriction_(/** @type {goog.ui.Component} */(e.target));
-  }, false, this);
+  goog.events.listen(this.restrictionEditors_, jsh.events.EventType.REMOVE,
+      function(e) {
+        this.removeRestriction_(/** @type {goog.ui.Component} */(e.target));
+      }, false, this);
 };
 
 
@@ -136,7 +137,7 @@ jsh.RestrictionPane.prototype.addRestriction_ = function(type) {
  * @private
  */
 jsh.RestrictionPane.prototype.removeRestriction_ = function(editor) {
-  this.removeChild(editor);
+  this.restrictionEditors_.removeChild(editor, true);
   this.refreshEmptyNotice_();
 };
 
@@ -147,5 +148,6 @@ jsh.RestrictionPane.prototype.removeRestriction_ = function(editor) {
  * @private
  */
 jsh.RestrictionPane.prototype.refreshEmptyNotice_ = function() {
-  goog.style.setElementShown(this.emptyNotice_, this.hasChildren());
+  goog.style.setElementShown(this.emptyNotice_,
+      !this.restrictionEditors_.hasChildren());
 };

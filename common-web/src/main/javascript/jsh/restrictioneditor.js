@@ -17,6 +17,12 @@ goog.require('goog.ui.Css3ButtonRenderer');
  */
 jsh.RestrictionEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  /**
+   * @type {goog.ui.Button}
+   * @private
+   */
+  this.removeButton_ = null;
 };
 goog.inherits(jsh.RestrictionEditor, goog.ui.Component);
 
@@ -34,12 +40,9 @@ jsh.RestrictionEditor.prototype.wrapDom = function(element) {
 
   var closeEl = goog.dom.getElementByClass(
       'jsh-restriction-editor-content-close-button', dom);
-  var closeButton = new goog.ui.Button('Remove',
+  this.removeButton_ = new goog.ui.Button('Remove',
       goog.ui.Css3ButtonRenderer.getInstance());
-  closeButton.render(closeEl);
-
-  goog.events.listen(closeButton, goog.ui.Component.EventType.ACTION,
-      this.handleCloseButtonClick_, false, this);
+  this.removeButton_.render(closeEl);
 
   return dom;
 };
@@ -47,8 +50,19 @@ jsh.RestrictionEditor.prototype.wrapDom = function(element) {
 
 /**
  * Handle the the click of the close button.
+ * @param {goog.events.Event} e
  * @private
  */
-jsh.RestrictionEditor.prototype.handleCloseButtonClick_ = function() {
+jsh.RestrictionEditor.prototype.handleRemoveButtonClick_ = function(e) {
   this.dispatchEvent(new goog.events.Event(jsh.events.EventType.REMOVE));
+};
+
+
+/**
+ * @override
+ */
+jsh.RestrictionEditor.prototype.enterDocument = function() {
+  goog.base(this, 'enterDocument');
+  goog.events.listen(this.removeButton_, goog.ui.Component.EventType.ACTION,
+      this.handleRemoveButtonClick_, false, this);
 };
