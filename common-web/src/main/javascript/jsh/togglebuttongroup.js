@@ -72,3 +72,39 @@ atd.ToggleButtonGroup.prototype.handleChildChecked_ = function(e) {
     this.selectedChild_ = null;
   }
 };
+
+
+/**
+ * @inheritDoc
+ */
+atd.ToggleButtonGroup.prototype.addChildAt = function(child, index, opt_render)
+    {
+  goog.base(this, 'addChildAt', child, index, opt_render);
+
+  this.setCollapsed_(index - 1);
+  this.setCollapsed_(index);
+  this.setCollapsed_(index + 1);
+};
+
+
+/**
+ *
+ * @param {number} index
+ * @private
+ */
+atd.ToggleButtonGroup.prototype.setCollapsed_ = function(index) {
+  var item = this.getChildAt(index);
+  if (!item) {
+    return;
+  }
+
+  var sides = goog.ui.ButtonSide.NONE;
+  if (index > 0) {
+    sides |= goog.ui.ButtonSide.START;
+  }
+  if (index < this.getChildCount() - 1) {
+    sides |= goog.ui.ButtonSide.END;
+  }
+
+  item.setCollapsed(sides);
+};

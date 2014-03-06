@@ -77,7 +77,8 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
   this.restrictionMenuButton_ = new goog.ui.MenuButton('Add Restriction',
       this.restrictionMenu_);
   for (var key in jsh.model.restrictionType) {
-    var restrictionType = /** @type {jsh.model.restrictionType} */(key);
+    var restrictionType = /** @type {jsh.model.restrictionType} */
+        (jsh.model.restrictionType[key]);
     var label = jsh.RestrictionTypeHelper.getMenuLabel(restrictionType);
     var menuItem = new goog.ui.MenuItem(label);
     this.restrictionMenu_.addChild(menuItem, true);
