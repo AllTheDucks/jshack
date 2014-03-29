@@ -39,7 +39,7 @@ jsh.RestrictionEditor.prototype.wrapDom = function(element) {
   contentEl.appendChild(element);
 
   var closeEl = goog.dom.getElementByClass(
-      'jsh-restriction-editor-content-close-button', dom);
+      'jsh-restriction-editor-close-button', dom);
   this.removeButton_ = new goog.ui.Button('Remove',
       goog.ui.Css3ButtonRenderer.getInstance());
   this.removeButton_.render(closeEl);

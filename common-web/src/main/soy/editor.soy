@@ -195,7 +195,7 @@
 {template .restrictionEditor}
     <div class="{css jsh-restriction-editor}">
         <div class="{css jsh-restriction-editor-content}"></div>
-        <div class="{css jsh-restriction-editor-content-close-button}"></div>
+        <div class="{css jsh-restriction-editor-close-button}"></div>
     </div>
 {/template}
 
@@ -205,7 +205,58 @@
   */
 {template .courseAvailabilityRestrictionEditor}
     <div class="{css jsh-course-availability-restriction-editor}">
-        <div class="jsh-label">The course is:</div>
+        <div class="{css jsh-label}">The course is:</div>
         <div class="{css jsh-course-availability-restriction-editor-options}"></div>
+    </div>
+{/template}
+
+
+/**
+  *
+  */
+{template .injectionPointPaneItem}
+    <div class="{css jsh-injection-point-pane-item}">
+        <div class="{css jsh-injection-point-pane-item-content}"></div>
+        <div class="{css jsh-injection-point-pane-item-close-button}"></div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Edit Mode Toggle item is selected.
+  */
+{template .injectionPointPaneItemEditModeToggle}
+    <div>
+        <div class="{css injection-point-title}">Edit Mode Toggle</div>
+        <div class="{css injection-point-id}">tag.editModeViewToggle.start</div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Top Frame item is selected.
+  */
+{template .injectionPointPaneItemTopFrame}
+    <div>
+        <div class="{css injection-point-title}">Top Frame</div>
+        <div class="{css injection-point-id}">jsp.topFrame.start</div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Learning System Pag item is selected.
+  */
+{template .injectionPointPaneItemLearningSystemPage}
+    <div>
+        <div class="{css injection-point-title}">Learning System Page</div>
+        <div class="{css injection-point-id}">tag.learningSystemPage.start</div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Frameset item is selected.
+  */
+{template .injectionPointPaneItemFrameset}
+    <div>
+        <div class="{css injection-point-title}">Frameset</div>
+        <div class="{css injection-point-id}">jsp.frameset.start</div>
     </div>
 {/template}

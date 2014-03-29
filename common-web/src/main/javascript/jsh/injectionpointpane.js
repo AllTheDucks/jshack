@@ -10,6 +10,7 @@ goog.require('goog.ui.Component');
 goog.require('goog.ui.Menu');
 goog.require('goog.ui.MenuButton');
 goog.require('goog.ui.MenuItem');
+goog.require('jsh.InjectionPointHelper');
 goog.require('jsh.events.EventType');
 goog.require('jsh.soy.editor');
 
@@ -281,7 +282,7 @@ goog.inherits(jsh.InjectionPointPaneItem, goog.ui.Component);
  * @override
  */
 jsh.InjectionPointPaneItem.prototype.createDom = function() {
-  var el = goog.dom.createDom('div');
+  var el = goog.soy.renderAsElement(jsh.soy.editor.injectionPointPaneItem);
   this.decorateInternal(el);
 };
 
@@ -296,10 +297,17 @@ jsh.InjectionPointPaneItem.prototype.createDom = function() {
 jsh.InjectionPointPaneItem.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  goog.dom.setTextContent(element, this.injectionPoint.toString());
+  var contentEl = goog.dom.getElementByClass(
+      'jsh-injection-point-pane-item-content', element);
 
-  this.removeBtn_ = new goog.ui.Button('Remove');
-  this.addChild(this.removeBtn_, true);
+  goog.dom.appendChild(contentEl,
+      jsh.InjectionPointHelper.getItemDom(this.injectionPoint));
+
+  var closeEl = goog.dom.getElementByClass(
+      'jsh-injection-point-pane-item-close-button', element);
+  this.removeBtn_ = new goog.ui.Button('Remove',
+      goog.ui.Css3ButtonRenderer.getInstance());
+  this.removeBtn_.render(closeEl);
 
   goog.events.listen(this.removeBtn_, goog.ui.Component.EventType.ACTION,
       function() {
@@ -364,7 +372,8 @@ jsh.InjectionPointPane.References_.prototype.getListItem = function() {
  */
 jsh.InjectionPointPane.References_.prototype.getMenuItem = function() {
   if (this.menuItem_ == null) {
-    this.menuItem_ = new goog.ui.MenuItem(this.injectionPoint.toString());
+    this.menuItem_ = new goog.ui.MenuItem(jsh.InjectionPointHelper.getMenuLabel(
+        this.injectionPoint));
   }
   return this.menuItem_;
 };

@@ -9,7 +9,7 @@
     color: #808080;
 }
 
-.jsh-restriction-editor {
+.jsh-restriction-editor, .jsh-injection-point-pane-item {
     display: inline-block;
     margin: 0.5em 0.5em 0.5em 0;
     border: 1px solid #808080;
@@ -18,13 +18,17 @@
     background-color: #808080;
 }
 
-.jsh-restriction-editor-content {
+.jsh-injection-point-pane-item {
+    width: 16em;
+}
+
+.jsh-restriction-editor-content, .jsh-injection-point-pane-item-content {
     padding: 0.5em;
     background-color: #191919;
     border-radius: 0.5em;
 }
 
-.jsh-restriction-editor-content-close-button {
+.jsh-restriction-editor-close-button, .jsh-injection-point-pane-item-close-button {
     text-align: right;
     padding: 0.25em;
 }
@@ -32,4 +36,20 @@
 .jsh-course-availability-restriction-editor .jsh-label {
     margin-bottom: 0.5em;
     text-align: center;
+}
+
+.jsh-injection-point-pane-item-content {
+    text-align: center;
+}
+
+.injection-point-title {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.injection-point-id:before {
+    content: '(';
+}
+.injection-point-id:after {
+    content: ')';
 }
