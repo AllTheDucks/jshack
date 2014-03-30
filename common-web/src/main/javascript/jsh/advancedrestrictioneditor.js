@@ -10,7 +10,7 @@ goog.require('jsh.AceEditor');
 
 
 /**
- * Restriction editor for Course Availability.
+ * Restriction editor for Advanced restrictions.
  *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {jsh.RestrictionEditor}

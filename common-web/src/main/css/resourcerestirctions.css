@@ -72,3 +72,18 @@
     border: 1px solid #232323;
 }
 
+.jsh-request-parameter-restriction-editor-options {
+    display: table;
+}
+
+.jsh-request-parameter-restriction-editor-options > label {
+    display: table-row;
+}
+
+.jsh-request-parameter-restriction-editor-options > label > span {
+    display: table-cell;
+}
+
+.jsh-request-parameter-restriction-editor-options input {
+    width: 15em;
+}

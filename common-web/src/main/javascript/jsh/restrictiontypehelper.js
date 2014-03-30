@@ -3,6 +3,7 @@ goog.provide('jsh.RestrictionTypeHelper');
 goog.require('jsh.AdvancedRestrictionEditor');
 goog.require('jsh.CourseAvailabilityRestrictionEditor');
 goog.require('jsh.EntitlementRestrictionEditor');
+goog.require('jsh.RequestParameterRestrictionEditor');
 goog.require('jsh.UrlRestrictionEditor');
 goog.require('jsh.model.restrictionType');
 
@@ -39,7 +40,7 @@ jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     requestParameter] = {
   MenuLabel: 'Request Parameter',
-  Editor: jsh.RestrictionEditor
+  Editor: jsh.RequestParameterRestrictionEditor
 };
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     systemRole] = {

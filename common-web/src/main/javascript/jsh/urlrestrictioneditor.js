@@ -9,7 +9,7 @@ goog.require('goog.ui.ToggleButton');
 
 
 /**
- * Restriction editor for Course Availability.
+ * Restriction editor for URLs.
  *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {jsh.RestrictionEditor}
