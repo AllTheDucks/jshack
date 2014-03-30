@@ -1,6 +1,7 @@
 goog.provide('jsh.TextEditor');
 
 goog.require('goog.dom');
+goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('jsh.BaseEditor');
@@ -90,6 +91,9 @@ jsh.TextEditor.prototype.enterDocument = function() {
       this.handleParentSizeChange, false, this);
   goog.events.listen(this.splitPane_, goog.ui.Component.EventType.CHANGE,
       goog.events.Event.stopPropagation, false, this);
+
+  goog.dom.classlist.add(this.hackEditor_.getElement(),
+      goog.getCssName('jsh-text-editor'));
 
   this.hackEditor_.getAce().setValue(this.resource_.content);
   this.hackEditor_.getAce().getSession().setMode(

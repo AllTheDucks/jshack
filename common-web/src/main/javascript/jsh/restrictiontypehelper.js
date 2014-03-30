@@ -1,5 +1,6 @@
 goog.provide('jsh.RestrictionTypeHelper');
 
+goog.require('jsh.AdvancedRestrictionEditor');
 goog.require('jsh.CourseAvailabilityRestrictionEditor');
 goog.require('jsh.UrlRestrictionEditor');
 goog.require('jsh.model.restrictionType');
@@ -12,7 +13,7 @@ jsh.RestrictionTypeHelper.restrictionLookup = {};
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     advanced] = {
   MenuLabel: 'Advanced',
-  Editor: jsh.RestrictionEditor
+  Editor: jsh.AdvancedRestrictionEditor
 };
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     courseAvailability] = {

@@ -61,3 +61,11 @@
 .jsh-url-restriction-editor-options input {
     width: 30em;
 }
+
+.jsh-advanced-restriction-editor-options .ace-editor-container .ace-editor {
+    width: 35em;
+    height: 10em;
+
+    border: 1px solid #232323;
+}
+
