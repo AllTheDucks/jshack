@@ -18,6 +18,10 @@ goog.require('jsh.AceEditor');
  */
 jsh.AdvancedRestrictionEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  /** @type {jsh.AceEditor}
+   * @private */
+  this.aceEditor_ = null;
 };
 goog.inherits(jsh.AdvancedRestrictionEditor, jsh.RestrictionEditor);
 
@@ -48,7 +52,19 @@ jsh.AdvancedRestrictionEditor.prototype.decorateInternal =
   var optionsComp = new goog.ui.Component();
   optionsComp.render(optionsEl);
 
-  var editor = new jsh.AceEditor();
-  optionsComp.addChild(editor, true);
+  this.aceEditor_ = new jsh.AceEditor();
+  optionsComp.addChild(this.aceEditor_, true);
 
+};
+
+
+/**
+ * Executed when the Ace component is inserted into the page.
+ *
+ * @override
+ */
+jsh.AdvancedRestrictionEditor.prototype.enterDocument = function() {
+  goog.base(this, 'enterDocument');
+
+  this.aceEditor_.getAce().getSession().setMode('ace/mode/advancedrestriction');
 };
