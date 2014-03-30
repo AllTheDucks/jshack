@@ -2,6 +2,7 @@ goog.provide('jsh.RestrictionTypeHelper');
 
 goog.require('jsh.AdvancedRestrictionEditor');
 goog.require('jsh.CourseAvailabilityRestrictionEditor');
+goog.require('jsh.EntitlementRestrictionEditor');
 goog.require('jsh.UrlRestrictionEditor');
 goog.require('jsh.model.restrictionType');
 
@@ -28,7 +29,7 @@ jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     entitlement] = {
   MenuLabel: 'Entitlement',
-  Editor: jsh.RestrictionEditor
+  Editor: jsh.EntitlementRestrictionEditor
 };
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     portalRole] = {

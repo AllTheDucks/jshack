@@ -61,6 +61,9 @@
 .jsh-url-restriction-editor-options input {
     width: 30em;
 }
+.jsh-entitlement-restriction-editor-options input {
+    width: 20em;
+}
 
 .jsh-advanced-restriction-editor-options .ace-editor-container .ace-editor {
     width: 35em;
