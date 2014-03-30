@@ -1,6 +1,7 @@
 goog.provide('jsh.RestrictionTypeHelper');
 
 goog.require('jsh.CourseAvailabilityRestrictionEditor');
+goog.require('jsh.UrlRestrictionEditor');
 goog.require('jsh.model.restrictionType');
 
 
@@ -46,7 +47,7 @@ jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     URL] = {
   MenuLabel: 'URL',
-  Editor: jsh.RestrictionEditor
+  Editor: jsh.UrlRestrictionEditor
 };
 
 

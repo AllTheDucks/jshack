@@ -18,6 +18,10 @@
     background-color: #808080;
 }
 
+.jsh-restriction-editor {
+    vertical-align: top;
+}
+
 .jsh-injection-point-pane-item {
     width: 16em;
 }
@@ -33,7 +37,7 @@
     padding: 0.25em;
 }
 
-.jsh-course-availability-restriction-editor .jsh-label {
+.jsh-label {
     margin-bottom: 0.5em;
     text-align: center;
 }
@@ -52,4 +56,8 @@
 }
 .injection-point-id:after {
     content: ')';
+}
+
+.jsh-url-restriction-editor-options input {
+    width: 30em;
 }
