@@ -68,6 +68,7 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
   var listEl = goog.dom.getElementByClass('jsh-restriction-pane-content',
       element);
   this.restrictionEditors_ = new goog.ui.Component();
+  this.addChild(this.restrictionEditors_, false);
   this.restrictionEditors_.render(listEl);
 
   this.emptyNotice_ = goog.dom.getElementByClass('jsh-empty-notice', element);
