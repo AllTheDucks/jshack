@@ -85,11 +85,4 @@ jsh.ResourceRestrictions.prototype.enterDocument = function() {
       this.handleInjectCheckboxChange, false, this);
 
   this.handleInjectCheckboxChange();
-
-  goog.events.listen(this.restrictionPane,
-      jsh.events.EventType.SYSTEM_ROLE_RESTRICTION_EDITOR_ADDED,
-      function() {
-        window.console.log('jsh.ResourceRestrictions.prototype.enterDocument');
-      },
-      false, this);
 };

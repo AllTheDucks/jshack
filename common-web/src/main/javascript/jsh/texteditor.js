@@ -98,13 +98,6 @@ jsh.TextEditor.prototype.enterDocument = function() {
   this.hackEditor_.getAce().setValue(this.resource_.content);
   this.hackEditor_.getAce().getSession().setMode(
       jsh.MimeTypeHelper.getAceMode(this.resource_.mime));
-
-  goog.events.listen(this.resourceProperties_,
-      jsh.events.EventType.SYSTEM_ROLE_RESTRICTION_EDITOR_ADDED,
-      function() {
-        window.console.log('jsh.TextEditor.prototype.enterDocument');
-      },
-      false, this);
 };
 
 

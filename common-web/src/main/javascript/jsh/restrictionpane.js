@@ -109,13 +109,6 @@ jsh.RestrictionPane.prototype.enterDocument = function() {
       function(e) {
         this.removeRestriction_(/** @type {goog.ui.Component} */(e.target));
       }, false, this);
-
-  goog.events.listen(this.restrictionEditors_,
-      jsh.events.EventType.SYSTEM_ROLE_RESTRICTION_EDITOR_ADDED,
-      function() {
-        window.console.log('jsh.RestrictionPane.prototype.enterDocument');
-      },
-      false, this);
 };
 
 

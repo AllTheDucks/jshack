@@ -3,6 +3,7 @@ goog.provide('jsh.SystemRoleRestrictionEditor');
 
 goog.require('atd.ToggleButtonGroup');
 goog.require('goog.events.Event');
+goog.require('goog.ui.ComboBox');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Css3ButtonRenderer');
 goog.require('goog.ui.LabelInput');
@@ -21,6 +22,9 @@ goog.require('jsh.model.BbRole');
  */
 jsh.RoleRestrictionEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  /** @type {goog.ui.ComboBox} */
+  this.roleCombo_;
 };
 goog.inherits(jsh.RoleRestrictionEditor, jsh.RestrictionEditor);
 
@@ -42,12 +46,19 @@ jsh.RoleRestrictionEditor.prototype.createDom = function() {
  *    text, if any will be used as the component's label.
  * @override
  */
-jsh.RoleRestrictionEditor.prototype.decorateInternal =
-    function(element) {
+jsh.RoleRestrictionEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
   var labelEl = goog.dom.getElementByClass('jsh-label', element);
   goog.dom.setTextContent(labelEl, this.getLabel() + ':');
+
+  var optionsEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-role-restriction-editor-options'), element);
+
+  this.roleCombo_ = new goog.ui.ComboBox();
+  this.addChild(this.roleCombo_, false);
+
+  this.roleCombo_.render(optionsEl);
 };
 
 
@@ -56,7 +67,20 @@ jsh.RoleRestrictionEditor.prototype.decorateInternal =
  */
 jsh.RoleRestrictionEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  this.dispatchEvent(new goog.events.Event(this.getAddEvent()));
+  this.dispatchEvent(new jsh.events.DataRequestEvent(this.getDataRequestType(),
+      goog.bind(this.handleData, this)));
+};
+
+
+/**
+ *
+ * @param {Array.<jsh.model.BbRole>} roleList
+ */
+jsh.RoleRestrictionEditor.prototype.handleData = function(roleList) {
+  goog.array.forEach(roleList,
+      function(role, i, roleList) {
+        this.roleCombo_.addItem(new goog.ui.MenuItem(role.name, role));
+      }, this);
 };
 
 
@@ -68,10 +92,10 @@ jsh.RoleRestrictionEditor.prototype.getLabel = goog.abstractMethod;
 
 
 /**
- * Gets the list of roles to choose from in this editor
- * @type {function(): jsh.events.EventType}
+ * returns the DataRequestType for this component.
+ * @type {function(): jsh.events.DataRequestType}
  */
-jsh.RoleRestrictionEditor.prototype.getAddEvent = goog.abstractMethod;
+jsh.RoleRestrictionEditor.prototype.getDataRequestType = goog.abstractMethod;
 
 
 
@@ -99,7 +123,7 @@ jsh.SystemRoleRestrictionEditor.prototype.getLabel = function() {
 /**
  * @inheritDoc
  */
-jsh.SystemRoleRestrictionEditor.prototype.getAddEvent = function() {
-  return jsh.events.EventType.SYSTEM_ROLE_RESTRICTION_EDITOR_ADDED;
+jsh.SystemRoleRestrictionEditor.prototype.getDataRequestType = function() {
+  return jsh.events.DataRequestType.SYSTEM_ROLES;
 };
 

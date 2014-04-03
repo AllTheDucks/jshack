@@ -131,8 +131,8 @@ jsh.DataService.prototype.saveHack = function(hack) {
 
 
 /**
- * Gets a list of roles of tyoe.
- * @param {string} type the type of role (system, course, instirution)
+ * Gets a list of roles of the specified type.
+ * @param {string} type the type of role (system, course, institution)
  * @return {goog.async.Deferred} The roles.
  * @private
  */
@@ -143,7 +143,7 @@ jsh.DataService.prototype.getBbRoles_ = function(type) {
 
   var requestId = this.putRequest_(dataServiceReq);
 
-  this.xhrManager_.send(requestId, this.bbRolesWSUrl_ + '/' + type, 'GET');
+  this.xhrManager_.send(requestId, this.bbRolesWSUrl_ + type, 'GET');
 
   return dataServiceReq.deferred;
 };
