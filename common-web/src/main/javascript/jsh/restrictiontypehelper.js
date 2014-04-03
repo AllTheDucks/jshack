@@ -4,6 +4,7 @@ goog.require('jsh.AdvancedRestrictionEditor');
 goog.require('jsh.CourseAvailabilityRestrictionEditor');
 goog.require('jsh.EntitlementRestrictionEditor');
 goog.require('jsh.RequestParameterRestrictionEditor');
+goog.require('jsh.SystemRoleRestrictionEditor');
 goog.require('jsh.UrlRestrictionEditor');
 goog.require('jsh.model.restrictionType');
 
@@ -45,7 +46,7 @@ jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     systemRole] = {
   MenuLabel: 'System Role',
-  Editor: jsh.RestrictionEditor
+  Editor: jsh.SystemRoleRestrictionEditor
 };
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     URL] = {

@@ -7,6 +7,7 @@ goog.require('goog.ui.Component');
 goog.require('jsh.CheckSwitchRenderer');
 goog.require('jsh.InjectionPointPane');
 goog.require('jsh.RestrictionPane');
+goog.require('jsh.events.EventType');
 goog.require('jsh.model.injectionPoint');
 goog.require('jsh.soy.editor');
 
@@ -56,13 +57,9 @@ jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
 
   this.injectionPointPane = new jsh.InjectionPointPane();
   this.addChild(this.injectionPointPane, true);
+
   this.restrictionPane = new jsh.RestrictionPane();
-
   this.addChild(this.restrictionPane, true);
-  goog.events.listen(this.injectCheckbox, goog.ui.Component.EventType.CHANGE,
-      this.handleInjectCheckboxChange, false, this);
-
-  this.handleInjectCheckboxChange();
 };
 
 
@@ -75,4 +72,24 @@ jsh.ResourceRestrictions.prototype.handleInjectCheckboxChange = function() {
 
   this.injectionPointPane.setEnabled(checked);
   this.restrictionPane.setEnabled(checked);
+};
+
+
+/**
+* @override
+*/
+jsh.ResourceRestrictions.prototype.enterDocument = function() {
+  goog.base(this, 'enterDocument');
+
+  goog.events.listen(this.injectCheckbox, goog.ui.Component.EventType.CHANGE,
+      this.handleInjectCheckboxChange, false, this);
+
+  this.handleInjectCheckboxChange();
+
+  goog.events.listen(this.restrictionPane,
+      jsh.events.EventType.SYSTEM_ROLE_RESTRICTION_EDITOR_ADDED,
+      function() {
+        window.console.log('jsh.ResourceRestrictions.prototype.enterDocument');
+      },
+      false, this);
 };

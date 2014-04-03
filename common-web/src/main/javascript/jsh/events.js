@@ -16,5 +16,9 @@ jsh.events.EventType = {
   RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable',
   INJECTION_POINT_ADDED: 'injectionpointadded',
   INJECTION_POINT_REMOVED: 'injectionpointremoved',
-  REMOVE: 'remove'
+  REMOVE: 'remove',
+  SYSTEM_ROLE_RESTRICTION_EDITOR_ADDED: 'systemrolerestrictioneditoradded',
+  COURSE_ROLE_RESTRICTION_EDITOR_ADDED: 'courserolerestrictioneditoradded',
+  INSTITUION_ROLE_RESTRICTION_EDITOR_ADDED:
+      'institutionrolerestrictioneditoradded'
 };

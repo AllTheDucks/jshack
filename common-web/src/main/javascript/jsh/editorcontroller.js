@@ -30,6 +30,11 @@ jsh.EditorController = function(hackEditor, dataService) {
 
   goog.events.listen(this.hackEditor_, jsh.events.EventType.FILES_IMPORTED,
       this.handleFilesImported, false, this);
+
+  goog.events.listen(this.hackEditor_,
+      jsh.events.EventType.SYSTEM_ROLE_RESTRICTION_EDITOR_ADDED,
+      function() { window.console.log('system role restriction editor added') },
+      false, this);
 };
 
 
