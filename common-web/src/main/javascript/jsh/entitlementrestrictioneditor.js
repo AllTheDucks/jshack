@@ -17,6 +17,12 @@ goog.require('goog.ui.ToggleButton');
  */
 jsh.EntitlementRestrictionEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  /**
+   * @type {goog.ui.LabelInput}
+   * @private
+   */
+  this.textbox_ = null;
 };
 goog.inherits(jsh.EntitlementRestrictionEditor, jsh.RestrictionEditor);
 
@@ -47,8 +53,17 @@ jsh.EntitlementRestrictionEditor.prototype.decorateInternal =
   var optionsComp = new goog.ui.Component();
   optionsComp.render(optionsEl);
 
-  var textbox = new goog.ui.LabelInput(
+  this.textbox_ = new goog.ui.LabelInput(
       'course.availability.MODIFY');
-  optionsComp.addChild(textbox, true);
+  optionsComp.addChild(this.textbox_, true);
 
+};
+
+
+/**
+ * @inheritDoc
+ */
+jsh.EntitlementRestrictionEditor.prototype.setEnabled = function(enabled) {
+  goog.base(this, 'setEnabled', enabled);
+  this.textbox_.setEnabled(enabled);
 };

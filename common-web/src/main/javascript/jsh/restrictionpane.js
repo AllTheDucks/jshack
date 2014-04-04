@@ -118,6 +118,9 @@ jsh.RestrictionPane.prototype.enterDocument = function() {
  */
 jsh.RestrictionPane.prototype.setEnabled = function(enabled) {
   this.restrictionMenuButton_.setEnabled(enabled);
+  this.restrictionEditors_.forEachChild(function(child, i) {
+    child.setEnabled(enabled);
+  }, this.restrictionEditors_);
 };
 
 

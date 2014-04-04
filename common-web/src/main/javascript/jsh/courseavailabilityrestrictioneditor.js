@@ -15,6 +15,12 @@ goog.require('goog.ui.ToggleButton');
  */
 jsh.CourseAvailabilityRestrictionEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  /**
+   * @type {atd.ToggleButtonGroup}
+   * @private
+   */
+  this.group_ = null;
 };
 goog.inherits(jsh.CourseAvailabilityRestrictionEditor, jsh.RestrictionEditor);
 
@@ -43,8 +49,18 @@ jsh.CourseAvailabilityRestrictionEditor.prototype.decorateInternal =
   var optionsEl = goog.dom.getElementByClass(
       'jsh-course-availability-restriction-editor-options', element);
   var renderer = goog.ui.Css3ButtonRenderer.getInstance();
-  var group = new atd.ToggleButtonGroup();
-  group.addChild(new goog.ui.ToggleButton('Available', renderer), true);
-  group.addChild(new goog.ui.ToggleButton('Unavailable', renderer), true);
-  group.render(optionsEl);
+  this.group_ = new atd.ToggleButtonGroup();
+  this.group_.addChild(new goog.ui.ToggleButton('Available', renderer), true);
+  this.group_.addChild(new goog.ui.ToggleButton('Unavailable', renderer), true);
+  this.group_.render(optionsEl);
+};
+
+
+/**
+ * @inheritDoc
+ */
+jsh.CourseAvailabilityRestrictionEditor.prototype.setEnabled =
+    function(enabled) {
+  goog.base(this, 'setEnabled', enabled);
+  this.group_.setEnabled(enabled);
 };

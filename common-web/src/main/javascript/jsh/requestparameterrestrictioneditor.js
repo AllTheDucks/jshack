@@ -17,6 +17,18 @@ goog.require('goog.ui.ToggleButton');
  */
 jsh.RequestParameterRestrictionEditor = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
+
+  /**
+   * @type {goog.ui.LabelInput}
+   * @private
+   */
+  this.name_ = null;
+
+  /**
+   * @type {goog.ui.LabelInput}
+   * @private
+   */
+  this.value_ = null;
 };
 goog.inherits(jsh.RequestParameterRestrictionEditor, jsh.RestrictionEditor);
 
@@ -44,12 +56,21 @@ jsh.RequestParameterRestrictionEditor.prototype.decorateInternal =
 
   var nameEl = goog.dom.getElementByClass(
       'jsh-request-parameter-restriction-editor-name', element);
-  var name = new goog.ui.LabelInput('type');
-  name.render(nameEl);
+  this.name_ = new goog.ui.LabelInput('type');
+  this.name_.render(nameEl);
 
   var valueEl = goog.dom.getElementByClass(
       'jsh-request-parameter-restriction-editor-value', element);
-  var value = new goog.ui.LabelInput('(blogs|journals)');
-  value.render(valueEl);
+  this.value_ = new goog.ui.LabelInput('(blogs|journals)');
+  this.value_.render(valueEl);
+};
 
+
+/**
+ * @inheritDoc
+ */
+jsh.RequestParameterRestrictionEditor.prototype.setEnabled = function(enabled) {
+  goog.base(this, 'setEnabled', enabled);
+  this.name_.setEnabled(enabled);
+  this.value_.setEnabled(enabled);
 };

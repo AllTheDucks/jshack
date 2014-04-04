@@ -108,6 +108,15 @@ jsh.RoleRestrictionEditor.prototype.updateCombo = function() {
 
 
 /**
+ * @inheritDoc
+ */
+jsh.RoleRestrictionEditor.prototype.setEnabled = function(enabled) {
+  goog.base(this, 'setEnabled', enabled);
+  this.roleCombo_.setEnabled(enabled);
+};
+
+
+/**
  * Get the label to display on this editor
  * @type {function(): string}
  */

@@ -66,3 +66,12 @@ jsh.RestrictionEditor.prototype.enterDocument = function() {
   goog.events.listen(this.removeButton_, goog.ui.Component.EventType.ACTION,
       this.handleRemoveButtonClick_, false, this);
 };
+
+
+/**
+ * Enables or disabled the editor.
+ * @param {boolean} enabled
+ */
+jsh.RestrictionEditor.prototype.setEnabled = function(enabled) {
+  this.removeButton_.setEnabled(enabled);
+};

@@ -68,3 +68,12 @@ jsh.AdvancedRestrictionEditor.prototype.enterDocument = function() {
 
   this.aceEditor_.getAce().getSession().setMode('ace/mode/advancedrestriction');
 };
+
+
+/**
+ * @inheritDoc
+ */
+jsh.AdvancedRestrictionEditor.prototype.setEnabled = function(enabled) {
+  goog.base(this, 'setEnabled', enabled);
+  this.aceEditor_.getAce().setReadOnly(!enabled);
+};
