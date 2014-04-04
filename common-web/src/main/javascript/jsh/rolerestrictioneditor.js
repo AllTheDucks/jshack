@@ -30,6 +30,12 @@ goog.inherits(jsh.RoleRestrictionEditor, jsh.RestrictionEditor);
 
 
 /**
+ * @type {Object}
+ */
+jsh.RoleRestrictionEditor.roleCache = {};
+
+
+/**
  * @override
  */
 jsh.RoleRestrictionEditor.prototype.createDom = function() {
@@ -67,17 +73,34 @@ jsh.RoleRestrictionEditor.prototype.decorateInternal = function(element) {
  */
 jsh.RoleRestrictionEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  this.dispatchEvent(new jsh.events.DataRequestEvent(this.getDataRequestType(),
-      goog.bind(this.handleData, this)));
+
+  if (jsh.RoleRestrictionEditor.roleCache[this.getDataRequestType] == null) {
+    this.dispatchEvent(
+        new jsh.events.DataRequestEvent(this.getDataRequestType(),
+        goog.bind(this.handleData, this)));
+  } else {
+    this.updateCombo();
+  }
 };
 
 
 /**
- *
+ * Handle the data that comes back from the data request.
  * @param {Array.<jsh.model.BbRole>} roleList
  */
 jsh.RoleRestrictionEditor.prototype.handleData = function(roleList) {
-  goog.array.forEach(roleList,
+  jsh.RoleRestrictionEditor.roleCache[this.getDataRequestType] = roleList;
+  this.updateCombo();
+};
+
+
+/**
+ * Updates the role combo from the cache
+ */
+jsh.RoleRestrictionEditor.prototype.updateCombo = function() {
+  this.roleCombo_.removeAllItems();
+  goog.array.forEach(
+      jsh.RoleRestrictionEditor.roleCache[this.getDataRequestType],
       function(role, i, roleList) {
         this.roleCombo_.addItem(new goog.ui.MenuItem(role.name, role));
       }, this);
@@ -100,7 +123,7 @@ jsh.RoleRestrictionEditor.prototype.getDataRequestType = goog.abstractMethod;
 
 
 /**
- * Restriction editor for Roles.
+ * Restriction editor for System Roles.
  *
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {jsh.RoleRestrictionEditor}
@@ -127,3 +150,62 @@ jsh.SystemRoleRestrictionEditor.prototype.getDataRequestType = function() {
   return jsh.events.DataRequestType.SYSTEM_ROLES;
 };
 
+
+
+/**
+ * Restriction editor for Course Roles.
+ *
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {jsh.RoleRestrictionEditor}
+ * @constructor
+ */
+jsh.CourseRoleRestrictionEditor = function(opt_domHelper) {
+  goog.base(this, opt_domHelper);
+};
+goog.inherits(jsh.CourseRoleRestrictionEditor, jsh.RoleRestrictionEditor);
+
+
+/**
+ * @inheritDoc
+ */
+jsh.CourseRoleRestrictionEditor.prototype.getLabel = function() {
+  return 'Course Role';
+};
+
+
+/**
+ * @inheritDoc
+ */
+jsh.CourseRoleRestrictionEditor.prototype.getDataRequestType = function() {
+  return jsh.events.DataRequestType.COURSE_ROLES;
+};
+
+
+
+/**
+ * Restriction editor for Institution Roles.
+ *
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ * @extends {jsh.RoleRestrictionEditor}
+ * @constructor
+ */
+jsh.InstitutionRoleRestrictionEditor = function(opt_domHelper) {
+  goog.base(this, opt_domHelper);
+};
+goog.inherits(jsh.InstitutionRoleRestrictionEditor, jsh.RoleRestrictionEditor);
+
+
+/**
+ * @inheritDoc
+ */
+jsh.InstitutionRoleRestrictionEditor.prototype.getLabel = function() {
+  return 'Institution Role';
+};
+
+
+/**
+ * @inheritDoc
+ */
+jsh.InstitutionRoleRestrictionEditor.prototype.getDataRequestType = function() {
+  return jsh.events.DataRequestType.INSTITUTION_ROLES;
+};

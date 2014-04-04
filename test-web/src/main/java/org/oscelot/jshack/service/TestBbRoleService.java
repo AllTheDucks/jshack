@@ -13,25 +13,34 @@ public class TestBbRoleService implements BbRoleService {
 
     static {
         systemRoles = new ArrayList<BbRole>();
-        systemRoles.add(new BbRole("sys1", "System Role 1"));
-        systemRoles.add(new BbRole("sys2", "System Role 2"));
-        systemRoles.add(new BbRole("sys3", "System Role 3"));
-        systemRoles.add(new BbRole("sys4", "System Role 4"));
-        systemRoles.add(new BbRole("sys5", "System Role 5"));
+        systemRoles.add(new BbRole("Z", "System Administrator"));
+        systemRoles.add(new BbRole("H", "System Support"));
+        systemRoles.add(new BbRole("C", "Course Administrator"));
+        systemRoles.add(new BbRole("A", "User Administrator"));
+        systemRoles.add(new BbRole("Y", "Community Administrator"));
+        systemRoles.add(new BbRole("U", "Guest"));
+        systemRoles.add(new BbRole("N", "None"));
+        systemRoles.add(new BbRole("O", "Observer"));
+        systemRoles.add(new BbRole("R", "Support"));
 
         courseRoles = new ArrayList<BbRole>();
-        courseRoles.add(new BbRole("course1", "Course Role 1"));
-        courseRoles.add(new BbRole("course2", "Course Role 2"));
-        courseRoles.add(new BbRole("course3", "Course Role 3"));
-        courseRoles.add(new BbRole("course4", "Course Role 4"));
-        courseRoles.add(new BbRole("course5", "Course Role 5"));
+        courseRoles.add(new BbRole("B", "Unit Builder"));
+        courseRoles.add(new BbRole("G", "Grader"));
+        courseRoles.add(new BbRole("P", "Instructor"));
+        courseRoles.add(new BbRole("S", "Student"));
+        courseRoles.add(new BbRole("T", "Teaching Assistant"));
+        courseRoles.add(new BbRole("U", "Guest"));
 
         institutionRoles = new ArrayList<BbRole>();
-        institutionRoles.add(new BbRole("inst1", "Institution Role 1"));
-        institutionRoles.add(new BbRole("inst1", "Institution Role 2"));
-        institutionRoles.add(new BbRole("inst1", "Institution Role 3"));
-        institutionRoles.add(new BbRole("inst1", "Institution Role 4"));
-        institutionRoles.add(new BbRole("inst1", "Institution Role 5"));
+        institutionRoles.add(new BbRole("student", "Student"));
+        institutionRoles.add(new BbRole("staff", "Staff"));
+        institutionRoles.add(new BbRole("sob", "School of Beef"));
+        institutionRoles.add(new BbRole("soc", "School of Chicken"));
+        institutionRoles.add(new BbRole("sol", "School of Lamb"));
+        institutionRoles.add(new BbRole("sof", "School of Frog"));
+        institutionRoles.add(new BbRole("sop", "School of Pork"));
+        institutionRoles.add(new BbRole("soq", "School of Quail"));
+        institutionRoles.add(new BbRole("fom", "Faculty of Meat"));
     }
 
     @Override

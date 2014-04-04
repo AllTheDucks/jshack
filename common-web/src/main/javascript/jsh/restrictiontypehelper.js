@@ -26,7 +26,7 @@ jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     courseRole] = {
   MenuLabel: 'Course Role',
-  Editor: jsh.RestrictionEditor
+  Editor: jsh.CourseRoleRestrictionEditor
 };
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     entitlement] = {
@@ -35,8 +35,8 @@ jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
 };
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     portalRole] = {
-  MenuLabel: 'Portal Role',
-  Editor: jsh.RestrictionEditor
+  MenuLabel: 'Institution Role',
+  Editor: jsh.InstitutionRoleRestrictionEditor
 };
 jsh.RestrictionTypeHelper.restrictionLookup[jsh.model.restrictionType.
     requestParameter] = {
