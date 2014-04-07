@@ -32,12 +32,12 @@ jsh.model.Restriction = function() {
  * @enum {string}
  */
 jsh.model.restrictionType = {
-  Advanced: 'Advanced',
-  CourseAvailability: 'CourseAvailability',
-  CourseRole: 'CourseRole',
-  Entitlement: 'Entitlement',
-  PortalRole: 'PortalRole',
-  RequestParameter: 'RequestParameter',
-  SystemRole: 'SystemRole',
+  advanced: 'Advanced',
+  courseAvailability: 'CourseAvailability',
+  courseRole: 'CourseRole',
+  entitlement: 'Entitlement',
+  portalRole: 'PortalRole',
+  requestParameter: 'RequestParameter',
+  systemRole: 'SystemRole',
   URL: 'URL'
 };

@@ -1,0 +1,7 @@
+.atd-toggle-button-group .goog-css3-button-checked {
+    /* @alternate */
+    background: -webkit-gradient(linear,0% 40%,0% 70%,from(#ddffdd) ,to(#ebfbeb));
+    /* @alternate */
+    background: -moz-linear-gradient(top,#ddffdd,#ebfbeb);
+    color: #004400;
+}

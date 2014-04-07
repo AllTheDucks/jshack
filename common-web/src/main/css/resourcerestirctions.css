@@ -1,0 +1,89 @@
+.jsh-resource-restriction-pane hr {
+    border: none;
+    border-bottom: 1px solid gray;
+    margin-right: 1em;
+}
+
+.jsh-resource-restriction-pane .jsh-empty-notice {
+    font-style: italic;
+    color: #808080;
+}
+
+.jsh-restriction-editor, .jsh-injection-point-pane-item {
+    display: inline-block;
+    margin: 0.5em 0.5em 0.5em 0;
+    border: 1px solid #808080;
+    border-radius: 0.5em;
+    box-shadow: 0.25em 0.25em 0.1em #111111;
+    background-color: #808080;
+}
+
+.jsh-restriction-editor {
+    vertical-align: top;
+}
+
+.jsh-injection-point-pane-item {
+    width: 16em;
+}
+
+.jsh-restriction-editor-content, .jsh-injection-point-pane-item-content {
+    padding: 0.5em;
+    background-color: #191919;
+    border-radius: 0.5em;
+}
+
+.jsh-restriction-editor-close-button, .jsh-injection-point-pane-item-close-button {
+    text-align: right;
+    padding: 0.25em;
+}
+
+.jsh-label {
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.jsh-injection-point-pane-item-content {
+    text-align: center;
+}
+
+.injection-point-title {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.injection-point-id:before {
+    content: '(';
+}
+.injection-point-id:after {
+    content: ')';
+}
+
+.jsh-url-restriction-editor-options input {
+    width: 30em;
+}
+.jsh-entitlement-restriction-editor-options input {
+    width: 20em;
+}
+
+.jsh-advanced-restriction-editor-options .ace-editor-container .ace-editor {
+    width: 35em;
+    height: 10em;
+
+    border: 1px solid #232323;
+}
+
+.jsh-request-parameter-restriction-editor-options {
+    display: table;
+}
+
+.jsh-request-parameter-restriction-editor-options > label {
+    display: table-row;
+}
+
+.jsh-request-parameter-restriction-editor-options > label > span {
+    display: table-cell;
+}
+
+.jsh-request-parameter-restriction-editor-options input {
+    width: 15em;
+}

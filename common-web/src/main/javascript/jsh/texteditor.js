@@ -1,10 +1,12 @@
 goog.provide('jsh.TextEditor');
 
 goog.require('goog.dom');
+goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('jsh.BaseEditor');
 goog.require('jsh.MimeTypeHelper');
+goog.require('jsh.ResourceRestrictions');
 goog.require('jsh.SplitPane');
 
 
@@ -65,10 +67,10 @@ jsh.TextEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
   this.hackEditor_ = new jsh.AceEditor();
-  this.resourceProperties_ = new goog.ui.Component();
+  this.resourceProperties_ = new jsh.ResourceRestrictions();
   this.splitPane_ = new jsh.SplitPane(this.hackEditor_,
       this.resourceProperties_, goog.ui.SplitPane.Orientation.VERTICAL);
-  this.splitPane_.setInitialSize(50);
+  this.splitPane_.setInitialSize(250);
   this.splitPane_.setHandleSize(this.splitPaneHandleWidth_);
   this.splitPane_.setSecondComponentStatic(true);
 
@@ -85,6 +87,9 @@ jsh.TextEditor.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
   goog.events.listen(this.splitPane_, goog.ui.Component.EventType.CHANGE,
       goog.events.Event.stopPropagation, false, this);
+
+  goog.dom.classlist.add(this.hackEditor_.getElement(),
+      goog.getCssName('jsh-text-editor'));
 
   this.hackEditor_.getAce().setValue(this.resource_.content);
   this.hackEditor_.getAce().getSession().setMode(

@@ -1,0 +1,78 @@
+.jsh-checkswitch {
+    position: relative;
+    margin: 4px 0 0 2px;
+    width: 70px;
+    height: 21px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.3), 0 1px 0 1px rgba(255,255,255,0.3);
+    cursor: pointer;
+    overflow: hidden;
+    display: inline-block;
+    background: #e9e9e9;
+}
+
+.jsh-checkswitch-hover {
+
+}
+
+.jsh-checkswitch-inner {
+    position: absolute;
+    top: 0;
+    left: -45px;
+    width: 115px;
+    height: 100%;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+.jsh-checkswitch-checked .jsh-checkswitch-inner {
+    left: 0;
+}
+
+.jsh-checkswitch-checkedlabel, .jsh-checkswitch-uncheckedlabel, .jsh-checkswitch-handle {
+    width: 45px;
+    height: 100%;
+    font-family: Arial, Tahoma, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 100;
+    color: #000000;
+    /*text-shadow: -1px -1px 0 rgba(0,0,0,0.15);*/
+    float: left;
+}
+
+.jsh-checkswitch-checkedlabel, .jsh-checkswitch-uncheckedlabel {
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.jsh-checkswitch-checkedlabel {
+    position: relative;
+    border-radius: 2px 0 0 2px;
+    background: #c8ffc8;
+}
+
+.jsh-checkswitch-uncheckedlabel {
+    position: relative;
+    border-radius: 0 2px 2px 0;
+    background: #ffc8c8;
+}
+
+.jsh-checkswitch-handle {
+    position: relative;
+    width: 25px;
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: 100;
+    color: #4b4b4b;
+    text-shadow: none;
+    border-radius: 3px;
+    box-shadow: inset 0 -16px 20px -10px rgba(0,0,0,0.12);
+    background: #ffffff url('drag_handle.png') center 6px no-repeat;
+}
+
+
+
+

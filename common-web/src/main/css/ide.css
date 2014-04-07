@@ -15,14 +15,6 @@ body {
 }
 
 
-.ace-editor-container .ace-editor {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
 .icon {
     font-size: 20px;
 }
@@ -41,7 +33,16 @@ body {
     border-top-left-radius: 10px;
     background-color: #191919;
 }
-.ace_gutter {
+
+.jsh-text-editor .ace-editor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.jsh-text-editor .ace_gutter, .jsh-text-editor .ace-editor {
     border-radius: 10px 0 0 10px
 }
 
@@ -169,3 +170,4 @@ input[type="text"] {
 .hack-description, .hack-name {
     width: 30em;
 }
+

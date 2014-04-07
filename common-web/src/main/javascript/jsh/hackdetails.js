@@ -43,9 +43,6 @@ jsh.HackDetailsArea.prototype.createDom = function() {
  */
 jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
-
-
-
 };
 
 

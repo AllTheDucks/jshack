@@ -33,6 +33,21 @@ jsh.EditorController = function(hackEditor, dataService) {
 
   goog.events.listen(this.hackEditor_, jsh.events.EventType.RESOURCE_DELETED,
       this.handleResourceDelete, false, this);
+
+  goog.events.listen(this.hackEditor_,
+      jsh.events.DataRequestType.COURSE_ROLES,
+      this.handleCourseRoleRequest,
+      false, this);
+
+  goog.events.listen(this.hackEditor_,
+      jsh.events.DataRequestType.INSTITUTION_ROLES,
+      this.handleInstitutionRoleRequest,
+      false, this);
+
+  goog.events.listen(this.hackEditor_,
+      jsh.events.DataRequestType.SYSTEM_ROLES,
+      this.handleSystemRoleRequest,
+      false, this);
 };
 
 
@@ -44,6 +59,39 @@ jsh.EditorController.prototype.handleSave = function(e) {
   var request = this.dataService_.saveHack(e.target.getHackModel());
   request.addCallback(this.hackEditor_.updateEditorState, this.hackEditor_);
   //todo: addErrback
+};
+
+
+/**
+ *
+ * @param {jsh.events.DataRequestEvent!} e the event
+ */
+jsh.EditorController.prototype.handleCourseRoleRequest = function(e) {
+  var request = this.dataService_.getCourseBbRoles();
+  request.addCallback(e.callback);
+  request.addErrback(e.errback);
+};
+
+
+/**
+ *
+ * @param {jsh.events.DataRequestEvent!} e the event
+ */
+jsh.EditorController.prototype.handleInstitutionRoleRequest = function(e) {
+  var request = this.dataService_.getInstitutionBbRoles();
+  request.addCallback(e.callback);
+  request.addErrback(e.errback);
+};
+
+
+/**
+ *
+ * @param {jsh.events.DataRequestEvent!} e the event
+ */
+jsh.EditorController.prototype.handleSystemRoleRequest = function(e) {
+  var request = this.dataService_.getSystemBbRoles();
+  request.addCallback(e.callback);
+  request.addErrback(e.errback);
 };
 
 

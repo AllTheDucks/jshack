@@ -16,6 +16,8 @@
         <property name="rootConfigDirPath" value="test-web/src/test/data"></property>
     </bean>
 
+    <bean id="bbRoleService" class="org.oscelot.jshack.service.TestBbRoleService" />
+
     <!--<bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackTestDirectoryFactory">-->
         <!--<property name="hacksDirPath" value="test-web/src/test/data" />-->
     <!--</bean>-->

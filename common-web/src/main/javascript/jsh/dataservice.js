@@ -5,6 +5,7 @@ goog.require('goog.async.Deferred');
 goog.require('goog.json');
 goog.require('goog.net.XhrIo');
 goog.require('goog.net.XhrManager');
+goog.require('jsh.model.BbRole');
 goog.require('jsh.model.Hack');
 
 
@@ -33,6 +34,13 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
    * @private
    */
   this.hacksWSUrl_ = this.contextRoot_ + '/ws/hacks/';
+
+  /**
+   * The url of the remote service for Bb roles.
+   * @type {string}
+   * @private
+   */
+  this.bbRolesWSUrl_ = this.contextRoot_ + '/ws/bbroles/';
 
   /**
    * The url of the remote service for temporary files.
@@ -123,6 +131,52 @@ jsh.DataService.prototype.saveHack = function(hack) {
 
 
 /**
+ * Gets a list of roles of the specified type.
+ * @param {string} type the type of role (system, course, institution)
+ * @return {goog.async.Deferred} The roles.
+ * @private
+ */
+jsh.DataService.prototype.getBbRoles_ = function(type) {
+  var dataServiceReq = new jsh.DataService.Request(
+      new goog.async.Deferred(),
+      this.unpackBbRoleJSON);
+
+  var requestId = this.putRequest_(dataServiceReq);
+
+  this.xhrManager_.send(requestId, this.bbRolesWSUrl_ + type, 'GET');
+
+  return dataServiceReq.deferred;
+};
+
+
+/**
+ * Gets a list of system roles.
+ * @return {goog.async.Deferred}
+ */
+jsh.DataService.prototype.getSystemBbRoles = function() {
+  return this.getBbRoles_('system');
+};
+
+
+/**
+ * Gets a list of course roles.
+ * @return {goog.async.Deferred}
+ */
+jsh.DataService.prototype.getCourseBbRoles = function() {
+  return this.getBbRoles_('course');
+};
+
+
+/**
+ * Gets a list of institution roles.
+ * @return {goog.async.Deferred}
+ */
+jsh.DataService.prototype.getInstitutionBbRoles = function() {
+  return this.getBbRoles_('institution');
+};
+
+
+/**
  * Send the file to to the server and store it temporarily.
  * Returns the temporary file name.
  * @param {Blob!} blob
@@ -203,6 +257,27 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
   jsonData['developerInstitution'] = hack.developerInstitution;
 
   return goog.json.serialize(jsonData);
+};
+
+
+/**
+ * Converts a JSON representation of a list of Bb hacks into BbRole models.
+ * @param {Array.<Object>} jsonData JSON object representing a list of BbRoles.
+ * @return {Array.<jsh.model.BbRole>} Array of BbRoles.
+ */
+jsh.DataService.prototype.unpackBbRoleJSON = function(jsonData) {
+  var bbRoles = [];
+
+  goog.array.forEach(jsonData, goog.bind(function(bbRoles, elem, index, array) {
+    var role = new jsh.model.BbRole();
+
+    role.id = elem['id'];
+    role.name = elem['name'];
+
+    bbRoles.push(role);
+  }, this, bbRoles));
+
+  return bbRoles;
 };
 
 

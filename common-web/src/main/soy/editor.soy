@@ -147,3 +147,174 @@
   <div class="ide-overlay-children"></div>
 </div>
 {/template}
+
+
+/**
+ * The Panel which contains all the controls for editing where and when a
+ * resource will be injected.
+ */
+{template .resourceRestrictions}
+<div>
+    <div>
+        <span id="enable" class="inject-checkbox goog-checkbox-unchecked goog-checkbox" aria-checked="true" role="checkbox" tabindex="0" aria-labelledby="enable.lbl" style="-webkit-user-select: none;"></span>
+        <span>Inject this resource directly into page.</span>
+    </div>
+</div>
+{/template}
+
+
+/**
+ * Component for selecting injection points.
+ */
+{template .injectionPointPane}
+    <div class="{css jsh-injection-point-pane} {css jsh-resource-restriction-pane}">
+        <hr>
+        <div class="{css jsh-injection-point-button}"></div>
+        <div class="{css jsh-empty-notice}">This resource currently has no injection points specified. It won't be injected anywhere.</div>
+        <div class="{css jsh-injection-point-pane-content}"></div>
+    </div>
+{/template}
+
+
+/**
+ * Component for selecting injection points.
+ */
+{template .restrictionPane}
+    <div class="{css jsh-restriction-pane} {css jsh-resource-restriction-pane}">
+        <hr>
+        <div class="{css jsh-restriction-button}"></div>
+        <div class="{css jsh-empty-notice}">This resource currently has no restrictions specified.  It will be injected in <b>every page</b> for the specified injection points.</div>
+        <div class="{css jsh-restriction-pane-content}"></div>
+    </div>
+{/template}
+
+
+/**
+  *
+  */
+{template .restrictionEditor}
+    <div class="{css jsh-restriction-editor}">
+        <div class="{css jsh-restriction-editor-content}"></div>
+        <div class="{css jsh-restriction-editor-close-button}"></div>
+    </div>
+{/template}
+
+
+/**
+  * Restriction Editor: Course Availability
+  */
+{template .courseAvailabilityRestrictionEditor}
+    <div class="{css jsh-course-availability-restriction-editor}">
+        <div class="{css jsh-label}">The course is:</div>
+        <div class="{css jsh-course-availability-restriction-editor-options}"></div>
+    </div>
+{/template}
+
+
+/**
+  * Restriction Editor: URL
+  */
+{template .urlRestrictionEditor}
+    <div class="{css jsh-url-restriction-editor}">
+        <div class="{css jsh-label}">Page URL:</div>
+        <div class="{css jsh-url-restriction-editor-options}"></div>
+    </div>
+{/template}
+
+
+/**
+  * Restriction Editor: Entitlement
+  */
+{template .entitlementRestrictionEditor}
+    <div class="{css jsh-entitlement-restriction-editor}">
+        <div class="{css jsh-label}">Entitlement:</div>
+        <div class="{css jsh-entitlement-restriction-editor-options}"></div>
+    </div>
+{/template}
+
+
+/**
+  * Restriction Editor: Advanced
+  */
+{template .advancedRestrictionEditor}
+    <div class="{css jsh-advanced-restriction-editor}">
+        <div class="{css jsh-label}">Advanced:</div>
+        <div class="{css jsh-advanced-restriction-editor-options}"></div>
+    </div>
+{/template}
+
+
+/**
+  * Restriction Editor: Request Parameter
+  */
+{template .requestParameterRestrictionEditor}
+    <div class="{css jsh-request-parameter-restriction-editor}">
+        <div class="{css jsh-label}">Request Parameter:</div>
+        <div class="{css jsh-request-parameter-restriction-editor-options}">
+            <label><span>Name:</span><span class="{css jsh-request-parameter-restriction-editor-name}"></span></label>
+            <label><span>Value:</span><span class="{css jsh-request-parameter-restriction-editor-value}"></span></label>
+        </div>
+    </div>
+{/template}
+
+
+/**
+  * Restriction Editor: Role
+  */
+{template .roleRestrictionEditor}
+    <div class="{css jsh-role-restriction-editor}">
+        <div class="{css jsh-label}"></div>
+        <div class="{css jsh-role-restriction-editor-options}"></div>
+    </div>
+{/template}
+
+
+/**
+  *
+  */
+{template .injectionPointPaneItem}
+    <div class="{css jsh-injection-point-pane-item}">
+        <div class="{css jsh-injection-point-pane-item-content}"></div>
+        <div class="{css jsh-injection-point-pane-item-close-button}"></div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Edit Mode Toggle item is selected.
+  */
+{template .injectionPointPaneItemEditModeToggle}
+    <div>
+        <div class="{css injection-point-title}">Edit Mode Toggle</div>
+        <div class="{css injection-point-id}">tag.editModeViewToggle.start</div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Top Frame item is selected.
+  */
+{template .injectionPointPaneItemTopFrame}
+    <div>
+        <div class="{css injection-point-title}">Top Frame</div>
+        <div class="{css injection-point-id}">jsp.topFrame.start</div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Learning System Pag item is selected.
+  */
+{template .injectionPointPaneItemLearningSystemPage}
+    <div>
+        <div class="{css injection-point-title}">Learning System Page</div>
+        <div class="{css injection-point-id}">tag.learningSystemPage.start</div>
+    </div>
+{/template}
+
+/**
+  * Displayed when the Frameset item is selected.
+  */
+{template .injectionPointPaneItemFrameset}
+    <div>
+        <div class="{css injection-point-title}">Frameset</div>
+        <div class="{css injection-point-id}">jsp.frameset.start</div>
+    </div>
+{/template}
