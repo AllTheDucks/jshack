@@ -19,11 +19,13 @@ jsh.DeveloperList = function(opt_domHelper) {
 
   /**
    * @type {goog.ui.Button}
+   * @private
    */
   this.addButton_ = null;
 
   /**
    * @type {goog.ui.Component}
+   * @private
    */
   this.list_ = null;
 };
@@ -45,7 +47,7 @@ jsh.DeveloperList.prototype.createDom = function() {
 jsh.DeveloperList.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  this.addButton_ = new goog.ui.Button("Add Developer",
+  this.addButton_ = new goog.ui.Button('Add Developer',
       goog.ui.Css3ButtonRenderer.getInstance());
   this.addChild(this.addButton_, true);
 
@@ -78,7 +80,7 @@ jsh.DeveloperList.prototype.enterDocument = function() {
 jsh.DeveloperList.prototype.addDeveloper = function() {
   var ed = new jsh.DeveloperEditor();
   this.list_.addChild(ed, true);
-}
+};
 
 
 
@@ -162,7 +164,8 @@ jsh.DeveloperEditor.prototype.decorateInternal = function(element) {
   this.addChild(this.urlTextbox_, false);
   this.urlTextbox_.render(urlEl);
 
-  var emailEl = goog.dom.getElementByClass('jsh-developer-editor-email', element);
+  var emailEl = goog.dom.getElementByClass('jsh-developer-editor-email',
+      element);
   this.emailTextbox_ = new goog.ui.LabelInput('jane.doe@jshack.net');
   this.addChild(this.emailTextbox_, false);
   this.emailTextbox_.render(emailEl);
@@ -178,6 +181,7 @@ jsh.DeveloperEditor.prototype.enterDocument = function() {
   goog.events.listen(this.removeButton_, goog.ui.Component.EventType.ACTION,
       this.handleRemoveButtonClick_, false, this);
 };
+
 
 /**
  * Handle the the click of the close button.
