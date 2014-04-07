@@ -5,6 +5,7 @@ goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('jsh.BaseEditor');
+goog.require('jsh.DeveloperList');
 goog.require('jsh.soy.editor');
 
 
@@ -20,6 +21,8 @@ jsh.HackDetailsArea = function(opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   this.valid = false;
+
+  this.developerList = null;
 };
 goog.inherits(jsh.HackDetailsArea, jsh.BaseEditor);
 
@@ -43,16 +46,7 @@ jsh.HackDetailsArea.prototype.createDom = function() {
  */
 jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
-};
 
-
-/**
- * Called when component's element is known to be in the document.
- * @override
- */
-jsh.HackDetailsArea.prototype.enterDocument = function() {
-  goog.base(this, 'enterDocument');
-  var element = this.getElement();
   this.hackNameInput = goog.dom.getElementByClass('hack-name', element);
   this.hackDescInput = goog.dom.getElementByClass('hack-description', element);
   this.hackIdentifierInput = goog.dom.getElementByClass('hack-identifier',
@@ -62,6 +56,20 @@ jsh.HackDetailsArea.prototype.enterDocument = function() {
       'hack-targetVersionMin', element);
   this.hackTargetVerMaxInput = goog.dom.getElementByClass(
       'hack-targetVersionMax', element);
+
+  var developerListEl = goog.dom.getElementByClass('hack-developers', element);
+  this.developerList = new jsh.DeveloperList();
+  this.addChild(this.developerList);
+  this.developerList.render(developerListEl);
+};
+
+
+/**
+ * Called when component's element is known to be in the document.
+ * @override
+ */
+jsh.HackDetailsArea.prototype.enterDocument = function() {
+  goog.base(this, 'enterDocument');
 
   goog.events.listen(this.hackNameInput,
       goog.events.EventType.BLUR, function() {
