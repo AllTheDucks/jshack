@@ -60,8 +60,8 @@ jsh.AceEditor.prototype.enterDocument = function() {
 
     jsh.AceEditor.enableAutoComplete();
     this.aceEditor.setOptions({
-      enableBasicAutocompletion: true,
-      enableSnippets: true
+      'enableBasicAutocompletion': true,
+      'enableSnippets': true
     });
   }
 };

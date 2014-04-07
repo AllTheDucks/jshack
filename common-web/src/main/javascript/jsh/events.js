@@ -14,7 +14,7 @@ jsh.events.EventType = {
   RESOURCE_RENAMED: 'resourcerenamed',
   RESOURCE_NAME_EDITABLE: 'resourcenameeditable',
   RESOURCE_NAME_UNEDITABLE: 'resourcenameuneditable',
-  RESOURCE_DELETED: 'resourcedeleted'
+  RESOURCE_DELETED: 'resourcedeleted',
   INJECTION_POINT_ADDED: 'injectionpointadded',
   INJECTION_POINT_REMOVED: 'injectionpointremoved',
   REMOVE: 'remove'
