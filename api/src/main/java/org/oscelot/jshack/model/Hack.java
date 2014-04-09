@@ -16,10 +16,7 @@ public class Hack {
     private String version;
     private String targetVersionMin;
     private String targetVersionMax;
-    private String developerName;
-    private String developerInstitution;
-    private String developerURL;
-    private String developerEmail;
+    private List<Developer> developers;
     private List<ConfigEntryDefinition> configEntryDefinitions;
     private List<HackResource> resources;
     private String source;
@@ -77,50 +74,12 @@ public class Hack {
         this.source = source;
     }
 
-    /**
-     * @return the lastUpdated
-     */
     public Date getLastUpdated() {
         return lastUpdated;
     }
 
-    /**
-     * @param lastUpdated the lastUpdated to set
-     */
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
-    }
-
-    public String getDeveloperName() {
-        return developerName;
-    }
-
-    public void setDeveloperName(String developerName) {
-        this.developerName = developerName;
-    }
-
-    public String getDeveloperURL() {
-        return developerURL;
-    }
-
-    public void setDeveloperURL(String developerURL) {
-        this.developerURL = developerURL;
-    }
-
-    public String getDeveloperEmail() {
-        return developerEmail;
-    }
-
-    public void setDeveloperEmail(String developerEmail) {
-        this.developerEmail = developerEmail;
-    }
-
-    public String getDeveloperInstitution() {
-        return developerInstitution;
-    }
-
-    public void setDeveloperInstitution(String developerInstitution) {
-        this.developerInstitution = developerInstitution;
     }
 
     public String getVersion() {
@@ -154,4 +113,8 @@ public class Hack {
     public void setSnippetDefinitions(List<SnippetDefinition> snippetDefinitions) {
         this.snippetDefinitions = snippetDefinitions;
     }
+
+    public List<Developer> getDevelopers() { return developers ; }
+
+    public void setDevelopers(List<Developer> developers) { this.developers = developers; }
 }

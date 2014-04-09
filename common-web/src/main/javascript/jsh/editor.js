@@ -223,6 +223,8 @@ jsh.HackEditor.prototype.updateEditorState = function(hack) {
   this.resourceListHeader_.setHackName(hack.name);
   this.resourceListHeader_.setHackIdentifier(hack.identifier);
 
+  this.hackDetails_.developerList.setDevelopers(hack.developers);
+
   this.setModel(hack);
 
   //TODO Need to update the resources when the data comes back from the server.
@@ -426,6 +428,8 @@ jsh.HackEditor.prototype.getHackModel = function() {
   hack.version = this.hackDetails_.hackVersionInput.value;
   hack.targetVersionMin = this.hackDetails_.hackTargetVerMinInput.value;
   hack.targetVersionMax = this.hackDetails_.hackTargetVerMaxInput.value;
+
+  hack.developers = this.hackDetails_.developerList.getDevelopers();
 
   return hack;
 };

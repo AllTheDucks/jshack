@@ -76,22 +76,60 @@ jsh.DeveloperList.prototype.enterDocument = function() {
 
 /**
  * Add a developer editor to the list.
+ * @param {jsh.model.Developer=} opt_model
  */
-jsh.DeveloperList.prototype.addDeveloper = function() {
-  var ed = new jsh.DeveloperEditor();
+jsh.DeveloperList.prototype.addDeveloper = function(opt_model) {
+  var ed = new jsh.DeveloperEditor(opt_model);
+
   this.list_.addChild(ed, true);
+};
+
+
+/**
+ * Gets a list of {jsh.model.Developer}.
+ * @return {Array.<jsh.model.Developer>}
+ */
+jsh.DeveloperList.prototype.getDevelopers = function() {
+  var developers = [];
+  this.list_.forEachChild(function(child, index) {
+    var dev = new jsh.model.Developer();
+    dev.name = child.getName();
+    dev.institution = child.getInstitution();
+    dev.url = child.getUrl();
+    dev.email = child.getEmail();
+
+    this.push(dev);
+  }, developers);
+
+  return developers;
+};
+
+
+/**
+ * Removes all existing developers and creates an editor for each of the given
+ * developers.
+ * @param {Array.<jsh.model.Developer>} developers
+ */
+jsh.DeveloperList.prototype.setDevelopers = function(developers) {
+  this.list_.removeChildren(true);
+
+  if (developers != null) {
+    goog.array.forEach(developers, function(item, index, array) {
+      this.addDeveloper(item);
+    }, this);
+  }
 };
 
 
 
 /**
  * Item in the list of developers
- *
+ * @param {jsh.model.Developer=} opt_developer
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
  * @extends {goog.ui.Component}
  * @constructor
  */
-jsh.DeveloperEditor = function(opt_domHelper) {
+jsh.DeveloperEditor = function(opt_developer, opt_domHelper) {
   goog.base(this, opt_domHelper);
 
   /**
@@ -123,6 +161,10 @@ jsh.DeveloperEditor = function(opt_domHelper) {
    * @private
    */
   this.emailTextbox_ = null;
+
+  if (opt_developer != null) {
+    this.setModel(opt_developer);
+  }
 };
 goog.inherits(jsh.DeveloperEditor, goog.ui.Component);
 
@@ -180,6 +222,14 @@ jsh.DeveloperEditor.prototype.enterDocument = function() {
 
   goog.events.listen(this.removeButton_, goog.ui.Component.EventType.ACTION,
       this.handleRemoveButtonClick_, false, this);
+
+  var model = this.getModel();
+  if (model != null) {
+    this.nameTextbox_.setValue(model.name);
+    this.institutionTextbox_.setValue(model.institution);
+    this.urlTextbox_.setValue(model.url);
+    this.emailTextbox_.setValue(model.email);
+  }
 };
 
 
@@ -190,4 +240,76 @@ jsh.DeveloperEditor.prototype.enterDocument = function() {
  */
 jsh.DeveloperEditor.prototype.handleRemoveButtonClick_ = function(e) {
   this.dispatchEvent(new goog.events.Event(jsh.events.EventType.REMOVE));
+};
+
+
+/**
+ * Gets the name of the developer.
+ * @return {string}
+ */
+jsh.DeveloperEditor.prototype.getName = function() {
+  return this.nameTextbox_.getValue();
+};
+
+
+/**
+ * Sets the name of the developer.
+ * @param {string} name
+ */
+jsh.DeveloperEditor.prototype.setName = function(name) {
+  this.nameTextbox_.setValue(name);
+};
+
+
+/**
+ * Gets the institution of the developer.
+ * @return {string}
+ */
+jsh.DeveloperEditor.prototype.getInstitution = function() {
+  return this.institutionTextbox_.getValue();
+};
+
+
+/**
+ * Sets the institution of the developer.
+ * @param {string} institution
+ */
+jsh.DeveloperEditor.prototype.setInstitution = function(institution) {
+  this.institutionTextbox_.setValue(institution);
+};
+
+
+/**
+ * Gets the URL of the developer.
+ * @return {string}
+ */
+jsh.DeveloperEditor.prototype.getUrl = function() {
+  return this.urlTextbox_.getValue();
+};
+
+
+/**
+ * Sets the URL of the developer.
+ * @param {string} url
+ */
+jsh.DeveloperEditor.prototype.setUrl = function(url) {
+  this.urlTextbox_.setValue(url);
+};
+
+
+/**
+ * Gets the email of the developer.
+ * @return {string}
+ */
+jsh.DeveloperEditor.prototype.getEmail = function() {
+  return this.emailTextbox_.getValue();
+};
+
+
+/**
+ * Sets the email of the developer.
+ * @param {string} email
+ */
+jsh.DeveloperEditor.prototype.setEmail = function(email) {
+  this.emailTextbox_.setValue(email);
 };
