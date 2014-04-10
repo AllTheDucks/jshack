@@ -8,7 +8,7 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <!-- Stripes Configuration -->
+    <!-- Stripes ConfigEntryDefinition -->
     <filter>
         <display-name>Stripes Filter</display-name>
         <filter-name>StripesFilter</filter-name>

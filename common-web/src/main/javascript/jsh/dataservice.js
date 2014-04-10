@@ -6,6 +6,8 @@ goog.require('goog.json');
 goog.require('goog.net.XhrIo');
 goog.require('goog.net.XhrManager');
 goog.require('jsh.model.BbRole');
+goog.require('jsh.model.ConfigEntryDefinition');
+goog.require('jsh.model.Developer');
 goog.require('jsh.model.Hack');
 
 
@@ -246,6 +248,20 @@ jsh.DataService.prototype.unpackHackJSON = function(jsonData) {
     }, this);
   }
 
+  hack.configEntryDefinitions = [];
+  if (jsonData['configEntryDefinitions']) {
+    goog.array.forEach(jsonData['configEntryDefinitions'],
+        function(item, index, array) {
+          var config = new jsh.model.ConfigEntryDefinition();
+          config.name = item['name'];
+          config.identifier = item['identifier'];
+          config.description = item['description'];
+          config.defaultValue = item['defaultValue'];
+
+          hack.configEntryDefinitions.push(config);
+        }, this);
+  }
+
   return hack;
 };
 
@@ -274,6 +290,17 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
     dev['email'] = item.email;
 
     jsonData['developers'].push(dev);
+  }, this);
+
+  jsonData['configEntryDefinitions'] = [];
+  goog.array.forEach(hack.configEntryDefinitions, function(item, index, array) {
+    var dev = {};
+    dev['name'] = item.name;
+    dev['identifier'] = item.identifier;
+    dev['description'] = item.description;
+    dev['defaultValue'] = item.defaultValue;
+
+    jsonData['configEntryDefinitions'].push(dev);
   }, this);
 
   return goog.json.serialize(jsonData);

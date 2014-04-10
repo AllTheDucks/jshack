@@ -69,6 +69,8 @@
   </tbody></table>
   <h2>Developers</h2>
   <div class="hack-developers"></div>
+  <h2>Configuration</h2>
+  <div class="hack-configuration"></div>
   </div>
 
 {/template}
@@ -86,6 +88,22 @@
             <label><span>Email:</span><span class="{css jsh-developer-editor-email}"></span></label>
         </div>
         <div class="{css jsh-developer-editor-close-button} {css editor-block-close-button}"></div>
+    </div>
+{/template}
+
+
+/**
+  * Editor for adding configuration to the package.
+  */
+{template .configurationEditor}
+    <div class="{css jsh-configuration-editor} {css editor-block}">
+        <div class="{css jsh-configuration-editor-content} {css editor-block-content} {css label-table}">
+            <label><span>Identifier:</span><span class="{css jsh-configuration-editor-identifier}"></span></label>
+            <label><span>Name:</span><span class="{css jsh-configuration-editor-name}"></span></label>
+            <label><span>Description:</span><span class="{css jsh-configuration-editor-description}"></span></label>
+            <label><span>Default Value:</span><span class="{css jsh-configuration-editor-default-value}"></span></label>
+        </div>
+        <div class="{css jsh-configuration-editor-close-button} {css editor-block-close-button}"></div>
     </div>
 {/template}
 

@@ -224,6 +224,8 @@ jsh.HackEditor.prototype.updateEditorState = function(hack) {
   this.resourceListHeader_.setHackIdentifier(hack.identifier);
 
   this.hackDetails_.developerList.setDevelopers(hack.developers);
+  this.hackDetails_.configurationList.setConfiguration(
+      hack.configEntryDefinitions);
 
   this.setModel(hack);
 
@@ -430,6 +432,8 @@ jsh.HackEditor.prototype.getHackModel = function() {
   hack.targetVersionMax = this.hackDetails_.hackTargetVerMaxInput.value;
 
   hack.developers = this.hackDetails_.developerList.getDevelopers();
+  hack.configEntryDefinitions =
+      this.hackDetails_.configurationList.getConfiguration();
 
   return hack;
 };
