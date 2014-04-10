@@ -211,6 +211,22 @@ jsh.DeveloperEditor.prototype.decorateInternal = function(element) {
   this.emailTextbox_ = new goog.ui.LabelInput('jane.doe@jshack.net');
   this.addChild(this.emailTextbox_, false);
   this.emailTextbox_.render(emailEl);
+
+  var model = this.getModel();
+  if (model != null) {
+    if (model.name) {
+      this.nameTextbox_.setValue(model.name);
+    }
+    if (model.institution) {
+      this.institutionTextbox_.setValue(model.institution);
+    }
+    if (model.url) {
+      this.urlTextbox_.setValue(model.url);
+    }
+    if (model.email) {
+      this.emailTextbox_.setValue(model.email);
+    }
+  }
 };
 
 
@@ -222,14 +238,6 @@ jsh.DeveloperEditor.prototype.enterDocument = function() {
 
   goog.events.listen(this.removeButton_, goog.ui.Component.EventType.ACTION,
       this.handleRemoveButtonClick_, false, this);
-
-  var model = this.getModel();
-  if (model != null) {
-    this.nameTextbox_.setValue(model.name);
-    this.institutionTextbox_.setValue(model.institution);
-    this.urlTextbox_.setValue(model.url);
-    this.emailTextbox_.setValue(model.email);
-  }
 };
 
 
