@@ -94,6 +94,9 @@ public class XStreamHackService implements HackService {
         xstream.alias("resource", HackResource.class);
         xstream.omitField(HackResource.class, "tempFileName");
 
+        xstream.alias("developers", Developer.class);
+        xstream.aliasField("developers", Hack.class, "developers");
+
         return xstream;
     }
 

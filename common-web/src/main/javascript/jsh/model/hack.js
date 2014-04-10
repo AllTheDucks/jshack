@@ -8,6 +8,7 @@
 
 goog.provide('jsh.model.Hack');
 
+goog.require('jsh.model.Developer');
 goog.require('jsh.model.HackResource');
 
 
@@ -29,16 +30,10 @@ jsh.model.Hack = function() {
   this.targetVersionMin;
   /** @type {string} */
   this.targetVersionMax;
-  /** @type {string} */
-  this.developerName;
-  /** @type {string} */
-  this.developerInstitution;
-  /** @type {string} */
-  this.developerURL;
-  /** @type {string} */
-  this.developerEmail;
   /** @type {goog.date.DateTime} */
   this.lastUpdated;
   /** @type {Array.<jsh.model.HackResource>} */
   this.resources;
+  /** @type {Array.<jsh.model.Developer>} */
+  this.developers;
 };

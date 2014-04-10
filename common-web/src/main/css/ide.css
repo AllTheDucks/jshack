@@ -171,3 +171,41 @@ input[type="text"] {
     width: 30em;
 }
 
+
+
+.editor-block {
+    display: inline-block;
+    margin: 0.5em 0.5em 0.5em 0;
+    border: 1px solid #808080;
+    border-radius: 0.5em;
+    box-shadow: 0.25em 0.25em 0.1em #111111;
+    background-color: #808080;
+}
+
+.editor-block-content {
+    padding: 0.5em;
+    background-color: #191919;
+    border-radius: 0.5em;
+}
+
+.editor-block-close-button {
+    text-align: right;
+    padding: 0.25em;
+}
+
+
+.label-table {
+    display: table;
+}
+
+.label-table > label {
+    display: table-row;
+}
+
+.label-table > label > span {
+    display: table-cell;
+}
+
+.label-table input {
+    width: 15em;
+}

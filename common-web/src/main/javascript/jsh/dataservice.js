@@ -232,8 +232,19 @@ jsh.DataService.prototype.unpackHackJSON = function(jsonData) {
   hack.version = jsonData['version'];
   hack.targetVersionMin = jsonData['targetVersionMin'];
   hack.targetVersionMax = jsonData['targetVersionMax'];
-  hack.developerName = jsonData['developerName'];
-  hack.developerInstitution = jsonData['developerInstitution'];
+
+  hack.developers = [];
+  if (jsonData['developers']) {
+    goog.array.forEach(jsonData['developers'], function(item, index, array) {
+      var dev = new jsh.model.Developer();
+      dev.name = item['name'];
+      dev.institution = item['institution'];
+      dev.url = item['url'];
+      dev.email = item['email'];
+
+      hack.developers.push(dev);
+    }, this);
+  }
 
   return hack;
 };
@@ -253,8 +264,17 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
   jsonData['version'] = hack.version;
   jsonData['targetVersionMin'] = hack.targetVersionMin;
   jsonData['targetVersionMax'] = hack.targetVersionMax;
-  jsonData['developerName'] = hack.developerName;
-  jsonData['developerInstitution'] = hack.developerInstitution;
+
+  jsonData['developers'] = [];
+  goog.array.forEach(hack.developers, function(item, index, array) {
+    var dev = {};
+    dev['name'] = item.name;
+    dev['institution'] = item.institution;
+    dev['url'] = item.url;
+    dev['email'] = item.email;
+
+    jsonData['developers'].push(dev);
+  }, this);
 
   return goog.json.serialize(jsonData);
 };

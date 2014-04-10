@@ -67,8 +67,26 @@
       <td><input class="hack-targetVersionMax" type="text" placeholder="9.1.14"></td>
     </tr>
   </tbody></table>
+  <h2>Developers</h2>
+  <div class="hack-developers"></div>
   </div>
 
+{/template}
+
+
+/**
+  * Editor for adding a developer to the package.
+  */
+{template .developerEditor}
+    <div class="{css jsh-developer-editor} {css editor-block}">
+        <div class="{css jsh-developer-editor-content} {css editor-block-content} {css label-table}">
+            <label><span>Name:</span><span class="{css jsh-developer-editor-name}"></span></label>
+            <label><span>Institution:</span><span class="{css jsh-developer-editor-institution}"></span></label>
+            <label><span>URL:</span><span class="{css jsh-developer-editor-url}"></span></label>
+            <label><span>Email:</span><span class="{css jsh-developer-editor-email}"></span></label>
+        </div>
+        <div class="{css jsh-developer-editor-close-button} {css editor-block-close-button}"></div>
+    </div>
 {/template}
 
 
@@ -193,9 +211,9 @@
   *
   */
 {template .restrictionEditor}
-    <div class="{css jsh-restriction-editor}">
-        <div class="{css jsh-restriction-editor-content}"></div>
-        <div class="{css jsh-restriction-editor-close-button}"></div>
+    <div class="{css jsh-restriction-editor} {css editor-block}">
+        <div class="{css jsh-restriction-editor-content} {css editor-block-content}"></div>
+        <div class="{css jsh-restriction-editor-close-button} {css editor-block-close-button}"></div>
     </div>
 {/template}
 
@@ -250,7 +268,7 @@
 {template .requestParameterRestrictionEditor}
     <div class="{css jsh-request-parameter-restriction-editor}">
         <div class="{css jsh-label}">Request Parameter:</div>
-        <div class="{css jsh-request-parameter-restriction-editor-options}">
+        <div class="{css jsh-request-parameter-restriction-editor-options} {css label-table}">
             <label><span>Name:</span><span class="{css jsh-request-parameter-restriction-editor-name}"></span></label>
             <label><span>Value:</span><span class="{css jsh-request-parameter-restriction-editor-value}"></span></label>
         </div>
@@ -273,9 +291,9 @@
   *
   */
 {template .injectionPointPaneItem}
-    <div class="{css jsh-injection-point-pane-item}">
-        <div class="{css jsh-injection-point-pane-item-content}"></div>
-        <div class="{css jsh-injection-point-pane-item-close-button}"></div>
+    <div class="{css jsh-injection-point-pane-item} {css editor-block}">
+        <div class="{css jsh-injection-point-pane-item-content} {css editor-block-content}"></div>
+        <div class="{css jsh-injection-point-pane-item-close-button} {css editor-block-close-button}"></div>
     </div>
 {/template}
 
