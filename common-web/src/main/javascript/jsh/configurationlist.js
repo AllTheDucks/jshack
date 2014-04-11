@@ -92,7 +92,7 @@ jsh.ConfigurationList.prototype.addConfiguration = function(opt_model) {
 jsh.ConfigurationList.prototype.getConfiguration = function() {
   var configurations = [];
   this.list_.forEachChild(function(child, index) {
-    var config = new jsh.model.Developer();
+    var config = new jsh.model.ConfigEntryDefinition();
     config.name = child.getName();
     config.identifier = child.getIdentifier();
     config.description = child.getDescription();
