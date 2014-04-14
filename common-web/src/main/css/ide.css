@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
 body {
     border: 0;
     margin: 0;
@@ -51,6 +56,12 @@ body {
     background-color: #191919;
     height: 100%;
     padding: 1em;
+    overflow: auto;
+}
+
+.jsh-resourcerestrictions {
+    height: 100%;
+    overflow: auto;
 }
 
 .jsh-reseditor {
