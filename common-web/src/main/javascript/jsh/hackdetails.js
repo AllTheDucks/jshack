@@ -50,23 +50,27 @@ jsh.HackDetailsArea.prototype.createDom = function() {
 jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  this.hackNameInput = goog.dom.getElementByClass('hack-name', element);
-  this.hackDescInput = goog.dom.getElementByClass('hack-description', element);
-  this.hackIdentifierInput = goog.dom.getElementByClass('hack-identifier',
+  this.hackNameInput = goog.dom.getElementByClass(goog.getCssName('hack-name'),
       element);
-  this.hackVersionInput = goog.dom.getElementByClass('hack-version', element);
+  this.hackDescInput = goog.dom.getElementByClass(
+      goog.getCssName('hack-description'), element);
+  this.hackIdentifierInput = goog.dom.getElementByClass(
+      goog.getCssName('hack-identifier'), element);
+  this.hackVersionInput = goog.dom.getElementByClass(
+      goog.getCssName('hack-version'), element);
   this.hackTargetVerMinInput = goog.dom.getElementByClass(
-      'hack-targetVersionMin', element);
+      goog.getCssName('hack-targetVersionMin'), element);
   this.hackTargetVerMaxInput = goog.dom.getElementByClass(
-      'hack-targetVersionMax', element);
+      goog.getCssName('hack-targetVersionMax'), element);
 
-  var developerListEl = goog.dom.getElementByClass('hack-developers', element);
+  var developerListEl = goog.dom.getElementByClass(
+      goog.getCssName('hack-developers'), element);
   this.developerList = new jsh.DeveloperList();
   this.addChild(this.developerList);
   this.developerList.render(developerListEl);
 
-  var configurationListEl = goog.dom.getElementByClass('hack-configuration',
-      element);
+  var configurationListEl = goog.dom.getElementByClass(
+      goog.getCssName('hack-configuration'), element);
   this.configurationList = new jsh.ConfigurationList();
   this.addChild(this.configurationList);
   this.configurationList.render(configurationListEl);

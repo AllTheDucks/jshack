@@ -47,17 +47,20 @@ goog.inherits(jsh.ResourceListItem, jsh.ResourceListBaseItem);
  */
 jsh.ResourceListItem.prototype.createDom = function() {
   var resource = this.getModel();
-  var resourceItem = goog.dom.createDom('div', 'jsh-resourcelistitem');
+  var resourceItem = goog.dom.createDom('div',
+      goog.getCssName('jsh-resourcelistitem'));
 
   var iconClass = jsh.MimeTypeHelper.getIconClass(resource.mime);
-  this.textEl_ = goog.dom.createDom('div', { 'class': 'text' }, resource.path);
-  this.nameInput_ = goog.dom.createDom('input', { 'class': 'nameInput' ,
-    'style': 'display:none;', 'value': resource.path});
+  this.textEl_ = goog.dom.createDom('div', { 'class': goog.getCssName('text') },
+      resource.path);
+  this.nameInput_ = goog.dom.createDom('input', { 'class':
+        goog.getCssName('nameInput'), 'style': 'display:none;',
+    'value': resource.path});
 
   goog.dom.classlist.add(resourceItem, iconClass);
 
   resourceItem.appendChild(goog.dom.createDom('div',
-      { 'class': 'icon' }));
+      { 'class': goog.getCssName('icon') }));
   resourceItem.appendChild(this.textEl_);
   resourceItem.appendChild(this.nameInput_);
 

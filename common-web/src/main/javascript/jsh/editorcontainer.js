@@ -21,7 +21,7 @@ goog.inherits(jsh.EditorContainer, goog.ui.Component);
  * @override
  */
 jsh.EditorContainer.prototype.createDom = function() {
-  var el = this.dom_.createDom('div', 'jsh-editorcontainer');
+  var el = this.dom_.createDom('div', goog.getCssName('jsh-editorcontainer'));
   this.decorateInternal(el);
 
 };

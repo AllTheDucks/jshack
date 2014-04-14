@@ -55,7 +55,8 @@ jsh.RoleRestrictionEditor.prototype.createDom = function() {
 jsh.RoleRestrictionEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  var labelEl = goog.dom.getElementByClass('jsh-label', element);
+  var labelEl = goog.dom.getElementByClass(goog.getCssName('jsh-label'),
+      element);
   goog.dom.setTextContent(labelEl, this.getLabel() + ':');
 
   var optionsEl = goog.dom.getElementByClass(

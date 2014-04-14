@@ -50,7 +50,7 @@ goog.inherits(jsh.TextEditor, jsh.BaseEditor);
  */
 jsh.TextEditor.prototype.createDom = function() {
 
-  var el = this.dom_.createDom('div', {'class': 'jsh-reseditor'});
+  var el = goog.dom.createDom('div', goog.getCssName('jsh-reseditor'));
   this.decorateInternal(el);
 
 };

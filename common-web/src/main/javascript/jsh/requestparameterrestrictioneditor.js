@@ -55,12 +55,14 @@ jsh.RequestParameterRestrictionEditor.prototype.decorateInternal =
   this.setElementInternal(element);
 
   var nameEl = goog.dom.getElementByClass(
-      'jsh-request-parameter-restriction-editor-name', element);
+      goog.getCssName('jsh-request-parameter-restriction-editor-name'),
+      element);
   this.name_ = new goog.ui.LabelInput('type');
   this.name_.render(nameEl);
 
   var valueEl = goog.dom.getElementByClass(
-      'jsh-request-parameter-restriction-editor-value', element);
+      goog.getCssName('jsh-request-parameter-restriction-editor-value'),
+      element);
   this.value_ = new goog.ui.LabelInput('(blogs|journals)');
   this.value_.render(valueEl);
 };

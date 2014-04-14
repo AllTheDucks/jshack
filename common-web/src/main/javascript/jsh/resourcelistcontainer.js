@@ -29,7 +29,7 @@ goog.inherits(jsh.ResourceListContainer, goog.ui.Container);
  * @override
  */
 jsh.ResourceListContainer.prototype.createDom = function() {
-  var el = this.dom_.createDom('div', 'jsh-resourcelistarea');
+  var el = this.dom_.createDom('div', goog.getCssName('jsh-resourcelistarea'));
   this.decorateInternal(el);
 
 };
