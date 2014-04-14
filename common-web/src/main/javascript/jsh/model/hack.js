@@ -36,4 +36,6 @@ jsh.model.Hack = function() {
   this.resources;
   /** @type {Array.<jsh.model.Developer>} */
   this.developers;
+  /** @type {Array.<jsh.model.ConfigEntryDefinition>} */
+  this.configEntryDefinitions;
 };

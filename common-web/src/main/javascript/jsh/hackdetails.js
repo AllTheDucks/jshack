@@ -5,6 +5,7 @@ goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('jsh.BaseEditor');
+goog.require('jsh.ConfigurationList');
 goog.require('jsh.DeveloperList');
 goog.require('jsh.soy.editor');
 
@@ -23,6 +24,8 @@ jsh.HackDetailsArea = function(opt_domHelper) {
   this.valid = false;
 
   this.developerList = null;
+
+  this.configurationList = null;
 };
 goog.inherits(jsh.HackDetailsArea, jsh.BaseEditor);
 
@@ -61,6 +64,12 @@ jsh.HackDetailsArea.prototype.decorateInternal = function(element) {
   this.developerList = new jsh.DeveloperList();
   this.addChild(this.developerList);
   this.developerList.render(developerListEl);
+
+  var configurationListEl = goog.dom.getElementByClass('hack-configuration',
+      element);
+  this.configurationList = new jsh.ConfigurationList();
+  this.addChild(this.configurationList);
+  this.configurationList.render(configurationListEl);
 };
 
 

@@ -209,3 +209,13 @@ input[type="text"] {
 .label-table input {
     width: 15em;
 }
+
+
+.jsh-configuration-editor-name input,
+.jsh-configuration-editor-description input,
+.jsh-configuration-editor-default-value input {
+    width: 25em;
+}
+.jsh-configuration-editor-identifier input {
+    width: 10em;
+}
