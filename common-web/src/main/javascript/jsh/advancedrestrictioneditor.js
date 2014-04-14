@@ -48,7 +48,7 @@ jsh.AdvancedRestrictionEditor.prototype.decorateInternal =
   this.setElementInternal(element);
 
   var optionsEl = goog.dom.getElementByClass(
-      'jsh-advanced-restriction-editor-options', element);
+      goog.getCssName('jsh-advanced-restriction-editor-options'), element);
   var optionsComp = new goog.ui.Component();
   optionsComp.render(optionsEl);
 

@@ -36,7 +36,7 @@ goog.inherits(jsh.DeveloperList, goog.ui.Component);
  * @inheritDoc
  */
 jsh.DeveloperList.prototype.createDom = function() {
-  var el = goog.dom.createDom('div', 'jsh-developer-list');
+  var el = goog.dom.createDom('div', goog.getCssName('jsh-developer-list'));
   this.decorateInternal(el);
 };
 
@@ -185,29 +185,31 @@ jsh.DeveloperEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
   var closeEl = goog.dom.getElementByClass(
-      'jsh-developer-editor-close-button', element);
+      goog.getCssName('jsh-developer-editor-close-button'), element);
   this.removeButton_ = new goog.ui.Button('Remove',
       goog.ui.Css3ButtonRenderer.getInstance());
   this.removeButton_.render(closeEl);
 
-  var nameEl = goog.dom.getElementByClass('jsh-developer-editor-name', element);
+  var nameEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-developer-editor-name'), element);
   this.nameTextbox_ = new goog.ui.LabelInput('Jane Doe');
   this.addChild(this.nameTextbox_, false);
   this.nameTextbox_.render(nameEl);
 
   var institutionEl = goog.dom.getElementByClass(
-      'jsh-developer-editor-institution', element);
+      goog.getCssName('jsh-developer-editor-institution'), element);
   this.institutionTextbox_ = new goog.ui.LabelInput('University of Hacks');
   this.addChild(this.institutionTextbox_, false);
   this.institutionTextbox_.render(institutionEl);
 
-  var urlEl = goog.dom.getElementByClass('jsh-developer-editor-url', element);
+  var urlEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-developer-editor-url'), element);
   this.urlTextbox_ = new goog.ui.LabelInput('http://jshack.net');
   this.addChild(this.urlTextbox_, false);
   this.urlTextbox_.render(urlEl);
 
-  var emailEl = goog.dom.getElementByClass('jsh-developer-editor-email',
-      element);
+  var emailEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-developer-editor-email'), element);
   this.emailTextbox_ = new goog.ui.LabelInput('jane.doe@jshack.net');
   this.addChild(this.emailTextbox_, false);
   this.emailTextbox_.render(emailEl);

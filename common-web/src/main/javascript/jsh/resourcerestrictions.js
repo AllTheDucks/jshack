@@ -50,7 +50,8 @@ jsh.ResourceRestrictions.prototype.createDom = function() {
 jsh.ResourceRestrictions.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  var cbel = goog.dom.getElementByClass('inject-checkbox', element);
+  var cbel = goog.dom.getElementByClass(goog.getCssName('inject-checkbox'),
+      element);
   this.injectCheckbox = new goog.ui.Checkbox();
   this.injectCheckbox.decorate(cbel);
   this.injectCheckbox.setLabel(goog.dom.getParentElement(cbel));

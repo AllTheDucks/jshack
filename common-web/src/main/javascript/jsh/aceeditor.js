@@ -27,7 +27,7 @@ goog.inherits(jsh.AceEditor, goog.ui.Component);
  * @override
  */
 jsh.AceEditor.prototype.createDom = function() {
-  var el = goog.dom.createDom('div', 'ace-editor-container');
+  var el = goog.dom.createDom('div', goog.getCssName('ace-editor-container'));
   this.decorateInternal(el);
 };
 
@@ -41,7 +41,7 @@ jsh.AceEditor.prototype.createDom = function() {
 jsh.AceEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  this.editorElement = goog.dom.createDom('div', 'ace-editor');
+  this.editorElement = goog.dom.createDom('div', goog.getCssName('ace-editor'));
 
   goog.dom.appendChild(element, this.editorElement);
 };

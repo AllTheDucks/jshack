@@ -44,10 +44,12 @@ jsh.CheckSwitchRenderer.prototype.createDom = function(checkbox) {
   var dom_ = checkbox.getDomHelper();
   var element = dom_.createDom(
       'span', this.getClassNames(checkbox).join(' '),
-      dom_.createDom('div', 'jsh-checkswitch-inner',
-          dom_.createDom('div', 'jsh-checkswitch-checkedlabel', 'is'),
-          dom_.createDom('div', 'jsh-checkswitch-handle'),
-          dom_.createDom('div', 'jsh-checkswitch-uncheckedlabel', 'is not')));
+      dom_.createDom('div', goog.getCssName('jsh-checkswitch-inner')),
+      dom_.createDom('div', goog.getCssName('jsh-checkswitch-checkedlabel'),
+      'is'),
+      dom_.createDom('div', goog.getCssName('jsh-checkswitch-handle'),
+          dom_.createDom('div',
+              goog.getCssName('jsh-checkswitch-uncheckedlabel'), 'is not')));
 
   var state = checkbox.getChecked();
   this.setCheckboxState(element, state);

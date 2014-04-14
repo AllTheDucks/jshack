@@ -65,13 +65,14 @@ jsh.RestrictionPane.prototype.createDom = function() {
 jsh.RestrictionPane.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  var listEl = goog.dom.getElementByClass('jsh-restriction-pane-content',
-      element);
+  var listEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-restriction-pane-content'), element);
   this.restrictionEditors_ = new goog.ui.Component();
   this.addChild(this.restrictionEditors_, false);
   this.restrictionEditors_.render(listEl);
 
-  this.emptyNotice_ = goog.dom.getElementByClass('jsh-empty-notice', element);
+  this.emptyNotice_ = goog.dom.getElementByClass(
+      goog.getCssName('jsh-empty-notice'), element);
 
   this.restrictionMenu_ = new goog.ui.Menu();
 
@@ -89,7 +90,7 @@ jsh.RestrictionPane.prototype.decorateInternal = function(element) {
   }
 
   this.restrictionMenuButton_.render(goog.dom.getElementByClass(
-      'jsh-restriction-button', element));
+      goog.getCssName('jsh-restriction-button'), element));
 
   //  var cbel = goog.dom.getElementByClass('jsh-checkswitch', element);
   //

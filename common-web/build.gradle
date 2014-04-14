@@ -35,6 +35,7 @@ glovr {
         'css-allowed-unrecognized-properties': ['-ie-filter', '-moz-filter', '-o-filter']
     ]
     paths = new File('common-web/src/main/soy').getAbsolutePath()
+    cssRename = true
 }
 
 

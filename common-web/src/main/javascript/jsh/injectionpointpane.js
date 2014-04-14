@@ -92,12 +92,13 @@ jsh.InjectionPointPane.prototype.createDom = function() {
 jsh.InjectionPointPane.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
-  var listEl = goog.dom.getElementByClass('jsh-injection-point-pane-content',
-      element);
+  var listEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-injection-point-pane-content'), element);
   this.injectionPointList_ = new goog.ui.Component();
   this.injectionPointList_.render(listEl);
 
-  this.emptyNotice_ = goog.dom.getElementByClass('jsh-empty-notice', element);
+  this.emptyNotice_ = goog.dom.getElementByClass(
+      goog.getCssName('jsh-empty-notice'), element);
 
   this.injectionPointMenu_ = new goog.ui.Menu();
   goog.array.forEach(this.referenceMap_.getValues(),
@@ -116,7 +117,7 @@ jsh.InjectionPointPane.prototype.decorateInternal = function(element) {
   this.injectionPointMenuButton_ = new goog.ui.MenuButton('Add Injection Point',
       this.injectionPointMenu_);
   this.injectionPointMenuButton_.render(goog.dom.getElementByClass(
-      'jsh-injection-point-button', element));
+      goog.getCssName('jsh-injection-point-button'), element));
 };
 
 
@@ -298,13 +299,13 @@ jsh.InjectionPointPaneItem.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
   var contentEl = goog.dom.getElementByClass(
-      'jsh-injection-point-pane-item-content', element);
+      goog.getCssName('jsh-injection-point-pane-item-content'), element);
 
   goog.dom.appendChild(contentEl,
       jsh.InjectionPointHelper.getItemDom(this.injectionPoint));
 
   var closeEl = goog.dom.getElementByClass(
-      'jsh-injection-point-pane-item-close-button', element);
+      goog.getCssName('jsh-injection-point-pane-item-close-button'), element);
   this.removeBtn_ = new goog.ui.Button('Remove',
       goog.ui.Css3ButtonRenderer.getInstance());
   this.removeBtn_.render(closeEl);

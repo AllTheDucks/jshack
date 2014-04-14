@@ -36,7 +36,7 @@ goog.inherits(jsh.ConfigurationList, goog.ui.Component);
  * @inheritDoc
  */
 jsh.ConfigurationList.prototype.createDom = function() {
-  var el = goog.dom.createDom('div', 'jsh-configuration-list');
+  var el = goog.dom.createDom('div', goog.getCssName('jsh-configuration-list'));
   this.decorateInternal(el);
 };
 
@@ -185,32 +185,32 @@ jsh.ConfigurationEditor.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
   var closeEl = goog.dom.getElementByClass(
-      'jsh-configuration-editor-close-button', element);
+      goog.getCssName('jsh-configuration-editor-close-button'), element);
   this.removeButton_ = new goog.ui.Button('Remove',
       goog.ui.Css3ButtonRenderer.getInstance());
   this.removeButton_.render(closeEl);
 
   var identifierEl = goog.dom.getElementByClass(
-      'jsh-configuration-editor-identifier', element);
+      goog.getCssName('jsh-configuration-editor-identifier'), element);
   this.identifierTextbox_ = new goog.ui.LabelInput('btnText');
   this.addChild(this.identifierTextbox_, false);
   this.identifierTextbox_.render(identifierEl);
 
-  var nameEl = goog.dom.getElementByClass('jsh-configuration-editor-name',
-      element);
+  var nameEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-configuration-editor-name'), element);
   this.nameTextbox_ = new goog.ui.LabelInput('Button Text');
   this.addChild(this.nameTextbox_, false);
   this.nameTextbox_.render(nameEl);
 
   var descriptionEl = goog.dom.getElementByClass(
-      'jsh-configuration-editor-description', element);
+      goog.getCssName('jsh-configuration-editor-description'), element);
   this.descriptionTextbox_ = new goog.ui.LabelInput(
       'The text that appears on the button');
   this.addChild(this.descriptionTextbox_, false);
   this.descriptionTextbox_.render(descriptionEl);
 
   var defaultValueEl = goog.dom.getElementByClass(
-      'jsh-configuration-editor-default-value', element);
+      goog.getCssName('jsh-configuration-editor-default-value'), element);
   this.defaultValueTextbox_ = new goog.ui.LabelInput('A Button');
   this.addChild(this.defaultValueTextbox_, false);
   this.defaultValueTextbox_.render(defaultValueEl);

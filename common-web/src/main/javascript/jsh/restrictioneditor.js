@@ -34,12 +34,12 @@ goog.inherits(jsh.RestrictionEditor, goog.ui.Component);
  */
 jsh.RestrictionEditor.prototype.wrapDom = function(element) {
   var dom = goog.soy.renderAsElement(jsh.soy.editor.restrictionEditor);
-  var contentEl = goog.dom.getElementByClass('jsh-restriction-editor-content',
-      dom);
+  var contentEl = goog.dom.getElementByClass(
+      goog.getCssName('jsh-restriction-editor-content'), dom);
   contentEl.appendChild(element);
 
   var closeEl = goog.dom.getElementByClass(
-      'jsh-restriction-editor-close-button', dom);
+      goog.getCssName('jsh-restriction-editor-close-button'), dom);
   this.removeButton_ = new goog.ui.Button('Remove',
       goog.ui.Css3ButtonRenderer.getInstance());
   this.removeButton_.render(closeEl);

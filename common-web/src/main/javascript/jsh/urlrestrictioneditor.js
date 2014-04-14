@@ -49,7 +49,7 @@ jsh.UrlRestrictionEditor.prototype.decorateInternal =
   this.setElementInternal(element);
 
   var optionsEl = goog.dom.getElementByClass(
-      'jsh-url-restriction-editor-options', element);
+      goog.getCssName('jsh-url-restriction-editor-options'), element);
   var optionsComp = new goog.ui.Component();
   optionsComp.render(optionsEl);
 

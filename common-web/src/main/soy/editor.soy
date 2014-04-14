@@ -35,15 +35,15 @@
     <tbody><tr>
       <td>Identifier: </td>
       <td>
-        <input class="hack-identifier" type="text" placeholder="hackid">
-        <span class="required-input">Required</span>
+        <input class="{css hack-identifier}" type="text" placeholder="hackid">
+        <span class="{css required-input}">Required</span>
       </td>
     </tr>
     <tr>
       <td>Hack Name:</td>
       <td>
-        <input class="hack-name" type="text" placeholder="Human Readable Name">
-        <span class="required-input">Required</span>
+        <input class="{css hack-name}" type="text" placeholder="Human Readable Name">
+        <span class="{css required-input}">Required</span>
       </td>
     </tr>
   </tbody></table>
@@ -52,25 +52,25 @@
     <tbody>
     <tr>
       <td>Version: </td>
-      <td><input class="hack-version" type="text" placeholder="1.0"></td>
+      <td><input class="{css hack-version}" type="text" placeholder="1.0"></td>
     </tr>
     <tr>
       <td>Description:</td>
-      <td><textarea class="hack-description" placeholder="A Description of the hack"></textarea></td>
+      <td><textarea class="{css hack-description}" placeholder="A Description of the hack"></textarea></td>
     </tr>
     <tr>
       <td>Min Bb Version:</td>
-      <td><input class="hack-targetVersionMin" type="text" placeholder="9.1.0"></td>
+      <td><input class="{css hack-targetVersionMin}" type="text" placeholder="9.1.0"></td>
     </tr>
     <tr>
       <td>Max Bb Version: </td>
-      <td><input class="hack-targetVersionMax" type="text" placeholder="9.1.14"></td>
+      <td><input class="{css hack-targetVersionMax}" type="text" placeholder="9.1.14"></td>
     </tr>
   </tbody></table>
   <h2>Developers</h2>
-  <div class="hack-developers"></div>
+  <div class="{css hack-developers}"></div>
   <h2>Configuration</h2>
-  <div class="hack-configuration"></div>
+  <div class="{css hack-configuration}"></div>
   </div>
 
 {/template}
@@ -141,9 +141,9 @@
  * The Editor for displaying an image resource.
  */
 {template .imageEditor}
-    <div class="jsh-imageeditor">
-        <img class="jsh-imageeditor-image" />
-        <div class="jsh-imageeditor-path"></div>
+    <div class="{css jsh-imageeditor}">
+        <img class="{css jsh-imageeditor-image}" />
+        <div class="{css jsh-imageeditor-path}"></div>
     </div>
 {/template}
 
@@ -152,10 +152,10 @@
  * The Editor for displaying an resource that isn't handled by any other editor.
  */
 {template .defaultEditor}
-    <div class="jsh-defaulteditor">
-        <div class="jsh-defaulteditor-content">
-            <div class="jsh-defaulteditor-message">Unknown content type.</div>
-            <a class="jsh-defaulteditor-link" target="blank">View the file in the browser.</a>
+    <div class="{css jsh-defaulteditor}">
+        <div class="{css jsh-defaulteditor-content}">
+            <div class="{css jsh-defaulteditor-message}">Unknown content type.</div>
+            <a class="{css jsh-defaulteditor-link}" target="blank">View the file in the browser.</a>
         </div>
     </div>
 {/template}
@@ -165,9 +165,9 @@
  * The drag and drop area for importing files.
  */
 {template .fileDropArea}
-<div class="jsh-file-drop-area">
-    <div class="jsh-file-drop-area-inner">
-        <div class="jsh-file-drop-area-content">Drop files here to import.</div>
+<div class="{css jsh-file-drop-area}">
+    <div class="{css jsh-file-drop-area-inner}">
+        <div class="{css jsh-file-drop-area-content}">Drop files here to import.</div>
     </div>
 </div>
 {/template}
@@ -178,9 +178,9 @@
  * UI Components.
  */
 {template .ideOverlay}
-<div class="ide-overlay">
-  <div class="ide-overlay-opaque-area"></div>
-  <div class="ide-overlay-children"></div>
+<div class="{css ide-overlay}">
+  <div class="{css ide-overlay-opaque-area}"></div>
+  <div class="{css ide-overlay-children}"></div>
 </div>
 {/template}
 
@@ -192,7 +192,7 @@
 {template .resourceRestrictions}
 <div>
     <div>
-        <span id="enable" class="inject-checkbox goog-checkbox-unchecked goog-checkbox" aria-checked="true" role="checkbox" tabindex="0" aria-labelledby="enable.lbl" style="-webkit-user-select: none;"></span>
+        <span id="enable" class="{css inject-checkbox} {css goog-checkbox-unchecked} {css goog-checkbox}" aria-checked="true" role="checkbox" tabindex="0" aria-labelledby="enable.lbl" style="-webkit-user-select: none;"></span>
         <span>Inject this resource directly into page.</span>
     </div>
 </div>

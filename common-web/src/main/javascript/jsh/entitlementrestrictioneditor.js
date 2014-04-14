@@ -49,7 +49,7 @@ jsh.EntitlementRestrictionEditor.prototype.decorateInternal =
   this.setElementInternal(element);
 
   var optionsEl = goog.dom.getElementByClass(
-      'jsh-entitlement-restriction-editor-options', element);
+      goog.getCssName('jsh-entitlement-restriction-editor-options'), element);
   var optionsComp = new goog.ui.Component();
   optionsComp.render(optionsEl);
 

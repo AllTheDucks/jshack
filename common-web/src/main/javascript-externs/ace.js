@@ -37,6 +37,11 @@ var ace;
 ace.edit = function(id) {};
 
 /**
+ * @param {string} require
+ */
+ace.require = function(require) {}
+
+/**
  * @class
  * @constructor
  */
