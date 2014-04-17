@@ -16,7 +16,7 @@ If you come across an issue in JSHack V1, Please either:
 
 Before you Begin
 ----------------
-The project is split into three parts
+The project is split into four parts
 
 - api - the non-bb non-web parts of jshack.
 - common-web - which contains the web resources for the final Building block,
@@ -54,7 +54,7 @@ which will run an instance of plovr, and an instance of Jetty.
 
 > gradlew jshack-test-web:jettyRunWar
 
-will build compile and build the web app, and deploy it an instance of Jetty.
+will compile and build the web app, and deploy it an instance of Jetty.
 
 > gradlew jshack-common-web:plovrServe
 
