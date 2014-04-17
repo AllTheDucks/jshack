@@ -37,7 +37,7 @@ The following frameworks and tools are being used in JSHack
 
 
 Building the Project to Deploy to Blackboard
---------
+--------------------------------------------
 Please Note.  This version of JSHack is still under heavy development, and won't
 work if you deploy it to Blackboard. However, if you'd like to build it anyway,
 do as follows.
@@ -47,7 +47,7 @@ do as follows.
     > gradlew jshack-b2:war
 
 Building and Developing without Blackboard
-----------------------------------------------------
+------------------------------------------
 Most of the JSHack building block can be developed without using Blackboard. To
 do this, you'll need to execute two gradle tasks (in different cmd prompts),
 which will run an instance of plovr, and an instance of Jetty.
@@ -62,8 +62,8 @@ will run an instance of Plovr, which allows changes to the javascript to be
 viewed without rebuilding and deploying the entire web application.
 
 
-Comitting Code
-----------------
+Committing Code
+---------------
 Please adhere to the coding conventions as used in the project. Most importantly,
 make sure you run the Closure Linter and Compiler before comitting any code.
 
