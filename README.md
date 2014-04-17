@@ -61,6 +61,8 @@ will compile and build the web app, and deploy it an instance of Jetty.
 will run an instance of Plovr, which allows changes to the javascript to be
 viewed without rebuilding and deploying the entire web application.
 
+Once these components are running, you can view the JS Hack editor by visiting this url:
+[http://localhost:8080/jshack-test-web/Editor.action?dev=true](http://localhost:8080/jshack-test-web/Editor.action?dev=true)
 
 Committing Code
 ---------------
