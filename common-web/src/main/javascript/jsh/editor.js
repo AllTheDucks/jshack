@@ -186,6 +186,7 @@ jsh.HackEditor.prototype.decorateInternal = function(element) {
       this.showHackDetailsArea, false, this);
 
   jsh.AceEditor.addCompleter(this.getResourceCompleter());
+  jsh.AceEditor.addCompleter(this.getConfigurationCompleter());
 
   this.editorContainer_ = new jsh.EditorContainer();
 
@@ -483,7 +484,7 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
 
 
 /**
- * Gets and AceEditor auto completer for the resources in this editor.
+ * Gets an AceEditor auto completer for the resources in this editor.
  * @return {{getCompletions: function(ace.AceEditor, ace.AceSession, number,
  * string, function(Object, Array.<{name: string, value:string, score: number,
  * meta: string}>))}}
@@ -511,6 +512,10 @@ jsh.HackEditor.prototype.getResourceCompleter = function() {
                 var lowerprefix = prefix.toLowerCase();
                 var selectedResource = /** @type {jsh.model.HackResource} */
                     (this.resourceListContainer_.getSelectedChild().getModel());
+
+                if (!jsh.MimeTypeHelper.getInjectable(selectedResource.mime)) {
+                  return accumulation;
+                }
 
                 var item = this.resourceListContainer_.getChild(childId);
                 if (!item) {
@@ -546,6 +551,53 @@ jsh.HackEditor.prototype.getResourceCompleter = function() {
                   'value': value,
                   'score': score,
                   'meta': 'resource'
+                };
+                accumulation.push(completion);
+                return accumulation;
+              }, [], this);
+          callback(null, items);
+        }, this)
+  };
+};
+
+
+/**
+ * Gets an AceEditor auto completer for the configuration items in this hack.
+ * @return {{getCompletions: function(ace.AceEditor, ace.AceSession, number,
+ * string, function(Object, Array.<{name: string, value:string, score: number,
+ * meta: string}>))}}
+ */
+jsh.HackEditor.prototype.getConfigurationCompleter = function() {
+  return {
+    'getCompletions': goog.bind(
+        function(editor, session, pos, prefix, callback) {
+          var items = goog.array.reduce(
+              this.hackDetails_.configurationList.getConfiguration(),
+              function(accumulation, config, index, array) {
+                var selectedResource = /** @type {jsh.model.HackResource} */
+                    (this.resourceListContainer_.getSelectedChild().getModel());
+
+                if (!jsh.MimeTypeHelper.getInjectable(selectedResource.mime)) {
+                  return accumulation;
+                }
+
+                var lowerPrefix = prefix.toLowerCase();
+                var lowerId = config.identifier.toLowerCase();
+                var score;
+                if (prefix.length === 0 ||
+                    goog.string.startsWith(lowerId, lowerPrefix)) {
+                  score = 100;
+                } else if (goog.string.contains(lowerId, lowerPrefix)) {
+                  score = 99;
+                } else {
+                  return accumulation;
+                }
+
+                var completion = {
+                  'name': config.name,
+                  'value': '${config[\'' + config.identifier + '\']}',
+                  'score': score,
+                  'meta': 'configuration'
                 };
                 accumulation.push(completion);
                 return accumulation;
