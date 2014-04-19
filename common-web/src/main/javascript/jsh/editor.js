@@ -490,8 +490,6 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
  * meta: string}>))}}
  */
 jsh.HackEditor.prototype.getResourceCompleter = function() {
-  /*todo: don't autocomplete resource references into files
-  that are not injected */
   return {
     'getCompletions': goog.bind(
         function(editor, session, pos, prefix, callback) {
