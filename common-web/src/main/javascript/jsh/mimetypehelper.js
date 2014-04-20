@@ -33,9 +33,6 @@ jsh.MimeTypeHelper.mimeLookup = {
     'aceMode': 'ace/mode/javascript',
     'dataType': jsh.MimeTypeHelper.DataType.TEXT,
     'editorType': jsh.MimeTypeHelper.EditorType.TEXT,
-    'autoCompletePattern': {
-      'application/javascript': 'require(###path###);'
-    },
     'defaultContent': '\/* This snippet binds a function to the ' +
         '\"dom:loaded\" event.\n' +
         'You can put your own javascript into the function, or replace\n' +
@@ -61,14 +58,12 @@ jsh.MimeTypeHelper.mimeLookup = {
         '    Event.observe(document,\'dom:loaded\', function() {\n' +
         '        //Your javascript goes here. \n' +
         '    });\n' +
-        '</script>\n'
+        '</script>\n',
+    injectable: true
   },
   'text/css': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-css'),
-    'aceMode': 'ace/mode/css',
-    'autoCompletePattern': {
-      'text/css': '@import url("###path###");'
-    }
+    'aceMode': 'ace/mode/css'
   },
   'image/png': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-png')
@@ -82,10 +77,7 @@ jsh.MimeTypeHelper.mimeLookup = {
   'text': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-text'),
     'dataType': jsh.MimeTypeHelper.DataType.TEXT,
-    'editorType': jsh.MimeTypeHelper.EditorType.TEXT,
-    'autoCompletePattern': {
-      '*': '###path###'
-    }
+    'editorType': jsh.MimeTypeHelper.EditorType.TEXT
   },
   'image': {
     'iconClass': goog.getCssName('jsh-resourcelistitem-text'),
@@ -152,6 +144,17 @@ jsh.MimeTypeHelper.getEditorType = function(mimeType) {
 jsh.MimeTypeHelper.getDefaultContent = function(mimeType) {
   return /** @type {string} */ (jsh.MimeTypeHelper.
       lookupAttribute_('defaultContent', mimeType));
+};
+
+
+/**
+ * Gets the injectability to use for this mime type.
+ * @param {string} mimeType the mime type.
+ * @return {boolean}
+ */
+jsh.MimeTypeHelper.getInjectable = function(mimeType) {
+  return /** @type {boolean} */ (jsh.MimeTypeHelper.
+      lookupAttribute_('injectable', mimeType) === true);
 };
 
 
