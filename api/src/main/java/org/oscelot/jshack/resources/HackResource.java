@@ -4,6 +4,10 @@
  */
 package org.oscelot.jshack.resources;
 
+import org.oscelot.jshack.model.Restriction;
+
+import java.util.List;
+
 /**
  *
  * @author Wiley Fuller <wfuller@swin.edu.au>
@@ -12,6 +16,21 @@ public class HackResource {
     private String path;
     private String tempFileName;
     private String mime;
+    /**
+     * only applicable for "text/html" resources
+     */
+    private boolean injectResource;
+    private List<String> injectionPoints;
+    private List<Restriction> restrictions;
+
+    public HackResource() {
+    }
+
+    public HackResource(String path, String tempFileName, String mime) {
+        this.path = path;
+        this.tempFileName = tempFileName;
+        this.mime = mime;
+    }
 
     /**
      * @return the path
@@ -53,5 +72,30 @@ public class HackResource {
      */
     public void setTempFileName(String tempFileName) {
         this.tempFileName = tempFileName;
+    }
+
+
+    public boolean isInjectResource() {
+        return injectResource;
+    }
+
+    public void setInjectResource(boolean injectResource) {
+        this.injectResource = injectResource;
+    }
+
+    public List<String> getInjectionPoints() {
+        return injectionPoints;
+    }
+
+    public void setInjectionPoints(List<String> injectionPoints) {
+        this.injectionPoints = injectionPoints;
+    }
+
+    public List<Restriction> getRestrictions() {
+        return restrictions;
+    }
+
+    public void setRestrictions(List<Restriction> restrictions) {
+        this.restrictions = restrictions;
     }
 }

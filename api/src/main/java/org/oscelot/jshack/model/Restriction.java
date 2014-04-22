@@ -13,6 +13,15 @@ public class Restriction {
     private String value;
     private boolean inverse;
 
+    public Restriction() {
+    }
+
+    public Restriction(RestrictionType type, String value, boolean inverse) {
+        this.type = type;
+        this.value = value;
+        this.inverse = inverse;
+    }
+
     /**
      * @return the type
      */

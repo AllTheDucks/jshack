@@ -19,10 +19,8 @@ public class Hack {
     private List<Developer> developers;
     private List<ConfigEntryDefinition> configEntryDefinitions;
     private List<HackResource> resources;
-    private String source;
     private Date lastUpdated;
-    private List<SnippetDefinition> snippetDefinitions;
-    
+
     public Hack() {
     }
 
@@ -66,14 +64,6 @@ public class Hack {
         this.targetVersionMax = targetVersionMax;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
     public Date getLastUpdated() {
         return lastUpdated;
     }
@@ -104,14 +94,6 @@ public class Hack {
 
     public void setResources(List<HackResource> resources) {
         this.resources = resources;
-    }
-
-    public List<SnippetDefinition> getSnippetDefinitions() {
-        return snippetDefinitions;
-    }
-
-    public void setSnippetDefinitions(List<SnippetDefinition> snippetDefinitions) {
-        this.snippetDefinitions = snippetDefinitions;
     }
 
     public List<Developer> getDevelopers() { return developers ; }

@@ -4,7 +4,6 @@
  */
 package org.oscelot.jshack.stripes;
 
-import blackboard.platform.plugin.PlugInException;
 import blackboard.platform.plugin.PlugInUtil;
 import com.google.gson.Gson;
 import java.io.File;
@@ -34,7 +33,6 @@ import org.oscelot.jshack.JSHackManagerFactory;
 import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.resources.HackResource;
 import org.oscelot.jshack.model.Restriction;
-import org.oscelot.jshack.model.SnippetDefinition;
 
 /**
  *
