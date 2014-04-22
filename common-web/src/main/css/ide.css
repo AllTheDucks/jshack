@@ -72,11 +72,13 @@ body {
     height: 100%;
 }
 
-input[type="text"] {
-    background-color: #eee;
-    border: 1px solid white;
+input[type="text"], textarea {
+    background-color: #303030;
+    border: none;
     border-radius: .25em;
-    padding: .25em;
+    padding: .4em;
+    color: #fff;
+    margin: 0.1em 0;
 }
 
 .toolbar-file-select {
@@ -175,11 +177,15 @@ input[type="text"] {
 }
 
 .hack-description {
-    height: 4em;
+    height: 6em !important;
 }
 
 .hack-description, .hack-name {
-    width: 30em;
+    width: 35em !important;
+}
+
+.hack-version, .hack-targetVersionMin, .hack-targetVersionMax {
+    width: 8em !important;
 }
 
 
@@ -215,10 +221,18 @@ input[type="text"] {
 
 .label-table > label > span {
     display: table-cell;
+    padding: 0.1em 0;
 }
 
 .label-table input {
     width: 15em;
+}
+
+.label-table > label > :first-child {
+    font-weight: bold;
+    vertical-align: top;
+    line-height: 2.2em;
+    padding-right: 0.5em
 }
 
 
@@ -229,4 +243,30 @@ input[type="text"] {
 }
 .jsh-configuration-editor-identifier input {
     width: 10em;
+}
+
+h2 {
+    text-shadow: 0.08em 0.08em #222;
+    margin-bottom: 0.2em;
+    margin-top: 1em;
+    font-weight: normal;
+    font-variant: small-caps;
+    font-size: 1.8em;
+    border-bottom: 1px solid #808080;
+}
+
+::-webkit-input-placeholder {
+    color: #505050;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #505050;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: #505050;
+}
+
+:-ms-input-placeholder {
+    color: #505050;
 }

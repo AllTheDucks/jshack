@@ -11,22 +11,20 @@
 /* Imageless button styles. */
 .goog-css3-button {
     margin: 0 2px;
-    padding: 3px 6px;
+    padding: 0.3em 0.8em;
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
     cursor: default;
     outline: none;
-    font-family: Arial, sans-serif;
-    color: #000;
+    font-family: Arial , sans-serif;
     border: 1px solid #bbb;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    /* TODO(eae): Change this to -webkit-linear-gradient once
-                  https://bugs.webkit.org/show_bug.cgi?id=28152 is resolved. */
-    background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#f9f9f9),
-    to(#e3e3e3));
-    /* @alternate */ background: -moz-linear-gradient(top, #f9f9f9, #e3e3e3);
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    border-radius: 0.3em;
+    background: #303030;
+    color: #E0E0E0;
+    font-weight:  bold;
 }
 
 
@@ -41,9 +39,7 @@
 
 .goog-css3-button-active, .goog-css3-button-open, .goog-css3-button-checked {
     border-color: #444 !important;
-    background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#e3e3e3),
-    to(#f9f9f9));
-    /* @alternate */ background: -moz-linear-gradient(top, #e3e3e3, #f9f9f9);
+    background: #404040;
 }
 
 .goog-css3-button-disabled {

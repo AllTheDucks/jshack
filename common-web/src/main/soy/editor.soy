@@ -30,43 +30,38 @@
   */
 {template .hackDetailsArea}
 <div class="{css jsh-hackdetailsarea}" style="">
-  <h2>Required Information</h2>
-  <table>
-    <tbody><tr>
-      <td>Identifier: </td>
-      <td>
+  <h2>Hack Metadata</h2>
+  <div class="{css label-table}">
+    <label>
+      <span>Identifier: *</span>
+      <span>
         <input class="{css hack-identifier}" type="text" placeholder="hackid">
         <span class="{css required-input}">Required</span>
-      </td>
-    </tr>
-    <tr>
-      <td>Hack Name:</td>
-      <td>
+      </span>
+    </label>
+    <label>
+      <span>Hack Name: *</span>
+      <span>
         <input class="{css hack-name}" type="text" placeholder="Human Readable Name">
         <span class="{css required-input}">Required</span>
-      </td>
-    </tr>
-  </tbody></table>
-  <h2>Extra Information</h2>
-  <table>
-    <tbody>
-    <tr>
-      <td>Version: </td>
-      <td><input class="{css hack-version}" type="text" placeholder="1.0"></td>
-    </tr>
-    <tr>
-      <td>Description:</td>
-      <td><textarea class="{css hack-description}" placeholder="A Description of the hack"></textarea></td>
-    </tr>
-    <tr>
-      <td>Min Bb Version:</td>
-      <td><input class="{css hack-targetVersionMin}" type="text" placeholder="9.1.0"></td>
-    </tr>
-    <tr>
-      <td>Max Bb Version: </td>
-      <td><input class="{css hack-targetVersionMax}" type="text" placeholder="9.1.14"></td>
-    </tr>
-  </tbody></table>
+      </span>
+    </label>
+    <label>
+      <span>Description:</span>
+      <span><textarea class="{css hack-description}" placeholder="A Description of the hack"></textarea></span>
+    </label>
+    <label>
+          <span>Hack Version:</span>
+          <span><input class="{css hack-version}" type="text" placeholder="1.0"></span>
+        </label>
+    <label>
+      <span>Min Bb Version:</span>
+      <span><input class="{css hack-targetVersionMin}" type="text" placeholder="9.1.0"></span>
+    </label>
+    <label>
+      <span>Max Bb Version:</span>
+      <span><input class="{css hack-targetVersionMax}" type="text" placeholder="9.1.14"></span>
+  </div>
   <h2>Developers</h2>
   <div class="{css hack-developers}"></div>
   <h2>Configuration</h2>
