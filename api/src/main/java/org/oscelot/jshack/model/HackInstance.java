@@ -22,7 +22,7 @@ public class HackInstance {
     private Map<String, String> configEntriesValuesExcludingDefaultsMapCache;
     private boolean hasConfig;
     private boolean enabled;
-    private List<Snippet> snippets;
+//    private List<Snippet> snippets;
 
     public Hack getHack() {
         return hack;
@@ -30,12 +30,12 @@ public class HackInstance {
 
     public void setHack(Hack hack) {
         this.hack = hack;
-        if (hack.getSnippetDefinitions() != null) {
-            snippets = new ArrayList<Snippet>(hack.getSnippetDefinitions().size());
-            for (SnippetDefinition snippetDefinition : hack.getSnippetDefinitions()) {
-                snippets.add(new Snippet(this, snippetDefinition));
-            }
-        }
+//        if (hack.getSnippetDefinitions() != null) {
+//            snippets = new ArrayList<Snippet>(hack.getSnippetDefinitions().size());
+//            for (SnippetDefinition snippetDefinition : hack.getSnippetDefinitions()) {
+//                snippets.add(new Snippet(this, snippetDefinition));
+//            }
+//        }
         if (hack.getResources() != null) {
             
         }
@@ -92,10 +92,10 @@ public class HackInstance {
         configEntriesValuesIncludingDefaultsMapCache = null;
         configEntriesValuesExcludingDefaultsMapCache = null;
     }
-
-    public List<Snippet> getSnippets() {
-        return snippets;
-    }
+//
+//    public List<Snippet> getSnippets() {
+//        return snippets;
+//    }
 
     private void reloadConfigEntries() throws PackageManagementException {
         if(hack == null) {

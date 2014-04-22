@@ -11,9 +11,9 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public interface HackStreamFactory {
-    InputStream getHackMetadataInputStream(String hackId);
+    InputStream getHackXMLInputStream(String hackId);
 
-    OutputStream getHackMetadataOutputStream(String hackId);
+    OutputStream getHackXMLOutputStream(String hackId);
 
     InputStream getHackResourceInputStream(String hackId, String resourceName);
 

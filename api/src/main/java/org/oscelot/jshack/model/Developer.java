@@ -7,6 +7,16 @@ public class Developer {
     private String url;
     private String email;
 
+    public Developer() {
+    }
+
+    public Developer(String name, String institution, String url, String email) {
+        this.name = name;
+        this.institution = institution;
+        this.url = url;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }

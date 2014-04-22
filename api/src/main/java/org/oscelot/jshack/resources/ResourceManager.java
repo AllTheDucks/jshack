@@ -21,8 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.oscelot.jshack.BuildingBlockHelper;
-import org.oscelot.jshack.JSHackManager;
-import org.oscelot.jshack.JSHackManagerFactory;
+//import org.oscelot.jshack.JSHackManager;
+//import org.oscelot.jshack.JSHackManagerFactory;
 import org.oscelot.jshack.model.HackInstance;
 
 /**
@@ -30,7 +30,7 @@ import org.oscelot.jshack.model.HackInstance;
  * @author Shane Argo <sargo@usc.edu.au>
  */
 public class ResourceManager {
-    
+    //todo: do we need shorthand?
     public static final String RESOURCE_SHORTHAND_START = "<[";
     public static final String RESOURCE_SHORTHAND_END = "]>";
     
@@ -41,11 +41,14 @@ public class ResourceManager {
     private ResourceCache resourceCache;
     private Pattern shorthandPattern = Pattern.compile(Pattern.quote(RESOURCE_SHORTHAND_START) + "([^\\r\\n]+(?=" + Pattern.quote(RESOURCE_SHORTHAND_END) + "))" + Pattern.quote(RESOURCE_SHORTHAND_END));
     
-    JSHackManager manager = JSHackManagerFactory.getHackManager();
-    File hackRoot = manager.getHacksRoot();
+//    JSHackManager manager = JSHackManagerFactory.getHackManager();
+    //todo refactor this to follow the new arch' conventions.
+    File hackRoot = null;//manager.getHacksRoot();
            
     public ResourceManager() throws IOException {
-        resourceCache = new ResourceCache(manager.getCentralConfig().getResourcesMaxCacheableBytes()); 
+        //todo: get this from central config
+        //resourceCache = new ResourceCache(manager.getCentralConfig().getResourcesMaxCacheableBytes());
+        resourceCache = new ResourceCache(5*1024*1024);
     }
     
     public synchronized void registerHackPackage(HackInstance hackInstance) throws FileNotFoundException, IOException {

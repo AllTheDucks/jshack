@@ -35,7 +35,7 @@ public class XStreamHackService implements HackService {
     @Override
     public Hack getHackForId(String hackId) {
 
-        InputStream is = streamFactory.getHackMetadataInputStream(hackId);
+        InputStream is = streamFactory.getHackXMLInputStream(hackId);
         XStream xstream = getHackMetadataXstream();
         Hack hack = (Hack) xstream.fromXML(is);
 
@@ -47,14 +47,14 @@ public class XStreamHackService implements HackService {
 
         InputStream is = streamFactory.getHackConfigInputStream(hackId);
         XStream xstream = getConfigEntriesXstream();
-        List<ConfigEntry> hackConfig = (List<ConfigEntry>)xstream.fromXML(is);
+        List<ConfigEntry> hackConfig = (List<ConfigEntry>) xstream.fromXML(is);
 
         return hackConfig;
     }
 
     @Override
     public void persistHack(Hack hack) {
-        OutputStream hackOS = streamFactory.getHackMetadataOutputStream(hack.getIdentifier());
+        OutputStream hackOS = streamFactory.getHackXMLOutputStream(hack.getIdentifier());
 
         XStream xstream = getHackMetadataXstream();
         xstream.toXML(hack, hackOS);
@@ -82,19 +82,15 @@ public class XStreamHackService implements HackService {
         xstream.alias("configEntryDefinition", ConfigEntryDefinition.class);
         xstream.aliasField("configEntryDefinitions", Hack.class, "configEntryDefinitions");
 
-        xstream.alias("snippetDefinition", SnippetDefinition.class);
-        xstream.aliasField("snippetDefinitions", Hack.class, "snippetDefinitions");
-        xstream.omitField(SnippetDefinition.class, "source");
-
-        xstream.alias("hook", String.class);
-        xstream.aliasField("hooks", Hack.class, "hooks");
+        xstream.alias("injectionPoint", String.class);
+        xstream.aliasField("injectionPoints", Hack.class, "injectionPoints");
 
         xstream.omitField(Hack.class, "enabled");
 
         xstream.alias("resource", HackResource.class);
         xstream.omitField(HackResource.class, "tempFileName");
 
-        xstream.alias("developers", Developer.class);
+        xstream.alias("developer", Developer.class);
         xstream.aliasField("developers", Hack.class, "developers");
 
         return xstream;

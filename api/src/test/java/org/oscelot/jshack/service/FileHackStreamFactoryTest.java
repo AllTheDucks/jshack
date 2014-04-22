@@ -56,13 +56,13 @@ public class FileHackStreamFactoryTest {
     @Test(expected = HackNotFoundException.class)
     public void getHackMetadataInputStream_withMissingFile_throwsException() throws Exception {
         when(directoryFactory.getHackDir("NOHACK")).thenReturn(new File("api/src/test/data/NOHACK"));
-        streamFactory.getHackMetadataInputStream("NOHACK");
+        streamFactory.getHackXMLInputStream("NOHACK");
     }
 
     @Test
     public void getHackMetadataInputStream_validFile_returnsStream() throws Exception {
         when(directoryFactory.getHackDir("hackstreamtest")).thenReturn(new File("api/src/test/data/singlehack/hackstreamtest"));
-        inputStream = streamFactory.getHackMetadataInputStream("hackstreamtest");
+        inputStream = streamFactory.getHackXMLInputStream("hackstreamtest");
         inputStream.read();
     }
 
@@ -70,7 +70,7 @@ public class FileHackStreamFactoryTest {
     public void getHackMetadataOutputStream_withMissingFile_returnsStream() throws Exception {
         when(directoryFactory.getAndCreateHackDir("noHackXml")).thenReturn(new File("api/src/test/data/noHackXml"));
 
-        outputStream = streamFactory.getHackMetadataOutputStream("noHackXml");
+        outputStream = streamFactory.getHackXMLOutputStream("noHackXml");
         assertNotNull(outputStream);
         outputStream.write("hello".getBytes());
 

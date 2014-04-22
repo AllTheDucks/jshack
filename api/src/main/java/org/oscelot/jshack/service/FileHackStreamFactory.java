@@ -22,7 +22,7 @@ public class FileHackStreamFactory implements HackStreamFactory {
     public JSHackDirectoryFactory directoryFactory;
 
     @Override
-    public InputStream getHackMetadataInputStream(String hackId) {
+    public InputStream getHackXMLInputStream(String hackId) {
         File hackMetadataFile = new File(directoryFactory.getHackDir(hackId), METADATA_FILENAME);
 
         try {
@@ -32,7 +32,7 @@ public class FileHackStreamFactory implements HackStreamFactory {
         }
     }
     @Override
-    public OutputStream getHackMetadataOutputStream(String hackId) {
+    public OutputStream getHackXMLOutputStream(String hackId) {
         File hackMetadataFile = new File(directoryFactory.getAndCreateHackDir(hackId), METADATA_FILENAME);
 
         try {
