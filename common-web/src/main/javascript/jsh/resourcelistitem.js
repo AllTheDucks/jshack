@@ -86,7 +86,7 @@ jsh.ResourceListItem.prototype.decorateInternal = function(element) {
  */
 jsh.ResourceListItem.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  goog.events.listen(this.textEl_, goog.events.EventType.MOUSEUP,
+  goog.events.listen(this.getElement(), goog.events.EventType.MOUSEUP,
       function(e) {
         if (this.isSelected()) {
           this.setNameEditable();
@@ -97,19 +97,10 @@ jsh.ResourceListItem.prototype.enterDocument = function() {
   goog.events.listen(this.nameInput_, goog.events.EventType.BLUR,
       this.setNameUneditable, false, this);
 
-  this.keyHandler_ = new goog.events.KeyHandler(this.nameInput_);
-
   goog.events.listen(this.nameInput_,
       [goog.events.EventType.MOUSEUP, goog.events.EventType.MOUSEDOWN],
       function(e) {
         e.stopPropagation();
-      }, false, this);
-
-  goog.events.listen(this.keyHandler_, goog.events.KeyHandler.EventType.KEY,
-      function(e) {
-        if (e.keyCode == goog.events.KeyCodes.ENTER) {
-          this.setNameUneditable();
-        }
       }, false, this);
 };
 
