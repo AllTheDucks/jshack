@@ -21,6 +21,13 @@ jsh.ResourceListContainer = function(opt_domHelper) {
    * @private
    */
   this.selectedItemIndex_ = -1;
+
+  /**
+   * Keeps track of the item currently being renamed, if any.
+   * @type {jsh.ResourceListItem}
+   * @private
+   */
+  this.renamingItem_ = null;
 };
 goog.inherits(jsh.ResourceListContainer, goog.ui.Container);
 
@@ -44,8 +51,28 @@ jsh.ResourceListContainer.prototype.enterDocument = function() {
   this.getHandler().listen(this, goog.ui.Component.EventType.SELECT,
       this.handleItemSelect);
 
+  this.getHandler().listen(this, jsh.events.EventType.RESOURCE_NAME_EDITABLE,
+      function(e) {
+        this.renamingItem_ = e.target;
+      }, false, this);
+
   this.getHandler().listen(this, jsh.events.EventType.RESOURCE_NAME_UNEDITABLE,
-      this.sortChildren);
+      function() {
+        this.renamingItem_ = null;
+      }, false, this);
+
+  this.getHandler().listen(this, jsh.events.EventType.RESOURCE_RENAMED,
+      function() {
+        this.sortChildren();
+      }, false, this);
+
+  this.getHandler().listen(this.getKeyHandler(),
+      goog.events.KeyHandler.EventType.KEY, function(e) {
+        if (e.keyCode == goog.events.KeyCodes.ENTER && this.renamingItem_) {
+          e.stopPropagation();
+          this.renamingItem_.setNameUneditable();
+        }
+      }, true, this);
 };
 
 
