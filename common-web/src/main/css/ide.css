@@ -270,3 +270,7 @@ h2 {
 :-ms-input-placeholder {
     color: #505050;
 }
+
+.ace-editor {
+    font-size: inherit !important;
+}
