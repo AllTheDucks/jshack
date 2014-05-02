@@ -1,4 +1,0 @@
-language: java
-
-install: ./gradlew jshack-common-web:assemble
-script: ./gradlew jshack-common-web:check
