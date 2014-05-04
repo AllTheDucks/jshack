@@ -56,7 +56,10 @@ jsh.EditorController = function(hackEditor, dataService) {
  * @param {goog.events.Event!} e the event
  */
 jsh.EditorController.prototype.handleSave = function(e) {
-  var request = this.dataService_.saveHack(e.target.getHackModel());
+
+  var editor = e.target;
+  window.console.log(editor.getResources());
+  var request = this.dataService_.saveHack(editor.getHackModel());
   request.addCallback(this.hackEditor_.updateEditorState, this.hackEditor_);
   //todo: addErrback
 };

@@ -21,7 +21,7 @@ public class ListHacksAction implements ActionBean {
 
     @DefaultHandler
     public Resolution displayEditor() {
-        hackManager.getHacks();
+        this.hacks = hackManager.getHacks();
         return new ForwardResolution("/WEB-INF/jsp/listhacks.jsp");
     }
 

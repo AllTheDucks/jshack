@@ -49,6 +49,11 @@ jsh.HackEditor = function(opt_hack, opt_domHelper) {
 
   this.currentEditor_ = null;
 
+  /**
+   * @private
+   * @type {jsh.ResourceListContainer} */
+  this.resourceListContainer_ = null;
+
   this.resourceListHeader_ = null;
 
   //TODO This needs to go somewhere else, like a constant or something
@@ -253,7 +258,7 @@ jsh.HackEditor.prototype.createResource = function(name, type) {
  * Add a resource to the end without ensuring order, selection or renaming.
  *
  * @param {jsh.model.HackResource!} resource the hack to add to the UI.
- * @return {jsh.ResourceListItem}
+ * @return {jsh.ResourceListBaseItem!}
  * @private
  */
 jsh.HackEditor.prototype.addResourceListItem_ = function(resource) {
@@ -291,16 +296,34 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource, opt_rename) {
  * @param {Array.<jsh.model.HackResource>!} resources the resources to add.
  */
 jsh.HackEditor.prototype.addResourceListItems = function(resources) {
+  var resItem;
   for (var i = 0; i < resources.length; i++) {
-    var resItem = resources[i];
-    if (resItem) {
-      this.addResourceListItem_(resItem);
+    var res = resources[i];
+    if (res) {
+      resItem = this.addResourceListItem_(res);
     }
   }
 
-  var lastItem = resources[resources.length - 1];
-  this.resourceListContainer_.setSelectedChild(lastItem);
+  if (resItem) {
+    this.resourceListContainer_.setSelectedChild(resItem);
+  }
   this.resourceListContainer_.sortChildren();
+};
+
+
+/**
+ * Returns the HackResource items currently being managed by the editor.
+ *
+ * @return {Array.<jsh.model.HackResource>}
+ */
+jsh.HackEditor.prototype.getResources = function() {
+  var resCount = this.resourceListContainer_.getChildCount();
+  var resources = new Array();
+  for (var i = 1; i < resCount; i++) {
+    var resItem = this.resourceListContainer_.getChildAt(i);
+    resources.push(resItem.getModel());
+  }
+  return resources;
 };
 
 
@@ -322,7 +345,9 @@ jsh.HackEditor.prototype.enterDocument = function() {
         this.btnRename_.setEnabled(resItem.isRenameable());
       }, false, this);
 
-  this.resourceListContainer_.setSelectedChild(this.resourceListHeader_);
+  if (this.resourceListHeader_) {
+    this.resourceListContainer_.setSelectedChild(this.resourceListHeader_);
+  }
 
   if (this.getModel()) {
     this.updateEditorState(/** @type {jsh.model.Hack} */ (this.getModel()));
@@ -461,7 +486,7 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
   var resItem = this.resourceListContainer_.getSelectedChild();
 
   if (resItem && resItem.isDeleteable()) {
-    var hackResource = resItem.getModel();
+    var hackResource = /**@type {jsh.model.HackResource} */(resItem.getModel());
     var id = resItem.getId();
     var ed = this.editorCache_[id];
     if (ed != null) {
