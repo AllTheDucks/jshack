@@ -54,8 +54,37 @@ public class HackManagerTest {
 
     }
 
+
     @Test(expected = HackNotFoundException.class)
     public void getHackById_forNonExistentHack_throwsException() {
         hackManager.getHackById("MYHACK");
+    }
+
+
+    @Test
+    public void getHacks_firstTimeWith2Hacks_returns2Hacks() {
+        Hack hackOne = new Hack();
+        hackOne.setIdentifier("MYHACK");
+        Hack hackTwo = new Hack();
+        hackTwo.setIdentifier("ANOTHERHACK");
+
+        List<String> hackIds = new ArrayList<String>();
+        hackIds.add("MYHACK");
+        hackIds.add("ANOTHERHACK");
+
+        when(hackService.getHackForId("MYHACK")).thenReturn(hackOne);
+        when(hackService.getHackForId("ANOTHERHACK")).thenReturn(hackTwo);
+        when(hackDiscoveryService.enumerateHackIds()).thenReturn(hackIds);
+
+        List<Hack> hacks = hackManager.getHacks();
+
+        assertEquals(2, hacks.size());
+
+    }
+
+
+    @Test
+    public void getHacks_firstTimeWith1Hack_returns1Hack() {
+
     }
 }

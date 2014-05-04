@@ -4,6 +4,7 @@ import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.Hack;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,13 @@ public class HackManager {
     private Map<String, Hack> hackLookup;
 
     public HackManager() {
-        hackLookup = new HashMap<String, Hack>();
+        hackLookup = null;//new HashMap<String, Hack>();
     }
 
     public Hack getHackById(String hackId) {
+        if (hackLookup == null) {
+            loadHacks();
+        }
         Hack hack = hackLookup.get(hackId);
         if (hack == null) {
             throw new HackNotFoundException("Couldn't find Hack. Doesn't appear to exist in the cache.");
@@ -40,14 +44,30 @@ public class HackManager {
         return hack;
     }
 
+    //TODO access to this method should be synchronized...
     public void loadHacks() {
+
+        HashMap<String, Hack> newHackLookup = new HashMap<String, Hack>();
         List<String> hackIds = discoveryService.enumerateHackIds();
 
         for (String hackId : hackIds) {
             Hack currHack = hackService.getHackForId(hackId);
-            hackLookup.put(hackId, currHack);
+            newHackLookup.put(hackId, currHack);
         }
 
+        hackLookup = newHackLookup;
+    }
+
+    /**
+     * Returns a List of all the Hacks loaded in memory.  If no hacks are loaded, loadHacks() will be called.
+     *
+     * @return a List of Hacks.
+     */
+    public List<Hack> getHacks() {
+        if (hackLookup == null) {
+            loadHacks();
+        }
+        return new ArrayList<Hack>(hackLookup.values());
     }
 
     public void persistHack(Hack hack) {

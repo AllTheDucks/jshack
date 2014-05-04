@@ -18,25 +18,4 @@
 
     <bean id="bbRoleService" class="org.oscelot.jshack.service.TestBbRoleService" />
 
-    <!--<bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackTestDirectoryFactory">-->
-        <!--<property name="hacksDirPath" value="test-web/src/test/data" />-->
-    <!--</bean>-->
-
-
-    <!--<bean id="hackDir" class="java.io.File" >-->
-
-        <!--<constructor-arg type="java.lang.String" value="test-web/src/test/data"></constructor-arg>-->
-    <!--</bean>-->
-
-    <!--<bean id="streamFactory" class="org.oscelot.jshack.service.HackStreamFactory">-->
-        <!--<property name="hacksDir" value="test-web/src/test/data"></property>-->
-    <!--</bean>-->
-    <!--<bean id="hackDiscoveryService" class="org.oscelot.jshack.service.HackDiscoveryService">-->
-        <!--<property name="hacksDir" ref="hackDir"></property>-->
-    <!--</bean>-->
-    <!--<bean id="xstreamHackService" class="org.oscelot.jshack.service.XStreamHackService"></bean>-->
-    <!--<bean id="hackManager" class="org.oscelot.jshack.service.HackManager">-->
-        <!--<property name="discoveryService" ref="hackDiscoveryService"></property>-->
-        <!--<property name="hackService" ref="xstreamHackService"></property>-->
-    <!--</bean>-->
 </beans>
