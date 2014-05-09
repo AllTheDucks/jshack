@@ -319,6 +319,7 @@ jsh.HackEditor.prototype.addResourceListItems = function(resources) {
 jsh.HackEditor.prototype.getResources = function() {
   var resCount = this.resourceListContainer_.getChildCount();
   var resources = new Array();
+  //The Magic Number "1" is to skip the resource list header item.
   for (var i = 1; i < resCount; i++) {
     var resItem = this.resourceListContainer_.getChildAt(i);
     resources.push(resItem.getModel());
@@ -461,6 +462,7 @@ jsh.HackEditor.prototype.getHackModel = function() {
   hack.configEntryDefinitions =
       this.hackDetails_.configurationList.getConfiguration();
 
+  hack.resources = this.getResources();
   return hack;
 };
 

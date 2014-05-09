@@ -294,13 +294,24 @@ jsh.DataService.prototype.packHackJSON = function(hack) {
 
   jsonData['configEntryDefinitions'] = [];
   goog.array.forEach(hack.configEntryDefinitions, function(item, index, array) {
-    var dev = {};
-    dev['name'] = item.name;
-    dev['identifier'] = item.identifier;
-    dev['description'] = item.description;
-    dev['defaultValue'] = item.defaultValue;
+    var entry = {};
+    entry['name'] = item.name;
+    entry['identifier'] = item.identifier;
+    entry['description'] = item.description;
+    entry['defaultValue'] = item.defaultValue;
 
-    jsonData['configEntryDefinitions'].push(dev);
+    jsonData['configEntryDefinitions'].push(entry);
+  }, this);
+
+  jsonData['resources'] = [];
+  goog.array.forEach(hack.resources, function(item, index, array) {
+    var res = {};
+    res['path'] = item.path;
+    res['tempFileName'] = item.tempFileName;
+    res['mime'] = item.mime;
+    res['content'] = item.content;
+
+    jsonData['resources'].push(res);
   }, this);
 
   return goog.json.serialize(jsonData);
