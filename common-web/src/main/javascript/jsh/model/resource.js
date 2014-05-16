@@ -22,7 +22,7 @@ jsh.model.HackResource = function() {
   this.tempFileName;
   /** @type {string} */
   this.mime;
-  /** @type {Array} */
+  /** @type {Array.<string>} */
   this.injectionPoints;
   /** @type {Array.<jsh.model.Restriction>} */
   this.restrictions;
@@ -30,4 +30,6 @@ jsh.model.HackResource = function() {
   this.content;
   /** @type {string} */
   this.url;
+
+  this.editor = null;
 };

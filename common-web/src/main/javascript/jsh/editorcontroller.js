@@ -23,6 +23,10 @@ jsh.EditorController = function(hackEditor, dataService) {
 
   this.hackEditor_ = hackEditor;
 
+  /**
+   * @type {jsh.DataService}
+   * @private
+   */
   this.dataService_ = dataService;
 
   goog.events.listen(this.hackEditor_, jsh.events.EventType.SAVE,
@@ -56,7 +60,9 @@ jsh.EditorController = function(hackEditor, dataService) {
  * @param {goog.events.Event!} e the event
  */
 jsh.EditorController.prototype.handleSave = function(e) {
-  var request = this.dataService_.saveHack(e.target.getHackModel());
+
+  var editor = e.target;
+  var request = this.dataService_.saveHack(editor.getHackModel());
   request.addCallback(this.hackEditor_.updateEditorState, this.hackEditor_);
   //todo: addErrback
 };
@@ -146,7 +152,7 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
       //if successful, return the result;
       return result[0] ? result[1] : null;
     }, this);
-    this.hackEditor_.addResourceListItems(resources);
+    this.hackEditor_.addResources(resources);
   }, this);
   deferredList.addCallback(completeCallback);
 };

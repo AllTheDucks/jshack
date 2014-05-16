@@ -1,5 +1,6 @@
 goog.provide('jsh.HackEditor');
 
+goog.require('goog.array');
 goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.MenuItem');
@@ -48,6 +49,18 @@ jsh.HackEditor = function(opt_hack, opt_domHelper) {
   this.editorContainer_ = null;
 
   this.currentEditor_ = null;
+
+  /**
+   *
+   * @type {Array.<jsh.model.HackResource>}
+   * @private
+   */
+  this.resources_ = new Array();
+
+  /**
+   * @private
+   * @type {jsh.ResourceListContainer} */
+  this.resourceListContainer_ = null;
 
   this.resourceListHeader_ = null;
 
@@ -245,7 +258,8 @@ jsh.HackEditor.prototype.createResource = function(name, type) {
   resource.path = name;
   resource.mime = type;
   resource.content = jsh.MimeTypeHelper.getDefaultContent(type);
-  this.addResourceListItem(resource);
+  var listItem = this.addResource(resource);
+  this.resources_.push(resource);
 };
 
 
@@ -253,7 +267,7 @@ jsh.HackEditor.prototype.createResource = function(name, type) {
  * Add a resource to the end without ensuring order, selection or renaming.
  *
  * @param {jsh.model.HackResource!} resource the hack to add to the UI.
- * @return {jsh.ResourceListItem}
+ * @return {jsh.ResourceListBaseItem!}
  * @private
  */
 jsh.HackEditor.prototype.addResourceListItem_ = function(resource) {
@@ -272,7 +286,7 @@ jsh.HackEditor.prototype.addResourceListItem_ = function(resource) {
  * @param {jsh.model.HackResource!} resource the hack to add to the UI.
  * @param {boolean=} opt_rename set the resource list item name editable.
  */
-jsh.HackEditor.prototype.addResourceListItem = function(resource, opt_rename) {
+jsh.HackEditor.prototype.addResource = function(resource, opt_rename) {
   var resItem = this.addResourceListItem_(resource);
 
   this.resourceListContainer_.setSelectedChild(resItem);
@@ -290,17 +304,37 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource, opt_rename) {
  *
  * @param {Array.<jsh.model.HackResource>!} resources the resources to add.
  */
-jsh.HackEditor.prototype.addResourceListItems = function(resources) {
+jsh.HackEditor.prototype.addResources = function(resources) {
+  var resItem;
   for (var i = 0; i < resources.length; i++) {
-    var resItem = resources[i];
-    if (resItem) {
-      this.addResourceListItem_(resItem);
+    var res = resources[i];
+    if (res) {
+      resItem = this.addResourceListItem_(res);
+      this.resources_.push(res);
     }
   }
 
-  var lastItem = resources[resources.length - 1];
-  this.resourceListContainer_.setSelectedChild(lastItem);
+  if (resItem) {
+    this.resourceListContainer_.setSelectedChild(resItem);
+  }
   this.resourceListContainer_.sortChildren();
+};
+
+
+/**
+ * Returns the HackResource items currently being managed by the editor.
+ *
+ * @return {Array.<jsh.model.HackResource>}
+ */
+jsh.HackEditor.prototype.getResources = function() {
+  var resources = this.resources_;
+  for (var i = 0; i < resources.length; i++) {
+    var currRes = resources[i];
+    if (currRes.editor && currRes.editor.getContent) {
+      currRes.content = currRes.editor.getContent();
+    }
+  }
+  return this.resources_;
 };
 
 
@@ -322,7 +356,9 @@ jsh.HackEditor.prototype.enterDocument = function() {
         this.btnRename_.setEnabled(resItem.isRenameable());
       }, false, this);
 
-  this.resourceListContainer_.setSelectedChild(this.resourceListHeader_);
+  if (this.resourceListHeader_) {
+    this.resourceListContainer_.setSelectedChild(this.resourceListHeader_);
+  }
 
   if (this.getModel()) {
     this.updateEditorState(/** @type {jsh.model.Hack} */ (this.getModel()));
@@ -354,7 +390,7 @@ jsh.HackEditor.prototype.resizeOuterSplitPane_ = function() {
 
 
 /**
- *
+ * Handler for when a ResourceListItem is selected.
  * @param {goog.events.Event!} e the select event
  */
 jsh.HackEditor.prototype.handleResourceSelect = function(e) {
@@ -362,10 +398,11 @@ jsh.HackEditor.prototype.handleResourceSelect = function(e) {
   var resource = resourceListItem.getModel();
 
   var id = resourceListItem.getId();
-  var ed = this.editorCache_[id];
+  var ed = resource.editor;
   if (ed == null) {
     ed = this.createEditor(resource);
     this.editorCache_[id] = ed;
+    resource.editor = ed;
     this.editorContainer_.addChild(ed, true);
     this.refreshWordWrapOnEditor_(ed);
     if (ed.resize) {
@@ -436,6 +473,7 @@ jsh.HackEditor.prototype.getHackModel = function() {
   hack.configEntryDefinitions =
       this.hackDetails_.configurationList.getConfiguration();
 
+  hack.resources = this.getResources();
   return hack;
 };
 
@@ -461,7 +499,7 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
   var resItem = this.resourceListContainer_.getSelectedChild();
 
   if (resItem && resItem.isDeleteable()) {
-    var hackResource = resItem.getModel();
+    var hackResource = /**@type {jsh.model.HackResource} */(resItem.getModel());
     var id = resItem.getId();
     var ed = this.editorCache_[id];
     if (ed != null) {
@@ -476,6 +514,8 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
     } else {
       this.resourceListContainer_.setSelectedChildByIndex(selectedIndex, true);
     }
+
+    goog.array.remove(this.resources_, hackResource);
 
     this.dispatchEvent(new goog.events.Event(
         jsh.events.EventType.RESOURCE_DELETED, hackResource));

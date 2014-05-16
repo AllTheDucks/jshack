@@ -117,3 +117,12 @@ jsh.TextEditor.prototype.resize = function() {
 jsh.TextEditor.prototype.wordWrap = function(wrap) {
   this.hackEditor_.getAce().getSession().setUseWrapMode(wrap);
 };
+
+
+/**
+ * Return the current contents of the Ace Editor
+ * @return {string}
+ */
+jsh.TextEditor.prototype.getContent = function() {
+  return this.hackEditor_.getAce().getValue();
+};

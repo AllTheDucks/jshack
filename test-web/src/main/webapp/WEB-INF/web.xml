@@ -9,6 +9,7 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
     <!-- Stripes ConfigEntryDefinition -->
     <filter>
         <display-name>Stripes Filter</display-name>
@@ -26,8 +27,12 @@
             <param-name>MultipartWrapper.Class</param-name>
             <param-value>net.sourceforge.stripes.controller.multipart.CommonsMultipartWrapper</param-value>
         </init-param>
-
+        <init-param>
+            <param-name>Interceptor.Classes</param-name>
+            <param-value>net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>
+        </init-param>
     </filter>
+
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>
         <url-pattern>*.jsp</url-pattern>
