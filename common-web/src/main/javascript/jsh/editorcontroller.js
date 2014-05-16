@@ -152,7 +152,7 @@ jsh.EditorController.prototype.handleFilesImported = function(e) {
       //if successful, return the result;
       return result[0] ? result[1] : null;
     }, this);
-    this.hackEditor_.addResourceListItems(resources);
+    this.hackEditor_.addResources(resources);
   }, this);
   deferredList.addCallback(completeCallback);
 };

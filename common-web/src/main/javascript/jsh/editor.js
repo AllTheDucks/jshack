@@ -258,7 +258,7 @@ jsh.HackEditor.prototype.createResource = function(name, type) {
   resource.path = name;
   resource.mime = type;
   resource.content = jsh.MimeTypeHelper.getDefaultContent(type);
-  var listItem = this.addResourceListItem(resource);
+  var listItem = this.addResource(resource);
   this.resources_.push(resource);
 };
 
@@ -286,7 +286,7 @@ jsh.HackEditor.prototype.addResourceListItem_ = function(resource) {
  * @param {jsh.model.HackResource!} resource the hack to add to the UI.
  * @param {boolean=} opt_rename set the resource list item name editable.
  */
-jsh.HackEditor.prototype.addResourceListItem = function(resource, opt_rename) {
+jsh.HackEditor.prototype.addResource = function(resource, opt_rename) {
   var resItem = this.addResourceListItem_(resource);
 
   this.resourceListContainer_.setSelectedChild(resItem);
@@ -304,12 +304,13 @@ jsh.HackEditor.prototype.addResourceListItem = function(resource, opt_rename) {
  *
  * @param {Array.<jsh.model.HackResource>!} resources the resources to add.
  */
-jsh.HackEditor.prototype.addResourceListItems = function(resources) {
+jsh.HackEditor.prototype.addResources = function(resources) {
   var resItem;
   for (var i = 0; i < resources.length; i++) {
     var res = resources[i];
     if (res) {
       resItem = this.addResourceListItem_(res);
+      this.resources_.push(res);
     }
   }
 
@@ -329,7 +330,7 @@ jsh.HackEditor.prototype.getResources = function() {
   var resources = this.resources_;
   for (var i = 0; i < resources.length; i++) {
     var currRes = resources[i];
-    if (currRes.editor) {
+    if (currRes.editor && currRes.editor.getContent) {
       currRes.content = currRes.editor.getContent();
     }
   }
