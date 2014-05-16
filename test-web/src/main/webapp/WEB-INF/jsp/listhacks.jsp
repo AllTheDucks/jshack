@@ -24,7 +24,9 @@
             <i>No Hacks to Display.</i>
         </c:when>
         <c:otherwise>
-            <b>list of hacks goes here</b>
+            <c:forEach items="${actionBean.hacks}" var="currHack">
+                <a href="Editor.action?hackid=${currHack.identifier}">${currHack.identifier}</a><br>
+            </c:forEach>
         </c:otherwise>
     </c:choose>
 </body>

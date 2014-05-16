@@ -1,5 +1,6 @@
 goog.provide('jsh.HackEditor');
 
+goog.require('goog.array');
 goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.MenuItem');
@@ -48,6 +49,13 @@ jsh.HackEditor = function(opt_hack, opt_domHelper) {
   this.editorContainer_ = null;
 
   this.currentEditor_ = null;
+
+  /**
+   *
+   * @type {Array.<jsh.model.HackResource>}
+   * @private
+   */
+  this.resources_ = new Array();
 
   /**
    * @private
@@ -250,7 +258,8 @@ jsh.HackEditor.prototype.createResource = function(name, type) {
   resource.path = name;
   resource.mime = type;
   resource.content = jsh.MimeTypeHelper.getDefaultContent(type);
-  this.addResourceListItem(resource);
+  var listItem = this.addResourceListItem(resource);
+  this.resources_.push(resource);
 };
 
 
@@ -317,14 +326,14 @@ jsh.HackEditor.prototype.addResourceListItems = function(resources) {
  * @return {Array.<jsh.model.HackResource>}
  */
 jsh.HackEditor.prototype.getResources = function() {
-  var resCount = this.resourceListContainer_.getChildCount();
-  var resources = new Array();
-  //The Magic Number "1" is to skip the resource list header item.
-  for (var i = 1; i < resCount; i++) {
-    var resItem = this.resourceListContainer_.getChildAt(i);
-    resources.push(resItem.getModel());
+  var resources = this.resources_;
+  for (var i = 0; i < resources.length; i++) {
+    var currRes = resources[i];
+    if (currRes.editor) {
+      currRes.content = currRes.editor.getContent();
+    }
   }
-  return resources;
+  return this.resources_;
 };
 
 
@@ -380,7 +389,7 @@ jsh.HackEditor.prototype.resizeOuterSplitPane_ = function() {
 
 
 /**
- *
+ * Handler for when a ResourceListItem is selected.
  * @param {goog.events.Event!} e the select event
  */
 jsh.HackEditor.prototype.handleResourceSelect = function(e) {
@@ -388,10 +397,11 @@ jsh.HackEditor.prototype.handleResourceSelect = function(e) {
   var resource = resourceListItem.getModel();
 
   var id = resourceListItem.getId();
-  var ed = this.editorCache_[id];
+  var ed = resource.editor;
   if (ed == null) {
     ed = this.createEditor(resource);
     this.editorCache_[id] = ed;
+    resource.editor = ed;
     this.editorContainer_.addChild(ed, true);
     this.refreshWordWrapOnEditor_(ed);
     if (ed.resize) {
@@ -503,6 +513,8 @@ jsh.HackEditor.prototype.deleteSelectedResource = function() {
     } else {
       this.resourceListContainer_.setSelectedChildByIndex(selectedIndex, true);
     }
+
+    goog.array.remove(this.resources_, hackResource);
 
     this.dispatchEvent(new goog.events.Event(
         jsh.events.EventType.RESOURCE_DELETED, hackResource));
