@@ -63,7 +63,7 @@ public class HackManagerTest {
     }
 
     @Test
-    public void persistHack_withOutResources_savesSuccessfully() {
+    public void persistHack_withoutResources_savesSuccessfully() {
         Hack hack = new Hack();
 
         hackManager.persistHack(hack);
@@ -79,6 +79,7 @@ public class HackManagerTest {
         hack.setIdentifier(id);
         List<HackResource> resources = new ArrayList<HackResource>();
         HackResource resource = new HackResource();
+        resource.setContent("dummy content");
         resources.add(resource);
         hack.setResources(resources);
 
@@ -95,8 +96,11 @@ public class HackManagerTest {
         hack.setIdentifier(id);
         List<HackResource> resources = new ArrayList<HackResource>();
         HackResource resource1 = new HackResource();
+        resource1.setContent("dummy content");
         HackResource resource2 = new HackResource();
+        resource2.setContent("dummy content");
         HackResource resource3 = new HackResource();
+        resource3.setContent("dummy content");
         resources.add(resource1);
         resources.add(resource2);
         resources.add(resource3);

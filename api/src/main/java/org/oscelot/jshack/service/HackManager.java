@@ -74,6 +74,9 @@ public class HackManager {
     }
 
     public void persistHack(Hack hack) {
+        if (hackLookup == null) {
+            loadHacks();
+        }
         if (hack.getResources() != null) {
             for (HackResource resource : hack.getResources()) {
                 if(resource.getContent() != null || resource.getTempFileName() != null) {
