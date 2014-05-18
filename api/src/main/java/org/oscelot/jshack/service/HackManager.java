@@ -2,6 +2,7 @@ package org.oscelot.jshack.service;
 
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.Hack;
+import org.oscelot.jshack.resources.HackResource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class HackManager {
     private HackService hackService;
     @Inject
     private HackDiscoveryService discoveryService;
+    @Inject
+    private HackResourceService resourceService;
 
     private Map<String, Hack> hackLookup;
 
@@ -71,6 +74,13 @@ public class HackManager {
     }
 
     public void persistHack(Hack hack) {
+        if (hack.getResources() != null) {
+            for (HackResource resource : hack.getResources()) {
+                if(resource.getContent() != null || resource.getTempFileName() != null) {
+                    resourceService.persistResource(hack.getIdentifier(), resource);
+                }
+            }
+        }
         hackService.persistHack(hack);
         hackLookup.put(hack.getIdentifier(), hack);
     }
@@ -89,5 +99,13 @@ public class HackManager {
 
     public void setDiscoveryService(HackDiscoveryService discoveryService) {
         this.discoveryService = discoveryService;
+    }
+
+    public HackResourceService getHackResourceService() {
+        return resourceService;
+    }
+
+    public void setHackResourceService(HackResourceService resourceService) {
+        this.resourceService = resourceService;
     }
 }

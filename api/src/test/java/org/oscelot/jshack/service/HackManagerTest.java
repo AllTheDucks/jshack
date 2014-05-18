@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.Hack;
+import org.oscelot.jshack.resources.HackResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +24,18 @@ public class HackManagerTest {
     private HackManager hackManager;
     private HackService hackService;
     private HackDiscoveryService hackDiscoveryService;
+    private HackResourceService resourceService;
 
     @Before
     public void setup() {
         hackDiscoveryService = mock(HackDiscoveryService.class);
         hackService = mock(HackService.class);
+        resourceService = mock(HackResourceService.class);
         hackManager = new HackManager();
 
         hackManager.setHackService(hackService);
         hackManager.setDiscoveryService(hackDiscoveryService);
-
+        hackManager.setHackResourceService(resourceService);
     }
 
     @Test
@@ -54,10 +57,57 @@ public class HackManagerTest {
 
     }
 
-
     @Test(expected = HackNotFoundException.class)
     public void getHackById_forNonExistentHack_throwsException() {
         hackManager.getHackById("MYHACK");
+    }
+
+    @Test
+    public void persistHack_withOutResources_savesSuccessfully() {
+        Hack hack = new Hack();
+
+        hackManager.persistHack(hack);
+
+        verify(resourceService, never()).persistResource(anyString(), any(HackResource.class));
+    }
+
+
+    @Test
+    public void persistHack_withOneResource_savesSuccessfully() {
+        String id = "MYHACK";
+        Hack hack = new Hack();
+        hack.setIdentifier(id);
+        List<HackResource> resources = new ArrayList<HackResource>();
+        HackResource resource = new HackResource();
+        resources.add(resource);
+        hack.setResources(resources);
+
+        hackManager.persistHack(hack);
+
+        verify(resourceService).persistResource("MYHACK", resource);
+        verifyNoMoreInteractions(resourceService);
+    }
+
+    @Test
+    public void persistHack_withMultipleResources_savesSuccessfully() {
+        String id = "MYHACK";
+        Hack hack = new Hack();
+        hack.setIdentifier(id);
+        List<HackResource> resources = new ArrayList<HackResource>();
+        HackResource resource1 = new HackResource();
+        HackResource resource2 = new HackResource();
+        HackResource resource3 = new HackResource();
+        resources.add(resource1);
+        resources.add(resource2);
+        resources.add(resource3);
+        hack.setResources(resources);
+
+        hackManager.persistHack(hack);
+
+        verify(resourceService).persistResource(id, resource1);
+        verify(resourceService).persistResource(id, resource2);
+        verify(resourceService).persistResource(id, resource3);
+        verifyNoMoreInteractions(resourceService);
     }
 
 
@@ -82,9 +132,4 @@ public class HackManagerTest {
 
     }
 
-
-    @Test
-    public void getHacks_firstTimeWith1Hack_returns1Hack() {
-
-    }
 }

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Path("tempfiles")
-public class TempFilesResource {
+public class TempFilesWebService {
 
     @Inject
     public TempFileService tempFileService;

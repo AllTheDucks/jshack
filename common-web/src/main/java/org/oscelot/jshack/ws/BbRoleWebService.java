@@ -8,7 +8,7 @@ import javax.ws.rs.*;
 import java.util.List;
 
 @Path("bbroles")
-public class BbRoleResource {
+public class BbRoleWebService {
 
     @Inject
     public BbRoleService bbRoleService;

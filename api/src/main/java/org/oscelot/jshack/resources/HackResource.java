@@ -17,6 +17,11 @@ public class HackResource {
     private String tempFileName;
     private String mime;
     /**
+     * only used for text type resources, and only contains a value when
+     * saving a modified resource.
+     */
+    private String content;
+    /**
      * only applicable for "text/html" resources
      */
     private boolean injectResource;
@@ -51,6 +56,27 @@ public class HackResource {
      */
     public String getMime() {
         return mime;
+    }
+
+    /**
+     * get the text content set from the client.  This will be null if no
+     * changes have been made or if the content is non-text.
+     *
+     * @return the content
+     */
+    public String getContent() {
+        return content;
+    }
+
+
+    /**
+     * Set the content.   This should only be called to set content sent from
+     * the client.
+     *
+     * @param content
+     */
+    public void setContent(String content) {
+        this.content = content;
     }
 
     /**
