@@ -4,6 +4,7 @@
  */
 package org.oscelot.jshack.resources;
 
+import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.model.Restriction;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public class HackResource {
     private boolean injectResource;
     private List<String> injectionPoints;
     private List<Restriction> restrictions;
+    /**
+     * only populated for the in-memory representation when hacks are being rendered.
+     *
+     */
+    private Hack hack;
 
     public HackResource() {
     }
@@ -124,4 +130,8 @@ public class HackResource {
     public void setRestrictions(List<Restriction> restrictions) {
         this.restrictions = restrictions;
     }
+
+    public Hack getHack() { return hack; }
+
+    public void setHack(Hack hack) { this.hack = hack; }
 }

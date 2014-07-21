@@ -24,6 +24,10 @@ public class Hack {
     public Hack() {
     }
 
+    public Hack(String identifier) {
+        this.identifier = identifier;
+    }
+
     public String getName() {
         return name;
     }

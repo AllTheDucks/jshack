@@ -5,23 +5,28 @@
 package org.oscelot.jshack.hooks;
 
 import blackboard.platform.context.Context;
+import blackboard.platform.context.ContextManager;
 import blackboard.platform.context.ContextManagerFactory;
+import blackboard.platform.plugin.PlugInUtil;
 import blackboard.servlet.renderinghook.RenderingHook;
+
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 
 //import org.oscelot.jshack.JSHackManager;
 
 //import org.oscelot.jshack.JSHackManagerFactory;
-import org.oscelot.jshack.model.HackInstance;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.oscelot.jshack.BuildingBlockHelper;
 import org.oscelot.jshack.model.Hack;
-import org.oscelot.jshack.resources.ResourceManager;
-import org.oscelot.jshack.resources.ResourceManagerFactory;
+import org.oscelot.jshack.resources.HackResource;
+import org.oscelot.jshack.service.HackManager;
+import org.oscelot.jshack.service.HackManagerFactory;
 
 /**
  * Base class for the JSHack rendering hook implementations.
@@ -32,7 +37,11 @@ public abstract class JSHackRenderingHook implements RenderingHook {
 
     @Override
     public abstract String getKey();
-//    protected JSHackManager hackManager;
+
+    protected HackManager hackManager;
+
+    protected ContextManager cm;
+    private VelocityEngine ve;
 
     @Override
     public String getContent() {
@@ -41,67 +50,105 @@ public abstract class JSHackRenderingHook implements RenderingHook {
 //            hackManager = getHackManager();
             StringBuilder output = new StringBuilder();
 
-            Context context = ContextManagerFactory.getInstance().getContext();
+            Context context = getContextManager().getContext();
             if (context == null) {
                 return "";
             }
 
-//            Collection<Snippet> snippets = hackManager.getMatchingSnippets(this.getKey(), context);
+            List<HackResource> resources = getHackManager().getRenderingContext(this.getKey(), context);
 
-//            if (snippets != null) {
-//                for (Snippet snippet : snippets) {
-//                    Hack hack = snippet.getHackInstance().getHack();
-//                    StringBuilder sb = new StringBuilder("\n<!-- START HACK : ");
-//                    sb.append(hack.getIdentifier());
-//                    sb.append(" -->\n");
-//                    sb.append(renderSnippet(snippet, context));
-//                    sb.append("\n<!-- END HACK : ");
-//                    sb.append(hack.getIdentifier());
-//                    sb.append(" -->\n");
-//
-//                    output.append(sb.toString());
-//                }
-//            }
+            if (resources != null) {
+                for (HackResource resource : resources) {
+                    Hack hack = resource.getHack();
+                    StringBuilder sb = new StringBuilder("\n<!-- START HACK : ");
+                    sb.append(hack.getIdentifier());
+                    sb.append(" -->\n");
+                    sb.append(renderResource(resource, context));
+                    sb.append("\n<!-- END HACK : ");
+                    sb.append(hack.getIdentifier());
+                    sb.append(" -->\n");
+
+                    output.append(sb.toString());
+                }
+            }
 
             return output.toString();
         } catch (Exception ex) {
-            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.SEVERE, 
+            Logger.getLogger(this.getClass().getCanonicalName()).log(Level.SEVERE,
                     "Exception while processing JS Hacks. Problem with Package: " +
-                    (currPkg == null ? "UNKNOWN" : currPkg.getIdentifier()), ex);
+                            (currPkg == null ? "UNKNOWN" : currPkg.getIdentifier()), ex
+            );
             ex.printStackTrace();
             return "<!-- ERROR RENDERING JS HACK - See Logs for details. -->";
         }
     }
 
-//    /**
-//     * Gets the current HackManager instance, or if null, gets an instance from
-//     * the Factory.
-//     *
-//     * @return the current HackManager instance.
-//     */
-//    protected JSHackManager getHackManager() {
-//        if (hackManager == null) {
-//            hackManager = JSHackManagerFactory.getHackManager();
-//        }
-//        return hackManager;
-//    }
-//
-//    protected String renderSnippet(Snippet snippet, Context context) throws Exception {
-//        HackInstance hack = snippet.getHackInstance();
-//        VelocityContext vc = new VelocityContext();
-//        ResourceManager resourceManager = ResourceManagerFactory.getResourceManager();
-//        vc.put("resources", resourceManager.getResourceUrlMap(hack.getHack().getIdentifier()));
-//        vc.put("context", context);
-//        vc.put("config", hack.getConfigEntriesMap());
-//        StringWriter sw = new StringWriter();
-//
-//        try {
-//            Velocity.evaluate(vc, sw, "JSHack", resourceManager.translateResourceShorthand(snippet.getSnippetDefinition().getSource()));
-//        } catch (IOException ex) {
-//            Logger.getLogger(JSHackRenderingHook.class.getName()).log(Level.SEVERE, null, ex);
-//            return "Error in JSHackRenderingHook. See Log for details. (" + ex.getMessage() + ")";
-//        }
-//        return sw.toString();
-//    }
-    
+    /**
+     * Gets the current HackManager instance, or if null, gets an instance from
+     * the Factory.
+     *
+     * @return the current HackManager instance.
+     */
+    protected HackManager getHackManager() {
+        if (hackManager == null) {
+            hackManager = HackManagerFactory.getHackManager();
+        }
+        return hackManager;
+    }
+
+
+    protected String renderResource(HackResource resource, Context context) throws Exception {
+        if (ve == null) {
+            ve = createVelocityEngine();
+        }
+        VelocityContext vc = new VelocityContext();
+        String baseUrl = PlugInUtil.getUriStem(BuildingBlockHelper.VENDOR_ID, BuildingBlockHelper.HANDLE);
+//        long lastModified = hackManager.getHackConfigFile().lastModified();
+//        String resourcePath = baseUrl+"resources/"+hack.getIdentifier()+"/"+lastModified;
+//        vc.put("resourcePath", resourcePath);
+        vc.put("context", context);
+        StringWriter sw = new StringWriter();
+
+        try {
+            ve.evaluate(vc, sw, "HackContentString", resource.getContent());
+        } catch (IOException ex) {
+            Logger.getLogger(JSHackRenderingHook.class.getName()).log(Level.SEVERE, null, ex);
+            return "Error in JSHackRenderingHook. See Log for details. (" + ex.getMessage() + ")";
+        }
+        return sw.toString();
+    }
+
+    private ContextManager getContextManager() {
+        if (cm == null) {
+            synchronized (this) {
+                if (cm == null) {
+                    cm = ContextManagerFactory.getInstance();
+                }
+            }
+        }
+        return cm;
+    }
+
+    public void setContextManager(ContextManager cm) {
+        this.cm = cm;
+    }
+
+
+    public VelocityEngine getVelocityEngine() {
+        return ve;
+    }
+
+    private synchronized VelocityEngine createVelocityEngine() {
+        if (ve == null) {
+            ve = new VelocityEngine();
+            ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
+                    "org.oscelot.jshack.Slf4jLogChute" );
+        }
+        return ve;
+    }
+
+    public void setVelocityEngine(VelocityEngine ve) {
+        this.ve = ve;
+    }
+
 }

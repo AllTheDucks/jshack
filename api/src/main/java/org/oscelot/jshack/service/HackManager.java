@@ -1,8 +1,11 @@
 package org.oscelot.jshack.service;
 
+import blackboard.platform.context.Context;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.Hack;
+import org.oscelot.jshack.model.HackGlobalContext;
 import org.oscelot.jshack.resources.HackResource;
+import org.oscelot.jshack.resources.ResourceRequestMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,10 +33,14 @@ public class HackManager {
     @Inject
     private HackResourceService resourceService;
 
+    private HackGlobalContext globalContext;
+
     private Map<String, Hack> hackLookup;
+    private List<Hack> hackList;
+    private ResourceRequestMatcher matcher;
 
     public HackManager() {
-        hackLookup = null;//new HashMap<String, Hack>();
+        hackLookup = null;
     }
 
     public Hack getHackById(String hackId) {
@@ -47,18 +54,22 @@ public class HackManager {
         return hack;
     }
 
-    //TODO access to this method should be synchronized...
-    public void loadHacks() {
+
+    public synchronized void loadHacks() {
 
         HashMap<String, Hack> newHackLookup = new HashMap<String, Hack>();
+        ArrayList<Hack> newHackList = new ArrayList<>();
         List<String> hackIds = discoveryService.enumerateHackIds();
 
         for (String hackId : hackIds) {
             Hack currHack = hackService.getHackForId(hackId);
             newHackLookup.put(hackId, currHack);
+            newHackList.add(currHack);
         }
 
         hackLookup = newHackLookup;
+        ResourceRequestMatcher newMatcher = new ResourceRequestMatcher(newHackList);
+        matcher = newMatcher;
     }
 
     /**
@@ -70,7 +81,7 @@ public class HackManager {
         if (hackLookup == null) {
             loadHacks();
         }
-        return new ArrayList<Hack>(hackLookup.values());
+        return hackList;
     }
 
     public void persistHack(Hack hack) {
@@ -86,6 +97,15 @@ public class HackManager {
         }
         hackService.persistHack(hack);
         hackLookup.put(hack.getIdentifier(), hack);
+    }
+
+    // TODO Return HackRenderingContext instead of List of HackResources
+    public List<HackResource> getRenderingContext(String hookKey, Context ctx) {
+        // do this first to make sure the ResourceRequestMatcher is initialised.
+        if (matcher == null) {
+            loadHacks();
+        }
+        return matcher.getMatchingResources(hookKey, ctx);
     }
 
     public HackService getHackService() {

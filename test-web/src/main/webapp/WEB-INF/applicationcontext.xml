@@ -8,9 +8,30 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         ">
 
-    <context:annotation-config />
-    <context:component-scan base-package="org.oscelot.jshack" />
+    <bean id="hackManager" class="org.oscelot.jshack.service.HackManagerFactory" factory-method="getHackManager">
+        <property name="discoveryService" ref="discoveryService"/>
+        <property name="hackService" ref="hackService"/>
+        <property name="hackResourceService" ref="hackResourceService"/>
+    </bean>
 
+    <bean id="discoveryService" class="org.oscelot.jshack.service.HackDiscoveryService">
+        <property name="directoryFactory" ref="directoryFactory"/>
+    </bean>
+
+    <bean id="hackService" class="org.oscelot.jshack.service.XStreamHackService">
+        <property name="streamFactory" ref="streamFactory"/>
+    </bean>
+
+    <bean id="streamFactory" class="org.oscelot.jshack.service.FileHackStreamFactory">
+        <property name="directoryFactory" ref="directoryFactory"/>
+    </bean>
+
+    <bean id="hackResourceService" class="org.oscelot.jshack.service.FileHackResourceService">
+        <property name="directoryFactory" ref="directoryFactory"/>
+        <property name="tempFileService" ref="tempFileService"/>
+    </bean>
+
+    <bean id="tempFileService" class="org.oscelot.jshack.service.TempFileService"/>
 
     <bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackTestDirectoryFactory">
         <property name="rootConfigDirPath" value="test-web/src/test/data"></property>
