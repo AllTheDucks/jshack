@@ -18,4 +18,8 @@ public class HackManagerFactory {
         }
         return hackManager;
     }
+
+    public static void reset() {
+        hackManager = null;
+    }
 }

@@ -18,6 +18,7 @@ dependencies {
     testCompile 'org.mockito:mockito-all:1.9.5'
     testCompile 'xmlunit:xmlunit:1.5'
     testCompile 'javax.servlet:servlet-api:2.5'
+    testCompile 'com.google.collections:google-collections:1.0'
 
 
     compile 'blackboard.platform:bb-platform:9.1.100401.0'

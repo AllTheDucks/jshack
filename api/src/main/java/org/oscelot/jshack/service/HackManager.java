@@ -2,8 +2,10 @@ package org.oscelot.jshack.service;
 
 import blackboard.platform.context.Context;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
+import org.oscelot.jshack.model.ConfigEntry;
 import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.model.HackGlobalContext;
+import org.oscelot.jshack.model.HackRenderingContext;
 import org.oscelot.jshack.resources.HackResource;
 import org.oscelot.jshack.resources.ResourceRequestMatcher;
 import org.springframework.stereotype.Service;
@@ -56,8 +58,10 @@ public class HackManager {
 
 
     public synchronized void loadHacks() {
+        HackGlobalContext globalCtx = new HackGlobalContext();
+        HashMap<String, Map<String,String>> hackConfigMaps = new HashMap<>();
 
-        HashMap<String, Hack> newHackLookup = new HashMap<String, Hack>();
+        HashMap<String, Hack> newHackLookup = new HashMap<>();
         ArrayList<Hack> newHackList = new ArrayList<>();
         List<String> hackIds = discoveryService.enumerateHackIds();
 
@@ -65,11 +69,24 @@ public class HackManager {
             Hack currHack = hackService.getHackForId(hackId);
             newHackLookup.put(hackId, currHack);
             newHackList.add(currHack);
+            Map<String, String> hackConfig = new HashMap<>();
+            List<ConfigEntry> configEntries = hackService.getConfigEntriesForId(hackId);
+            if (configEntries != null && !configEntries.isEmpty()) {
+                for (ConfigEntry configEntry : configEntries) {
+                    hackConfig.put(configEntry.getIdentifier(), configEntry.getValue());
+                }
+            }
+            hackConfigMaps.put(hackId, hackConfig);
         }
 
         hackLookup = newHackLookup;
         ResourceRequestMatcher newMatcher = new ResourceRequestMatcher(newHackList);
         matcher = newMatcher;
+
+        globalCtx.setMatcher(newMatcher);
+        globalCtx.setHackConfigMaps(hackConfigMaps);
+
+        this.globalContext = globalCtx;
     }
 
     /**
@@ -100,12 +117,20 @@ public class HackManager {
     }
 
     // TODO Return HackRenderingContext instead of List of HackResources
-    public List<HackResource> getRenderingContext(String hookKey, Context ctx) {
+    public HackRenderingContext getRenderingContext(String hookKey, Context ctx) {
         // do this first to make sure the ResourceRequestMatcher is initialised.
-        if (matcher == null) {
+        if (globalContext == null) {
             loadHacks();
         }
-        return matcher.getMatchingResources(hookKey, ctx);
+        HackGlobalContext globalCtx = this.globalContext;
+
+        HackRenderingContext renderingCtx = new HackRenderingContext();
+        renderingCtx.setResources(matcher.getMatchingResources(hookKey, ctx));
+        renderingCtx.setHackConfigMaps(globalCtx.getHackConfigMaps());
+//        renderingCtx.setResourceUrlMap(globalCtx.getResourceUrlMap());
+
+
+        return renderingCtx;
     }
 
     public HackService getHackService() {

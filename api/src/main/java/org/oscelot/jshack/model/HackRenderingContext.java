@@ -16,8 +16,25 @@ public class HackRenderingContext {
     private List<HackResource> resources;
 
     /** Map of config entries keyed by Hack ID */
-    private Map<String, Map<String, String>> configEntryMap;
+    private Map<String, Map<String, String>> hackConfigMaps;
 
     /** Map of Resource URL entries keyed by Hack ID */
     private Map<String, Map<String, String>> resourceUrlMap;
+
+
+    public List<HackResource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<HackResource> resources) {
+        this.resources = resources;
+    }
+
+    public Map<String, Map<String, String>> getHackConfigMaps() {
+        return hackConfigMaps;
+    }
+
+    public void setHackConfigMaps(Map<String, Map<String, String>> hackConfigMaps) {
+        this.hackConfigMaps = hackConfigMaps;
+    }
 }

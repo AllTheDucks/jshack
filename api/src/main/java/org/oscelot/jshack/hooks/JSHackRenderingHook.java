@@ -12,7 +12,9 @@ import blackboard.servlet.renderinghook.RenderingHook;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +26,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.oscelot.jshack.BuildingBlockHelper;
 import org.oscelot.jshack.model.Hack;
+import org.oscelot.jshack.model.HackRenderingContext;
 import org.oscelot.jshack.resources.HackResource;
 import org.oscelot.jshack.service.HackManager;
 import org.oscelot.jshack.service.HackManagerFactory;
@@ -55,15 +58,17 @@ public abstract class JSHackRenderingHook implements RenderingHook {
                 return "";
             }
 
-            List<HackResource> resources = getHackManager().getRenderingContext(this.getKey(), context);
+            HackRenderingContext hackCtx = getHackManager().getRenderingContext(this.getKey(), context);
+            List<HackResource> resources = hackCtx.getResources();
 
             if (resources != null) {
                 for (HackResource resource : resources) {
                     Hack hack = resource.getHack();
+                    String hackId = hack.getIdentifier();
                     StringBuilder sb = new StringBuilder("\n<!-- START HACK : ");
-                    sb.append(hack.getIdentifier());
+                    sb.append(hackId);
                     sb.append(" -->\n");
-                    sb.append(renderResource(resource, context));
+                    sb.append(renderResource(resource, context, hackCtx.getHackConfigMaps().get(hackId)));
                     sb.append("\n<!-- END HACK : ");
                     sb.append(hack.getIdentifier());
                     sb.append(" -->\n");
@@ -97,7 +102,7 @@ public abstract class JSHackRenderingHook implements RenderingHook {
     }
 
 
-    protected String renderResource(HackResource resource, Context context) throws Exception {
+    protected String renderResource(HackResource resource, Context context, Map<String, String> config) throws Exception {
         if (ve == null) {
             ve = createVelocityEngine();
         }
@@ -107,6 +112,7 @@ public abstract class JSHackRenderingHook implements RenderingHook {
 //        String resourcePath = baseUrl+"resources/"+hack.getIdentifier()+"/"+lastModified;
 //        vc.put("resourcePath", resourcePath);
         vc.put("context", context);
+        vc.put("config", config);
         StringWriter sw = new StringWriter();
 
         try {

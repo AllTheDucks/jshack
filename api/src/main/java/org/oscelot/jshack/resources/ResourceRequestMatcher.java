@@ -26,23 +26,25 @@ public class ResourceRequestMatcher {
         resourcesByHookKey = new HashMap<>();
         this.hacks = hacks;
         for (Hack hack : hacks) {
-            for (HackResource resource : hack.getResources()) {
+            if (hack.getResources() != null) {
+                for (HackResource resource : hack.getResources()) {
 
-                CompiledHackResource compiledResource = new CompiledHackResource(
-                        resource, new ArrayList<CompiledRestriction>());
-                List<Restriction> restrictions = resource.getRestrictions();
-                if (restrictions != null) {
-                    for (Restriction restriction : resource.getRestrictions()) {
-                        compiledResource.getRestrictions().add(RestrictionCompiler.compileRestriction(restriction));
+                    CompiledHackResource compiledResource = new CompiledHackResource(
+                            resource, new ArrayList<CompiledRestriction>());
+                    List<Restriction> restrictions = resource.getRestrictions();
+                    if (restrictions != null) {
+                        for (Restriction restriction : resource.getRestrictions()) {
+                            compiledResource.getRestrictions().add(RestrictionCompiler.compileRestriction(restriction));
+                        }
                     }
-                }
-                for (String hook : resource.getInjectionPoints()) {
-                    List<CompiledHackResource> resList = resourcesByHookKey.get(hook);
-                    if (resList == null) {
-                        resList = new ArrayList();
-                        resourcesByHookKey.put(hook, resList);
+                    for (String hook : resource.getInjectionPoints()) {
+                        List<CompiledHackResource> resList = resourcesByHookKey.get(hook);
+                        if (resList == null) {
+                            resList = new ArrayList();
+                            resourcesByHookKey.put(hook, resList);
+                        }
+                        resList.add(compiledResource);
                     }
-                    resList.add(compiledResource);
                 }
             }
         }

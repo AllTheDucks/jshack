@@ -13,6 +13,11 @@ public class ConfigEntry {
     protected String identifier;
     protected String value;
 
+    public ConfigEntry(String identifier, String value) {
+        this.identifier = identifier;
+        this.value = value;
+    }
+
     public String getIdentifier() {
         return identifier;
     }
