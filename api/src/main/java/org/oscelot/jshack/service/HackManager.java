@@ -7,9 +7,11 @@ import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.model.HackGlobalContext;
 import org.oscelot.jshack.model.HackRenderingContext;
 import org.oscelot.jshack.resources.HackResource;
+import org.oscelot.jshack.resources.ResourceManager;
 import org.oscelot.jshack.resources.ResourceRequestMatcher;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,8 @@ public class HackManager {
     private HackDiscoveryService discoveryService;
     @Inject
     private HackResourceService resourceService;
+    @Inject
+    private ResourceManager resourceManager;
 
     private HackGlobalContext globalContext;
 
@@ -60,6 +64,8 @@ public class HackManager {
     public synchronized void loadHacks() {
         HackGlobalContext globalCtx = new HackGlobalContext();
         HashMap<String, Map<String,String>> hackConfigMaps = new HashMap<>();
+        HashMap<String, Map<String,String>> resourceUrlMaps = new HashMap<>();
+
 
         HashMap<String, Hack> newHackLookup = new HashMap<>();
         ArrayList<Hack> newHackList = new ArrayList<>();
@@ -77,6 +83,18 @@ public class HackManager {
                 }
             }
             hackConfigMaps.put(hackId, hackConfig);
+            try {
+                resourceManager.registerHackPackage(currHack);
+            } catch (IOException e) {
+                // TODO Log this using a logger.
+                System.err.println("Error loading resources for hack: " + hackId);
+            }
+            Map<String, String> hackResourceUrls = resourceManager.getResourceUrlMap(hackId);
+            if (hackResourceUrls == null) {
+                hackResourceUrls = new HashMap<>();
+            }
+            resourceUrlMaps.put(hackId, hackResourceUrls);
+
         }
 
         hackLookup = newHackLookup;
@@ -85,6 +103,7 @@ public class HackManager {
 
         globalCtx.setMatcher(newMatcher);
         globalCtx.setHackConfigMaps(hackConfigMaps);
+        globalCtx.setResourceUrlMaps(resourceUrlMaps);
 
         this.globalContext = globalCtx;
     }
@@ -127,7 +146,7 @@ public class HackManager {
         HackRenderingContext renderingCtx = new HackRenderingContext();
         renderingCtx.setResources(matcher.getMatchingResources(hookKey, ctx));
         renderingCtx.setHackConfigMaps(globalCtx.getHackConfigMaps());
-//        renderingCtx.setResourceUrlMap(globalCtx.getResourceUrlMap());
+        renderingCtx.setResourceUrlMaps(globalCtx.getResourceUrlMaps());
 
 
         return renderingCtx;
@@ -155,5 +174,13 @@ public class HackManager {
 
     public void setHackResourceService(HackResourceService resourceService) {
         this.resourceService = resourceService;
+    }
+
+    public ResourceManager getResourceManager() {
+        return resourceManager;
+    }
+
+    public void setResourceManager(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
     }
 }

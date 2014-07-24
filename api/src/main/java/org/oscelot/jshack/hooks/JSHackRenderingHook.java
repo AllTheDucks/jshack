@@ -12,7 +12,6 @@ import blackboard.servlet.renderinghook.RenderingHook;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -68,7 +67,9 @@ public abstract class JSHackRenderingHook implements RenderingHook {
                     StringBuilder sb = new StringBuilder("\n<!-- START HACK : ");
                     sb.append(hackId);
                     sb.append(" -->\n");
-                    sb.append(renderResource(resource, context, hackCtx.getHackConfigMaps().get(hackId)));
+                    sb.append(renderResource(resource, context,
+                            hackCtx.getHackConfigMaps().get(hackId),
+                            hackCtx.getResourceUrlMaps().get(hackId)));
                     sb.append("\n<!-- END HACK : ");
                     sb.append(hack.getIdentifier());
                     sb.append(" -->\n");
@@ -102,7 +103,10 @@ public abstract class JSHackRenderingHook implements RenderingHook {
     }
 
 
-    protected String renderResource(HackResource resource, Context context, Map<String, String> config) throws Exception {
+    protected String renderResource(HackResource resource,
+                                    Context context,
+                                    Map<String, String> config,
+                                    Map<String, String> resources) throws Exception {
         if (ve == null) {
             ve = createVelocityEngine();
         }
@@ -113,6 +117,7 @@ public abstract class JSHackRenderingHook implements RenderingHook {
 //        vc.put("resourcePath", resourcePath);
         vc.put("context", context);
         vc.put("config", config);
+        vc.put("resources", resources);
         StringWriter sw = new StringWriter();
 
         try {

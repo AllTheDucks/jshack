@@ -18,15 +18,13 @@ import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.model.Restriction;
 import org.oscelot.jshack.model.RestrictionType;
 import org.oscelot.jshack.resources.HackResource;
+import org.oscelot.jshack.resources.ResourceManager;
 import org.oscelot.jshack.service.HackDiscoveryService;
 import org.oscelot.jshack.service.HackManager;
 import org.oscelot.jshack.service.HackManagerFactory;
 import org.oscelot.jshack.service.HackService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by wiley on 20/07/14.
@@ -38,6 +36,7 @@ public class FramesetRenderingHookIntegrationTest {
     HackManager hackManager;
     HackDiscoveryService discoveryService;
     HackService hackService;
+    ResourceManager resourceManager;
     ContextManager cm;
 
     @Before
@@ -47,8 +46,10 @@ public class FramesetRenderingHookIntegrationTest {
         cm = Mockito.mock(ContextManager.class);
         hackService = Mockito.mock(HackService.class);
         discoveryService = Mockito.mock(HackDiscoveryService.class);
+        resourceManager = Mockito.mock(ResourceManager.class);
         hackManager.setDiscoveryService(discoveryService);
         hackManager.setHackService(hackService);
+        hackManager.setResourceManager(resourceManager);
         hook = new JspFramesetStartHook();
         hook.setContextManager(cm);
     }
@@ -144,6 +145,33 @@ public class FramesetRenderingHookIntegrationTest {
         String content = hook.getContent();
 
         Assert.assertEquals("\n<!-- START HACK : testhack -->\nmy value\n<!-- END HACK : testhack -->\n", content);
+    }
+
+
+    @Test
+    public void getContent_hackWithResourceUrl_rendersContent() {
+        Context ctx = mock(Context.class);
+        when(cm.getContext()).thenReturn(ctx);
+        Hack hack = new Hack("testhack");
+
+        HackResource resource = newResource(null, null, "${resources.get('my.js')}");
+        resource.setInjectionPoints(Lists.newArrayList("jsp.frameset.start"));
+
+        addResourcesToHack(hack, resource);
+
+        ConfigEntry configEntry = new ConfigEntry("myconfig", "my value");
+        Map<String,String> urlMap = new HashMap<>();
+        urlMap.put("my.js", "/resources/abcdad/my.js");
+
+        when(discoveryService.enumerateHackIds()).thenReturn(Lists.newArrayList("testhack"));
+        when(resourceManager.getResourceUrlMap("testhack")).thenReturn(urlMap);
+        when(hackService.getHackForId("testhack")).thenReturn(hack);
+        when(hackService.getConfigEntriesForId("testhack")).thenReturn(Arrays.asList(configEntry));
+
+
+        String content = hook.getContent();
+
+        Assert.assertEquals("\n<!-- START HACK : testhack -->\n/resources/abcdad/my.js\n<!-- END HACK : testhack -->\n", content);
     }
 
 

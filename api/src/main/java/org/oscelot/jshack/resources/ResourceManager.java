@@ -14,6 +14,7 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.oscelot.jshack.BuildingBlockHelper;
 //import org.oscelot.jshack.JSHackManager;
 //import org.oscelot.jshack.JSHackManagerFactory;
+import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.model.HackInstance;
 
 /**
@@ -37,7 +39,7 @@ public class ResourceManager {
     private ConcurrentHashMap<String, File> fileLookup = new ConcurrentHashMap<String, File>();
     private ConcurrentHashMap<String, HackResource> resourceLookup = new ConcurrentHashMap<String, HackResource>();
     private ConcurrentHashMap<String, String> hashLookup = new ConcurrentHashMap<String, String>();
-    private ConcurrentHashMap<String, HashMap<String, String>> urlLookup = new ConcurrentHashMap<String, HashMap<String, String>>();
+    private ConcurrentHashMap<String, Map<String, String>> urlLookup = new ConcurrentHashMap<String, Map<String, String>>();
     private ResourceCache resourceCache;
     private Pattern shorthandPattern = Pattern.compile(Pattern.quote(RESOURCE_SHORTHAND_START) + "([^\\r\\n]+(?=" + Pattern.quote(RESOURCE_SHORTHAND_END) + "))" + Pattern.quote(RESOURCE_SHORTHAND_END));
     
@@ -51,10 +53,10 @@ public class ResourceManager {
         resourceCache = new ResourceCache(5*1024*1024);
     }
     
-    public synchronized void registerHackPackage(HackInstance hackInstance) throws FileNotFoundException, IOException {
-        HashMap<String, String> urlLookupEntry = new HashMap<String, String>();
-        for(HackResource hackResource : hackInstance.getHack().getResources()) {
-            File resourceFile =  getResourceFile(hackInstance.getHack().getIdentifier(), hackResource);
+    public synchronized void registerHackPackage(Hack hack) throws FileNotFoundException, IOException {
+        HashMap<String, String> urlLookupEntry = new HashMap<>();
+        for(HackResource hackResource : hack.getResources()) {
+            File resourceFile =  getResourceFile(hack.getIdentifier(), hackResource);
             String hash = calculateHash(resourceFile);
             hashLookup.putIfAbsent(resourceFile.getCanonicalPath(), hash);
             fileLookup.putIfAbsent(hash, resourceFile);
@@ -63,7 +65,7 @@ public class ResourceManager {
             String baseUrl = PlugInUtil.getUriStem(BuildingBlockHelper.VENDOR_ID, BuildingBlockHelper.HANDLE);
             urlLookupEntry.put(hackResource.getPath(), baseUrl + "resources/" + hash);
         }
-        urlLookup.putIfAbsent(hackInstance.getHack().getIdentifier(), urlLookupEntry);
+        urlLookup.putIfAbsent(hack.getIdentifier(), urlLookupEntry);
     }
     
     public File getResourceFile(String hackId, HackResource hackResource) {
@@ -99,10 +101,12 @@ public class ResourceManager {
         return resourceLookup.get(hash);
     }
     
-    public HashMap<String, String> getResourceUrlMap(String hackId) {
+    public Map<String, String> getResourceUrlMap(String hackId) {
         return urlLookup.get(hackId);
     }
-    
+
+
+    // TODO Deprecated ??
     public String translateResourceShorthand(String snippetSource) {
         Matcher m = shorthandPattern.matcher(snippetSource);
         return m.replaceAll("\\${resources.get('$1')}");

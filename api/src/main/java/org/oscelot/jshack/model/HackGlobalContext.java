@@ -24,7 +24,7 @@ public class HackGlobalContext {
     private Map<String, Map<String, String>> hackConfigMaps;
 
     /** Map of Resource URL entries keyed by Hack ID */
-    private Map<String, Map<String, String>> resourceUrlMap;
+    private Map<String, Map<String, String>> resourceUrlMaps;
 
     public ResourceRequestMatcher getMatcher() {
         return matcher;
@@ -40,5 +40,13 @@ public class HackGlobalContext {
 
     public void setHackConfigMaps(Map<String, Map<String, String>> hackConfigMaps) {
         this.hackConfigMaps = hackConfigMaps;
+    }
+
+    public Map<String, Map<String, String>> getResourceUrlMaps() {
+        return resourceUrlMaps;
+    }
+
+    public void setResourceUrlMaps(Map<String, Map<String, String>> resourceUrlMaps) {
+        this.resourceUrlMaps = resourceUrlMaps;
     }
 }
