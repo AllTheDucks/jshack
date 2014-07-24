@@ -94,7 +94,7 @@ public class HackManager {
                 hackResourceUrls = new HashMap<>();
             }
             resourceUrlMaps.put(hackId, hackResourceUrls);
-
+            hackList = newHackList;
         }
 
         hackLookup = newHackLookup;

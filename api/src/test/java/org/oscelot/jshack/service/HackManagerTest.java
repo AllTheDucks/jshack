@@ -2,9 +2,11 @@ package org.oscelot.jshack.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.Hack;
 import org.oscelot.jshack.resources.HackResource;
+import org.oscelot.jshack.resources.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class HackManagerTest {
     private HackService hackService;
     private HackDiscoveryService hackDiscoveryService;
     private HackResourceService resourceService;
+    private ResourceManager resourceManager;
 
     @Before
     public void setup() {
@@ -32,10 +35,11 @@ public class HackManagerTest {
         hackService = mock(HackService.class);
         resourceService = mock(HackResourceService.class);
         hackManager = new HackManager();
-
+        resourceManager = Mockito.mock(ResourceManager.class);
         hackManager.setHackService(hackService);
         hackManager.setDiscoveryService(hackDiscoveryService);
         hackManager.setHackResourceService(resourceService);
+        hackManager.setResourceManager(resourceManager);
     }
 
     @Test
