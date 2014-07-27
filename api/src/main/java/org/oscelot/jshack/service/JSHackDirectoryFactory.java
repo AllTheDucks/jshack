@@ -14,6 +14,7 @@ import java.io.File;
 public abstract class JSHackDirectoryFactory {
 
     public static final String HACKS_DIR_NAME = "hacks";
+    public static final String RESOURCE_DIR_NAME = "resources";
     public static final String WORKING_DIR_NAME = "working";
     public static final String TEMP_DIR_NAME = "temp";
     public static final String ARCHIVE_DIR_NAME = "archive";
@@ -43,6 +44,10 @@ public abstract class JSHackDirectoryFactory {
 
     public File getHackDir(String hackId) {
         return new File(this.getAndCreateHacksDir(), hackId);
+    }
+
+    public File getAndCreateHackResourceDir(String hackId) {
+        return getOrCreateSubDir(RESOURCE_DIR_NAME, getAndCreateHackDir(hackId));
     }
 
     public File getAndCreateTempDir() {

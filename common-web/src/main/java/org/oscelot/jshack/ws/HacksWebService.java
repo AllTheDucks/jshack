@@ -1,7 +1,9 @@
 package org.oscelot.jshack.ws;
 
 import org.oscelot.jshack.model.Hack;
+import org.oscelot.jshack.resources.HackResource;
 import org.oscelot.jshack.service.HackManager;
+import org.oscelot.jshack.service.HackResourceService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,7 +16,7 @@ import javax.ws.rs.*;
  * To change this template use File | Settings | File Templates.
  */
 @Path("hacks")
-public class HacksResource {
+public class HacksWebService {
 
     @Inject
     private HackManager hackManager;

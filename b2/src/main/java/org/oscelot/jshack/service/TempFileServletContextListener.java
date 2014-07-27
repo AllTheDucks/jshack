@@ -7,7 +7,10 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * Created by shane on 11/02/14.
+ *
+ * Created by shane on 11/02/14.<br>
+ * Cleans up (i.e. deletes) temp files older than 4 weeks, when Web app starts and stops.
+ *
  */
 public class TempFileServletContextListener implements ServletContextListener {
 
