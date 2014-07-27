@@ -65,11 +65,6 @@
         <servlet-name>HackResourceServlet</servlet-name>
         <url-pattern>/resources/*</url-pattern>
     </servlet-mapping>
-    <listener>
-        <listener-class>
-      org.oscelot.jshack.JSHackServletContextListener
-    </listener-class>
-    </listener>
     <context-param>
         <param-name>blackboard.plugin.vendor</param-name>
         <param-value>oslt</param-value>
@@ -77,6 +72,10 @@
     <context-param>
         <param-name>blackboard.plugin.handle</param-name>
         <param-value>jshack</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/applicationContext.xml</param-value>
     </context-param>
     <listener>
         <listener-class>blackboard.platform.plugin.PluginLocalizationContextListener</listener-class>
@@ -87,7 +86,15 @@
     </mime-mapping>
 
     <listener>
-        <listener-class>org.oscelot.jshack.service.TempFileServletContextListener</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>
+            org.oscelot.jshack.servlets.JSHackServletContextListener
+        </listener-class>
+    </listener>
+    <!--<listener>-->
+        <!--<listener-class>org.oscelot.jshack.service.TempFileServletContextListener</listener-class>-->
+    <!--</listener>-->
 
 </web-app>

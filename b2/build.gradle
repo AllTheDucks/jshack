@@ -9,6 +9,10 @@ repositories {
     }
 }
 
+configurations {
+    b2deploy
+}
+
 war {
     dependsOn ":jshack-common-web:plovrBuild"
     from '../common-web/src/main/webapp'
@@ -19,6 +23,8 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.10'
     testCompile 'org.mockito:mockito-all:1.9.5'
+
+    b2deploy 'org.oscelot:b2deploy-task:0.1.0'
 
     compile project(':jshack-common-web')
 
@@ -39,5 +45,13 @@ dependencies {
 
 }
 
+ant.taskdef(name: 'b2deploy', classname: 'org.oscelot.ant.B2DeployTask', classpath: configurations.b2deploy.asPath)
 
+task deployb2(dependsOn: 'war') << {
+    println "Deploying \"" + war.archivePath + "\""
+    ant.b2deploy(localfilepath: war.archivePath,
+        host: 'localhost:8081',
+        clean: 'true',
+        courseorgavailable:'true')
+}
 

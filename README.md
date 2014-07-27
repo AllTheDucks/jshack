@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AllTheDucks/jshack.svg?branch=implement-b2)](https://travis-ci.org/AllTheDucks/jshack)
+
 Javascript Hacks for Blackboard
 ===============================
 

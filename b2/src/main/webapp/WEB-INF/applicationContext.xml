@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+
+    <bean id="hackManager" class="org.oscelot.jshack.service.HackManagerFactory" factory-method="getHackManager">
+        <property name="discoveryService" ref="discoveryService"/>
+        <property name="hackService" ref="hackService"/>
+        <property name="hackResourceService" ref="hackResourceService"/>
+    </bean>
+
+    <bean id="discoveryService" class="org.oscelot.jshack.service.HackDiscoveryService">
+        <property name="directoryFactory" ref="directoryFactory"/>
+    </bean>
+
+    <bean id="hackService" class="org.oscelot.jshack.service.XStreamHackService">
+        <property name="streamFactory" ref="streamFactory"/>
+    </bean>
+
+    <bean id="streamFactory" class="org.oscelot.jshack.service.FileHackStreamFactory">
+        <property name="directoryFactory" ref="directoryFactory"/>
+    </bean>
+
+    <bean id="hackResourceService" class="org.oscelot.jshack.service.FileHackResourceService">
+        <property name="directoryFactory" ref="directoryFactory"/>
+        <property name="tempFileService" ref="tempFileService"/>
+    </bean>
+
+    <bean id="tempFileService" class="org.oscelot.jshack.service.TempFileService"/>
+
+    <bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackB2DirectoryFactory">
+        <!--<property name="rootConfigDirPath" value="test-web/src/test/data"></property>-->
+    </bean>
+
+    <!--<bean id="bbRoleService" class="org.oscelot.jshack.service.TestBbRoleService" />-->
+
+</beans>
