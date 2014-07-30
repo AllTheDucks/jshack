@@ -3,6 +3,7 @@ package org.oscelot.jshack.service;
 import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 import org.junit.Before;
 import org.junit.Test;
+import org.oscelot.jshack.exceptions.ConfigNotFoundException;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.*;
 import org.oscelot.jshack.resources.HackResource;
@@ -14,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 import static org.custommonkey.xmlunit.XMLAssert.*;
@@ -168,6 +170,13 @@ public class XStreamHackServiceTest {
         when(streamFactory.getHackConfigInputStream("MYHACK")).thenReturn(is);
 
         service.getConfigEntriesForId("MYHACK");
+    }
+
+    @Test
+    public void getHackConfigForId_withMissingConfigFile_returnsEmptyList() {
+        when(streamFactory.getHackConfigInputStream("MYHACK")).thenThrow(new ConfigNotFoundException());
+        List<ConfigEntry> entries = service.getConfigEntriesForId("MYHACK");
+        assertEquals(0, entries.size());
     }
 
     @Test

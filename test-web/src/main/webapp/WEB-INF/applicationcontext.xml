@@ -12,6 +12,7 @@
         <property name="discoveryService" ref="discoveryService"/>
         <property name="hackService" ref="hackService"/>
         <property name="hackResourceService" ref="hackResourceService"/>
+        <property name="resourceManager" ref="resourceManager"/>
     </bean>
 
     <bean id="discoveryService" class="org.oscelot.jshack.service.HackDiscoveryService">
@@ -38,5 +39,6 @@
     </bean>
 
     <bean id="bbRoleService" class="org.oscelot.jshack.service.TestBbRoleService" />
+    <bean id="resourceManager" class="org.oscelot.jshack.resources.ResourceManager"></bean>
 
 </beans>

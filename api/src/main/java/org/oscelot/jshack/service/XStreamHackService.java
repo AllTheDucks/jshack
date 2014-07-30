@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
+import org.oscelot.jshack.exceptions.ConfigNotFoundException;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.exceptions.HackPersistenceException;
 import org.oscelot.jshack.model.*;
@@ -14,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,8 +46,13 @@ public class XStreamHackService implements HackService {
 
     @Override
     public List<ConfigEntry> getConfigEntriesForId(String hackId) {
+        InputStream is;
+        try {
+            is = streamFactory.getHackConfigInputStream(hackId);
+        } catch (ConfigNotFoundException ex) {
+            return new ArrayList<>();
+        }
 
-        InputStream is = streamFactory.getHackConfigInputStream(hackId);
         XStream xstream = getConfigEntriesXstream();
         List<ConfigEntry> hackConfig = (List<ConfigEntry>) xstream.fromXML(is);
 

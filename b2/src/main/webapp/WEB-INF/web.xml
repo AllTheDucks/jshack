@@ -27,12 +27,10 @@
         </init-param>
         <init-param>
             <param-name>Interceptor.Classes</param-name>
-            <param-value>org.oscelot.bb.stripes.interceptors.BlackboardSecurityInterceptor</param-value>
+            <param-value>org.oscelot.bb.stripes.interceptors.BlackboardSecurityInterceptor,
+                net.sourceforge.stripes.integration.spring.SpringInterceptor</param-value>
         </init-param>
-        <!--        <init-param>
-        <param-name>LocalizationBundleFactory.Class</param-name>
-        <param-value>au.edu.swinburne.bb.servlet.StudentViewLocalizationBundleFactory</param-value>
-    </init-param> -->
+
     </filter>
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>
@@ -57,6 +55,18 @@
         <servlet-name>HackResourceServlet</servlet-name>
         <servlet-class>org.oscelot.jshack.servlets.HackResourceServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JerseyEndpoint</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>org.oscelot.jshack.ws</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JerseyEndpoint</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StripesDispatcher</servlet-name>
         <url-pattern>*.action</url-pattern>

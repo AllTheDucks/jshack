@@ -53,11 +53,11 @@
   <bbNG:hierarchyList reorderable="false" >
 
     <bbNG:actionControlBar showWhenEmpty="true">
-      <bbNG:actionButton title="${buttonCreateHackText}" url="CreateHack.action" primary="true"></bbNG:actionButton>
+      <bbNG:actionButton title="${buttonCreateHackText}" url="Editor.action" primary="true"></bbNG:actionButton>
       <bbNG:actionButton title="${buttonUploadHackPackageText}" url="UploadHackPackage.action" primary="true"></bbNG:actionButton>
       <bbNG:actionButton title="${buttonForceReloadText}" url="ReloadHackPackages.action" primary="false"></bbNG:actionButton>
     </bbNG:actionControlBar>
-    <c:forEach items="${actionBean.hackInstances}" var="hack">
+    <c:forEach items="${actionBean.hacks}" var="hack">
         <c:set var="hackDefn" value="${hack.hack}" />
       <bbNG:hierarchyListItem title="${hackDefn.name}">
         <bbNG:delegateContextMenu>

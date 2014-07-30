@@ -36,10 +36,10 @@ public class ResourceManager {
     public static final String RESOURCE_SHORTHAND_START = "<[";
     public static final String RESOURCE_SHORTHAND_END = "]>";
     
-    private ConcurrentHashMap<String, File> fileLookup = new ConcurrentHashMap<String, File>();
-    private ConcurrentHashMap<String, HackResource> resourceLookup = new ConcurrentHashMap<String, HackResource>();
+    private ConcurrentHashMap<String, File> fileLookup = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, HackResource> resourceLookup = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, String> hashLookup = new ConcurrentHashMap<String, String>();
-    private ConcurrentHashMap<String, Map<String, String>> urlLookup = new ConcurrentHashMap<String, Map<String, String>>();
+    private ConcurrentHashMap<String, Map<String, String>> urlLookup = new ConcurrentHashMap<>();
     private ResourceCache resourceCache;
     private Pattern shorthandPattern = Pattern.compile(Pattern.quote(RESOURCE_SHORTHAND_START) + "([^\\r\\n]+(?=" + Pattern.quote(RESOURCE_SHORTHAND_END) + "))" + Pattern.quote(RESOURCE_SHORTHAND_END));
     

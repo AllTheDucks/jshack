@@ -1,5 +1,6 @@
 package org.oscelot.jshack.service;
 
+import org.oscelot.jshack.exceptions.ConfigNotFoundException;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.io.*;
 public class FileHackStreamFactory implements HackStreamFactory {
 
     public static final String METADATA_FILENAME = "hack.xml";
+    public static final String CONFIG_FILENAME = "config.xml";
 
     @Inject
     public JSHackDirectoryFactory directoryFactory;
@@ -31,6 +33,7 @@ public class FileHackStreamFactory implements HackStreamFactory {
             throw new HackNotFoundException(e);
         }
     }
+
     @Override
     public OutputStream getHackXMLOutputStream(String hackId) {
         File hackMetadataFile = new File(directoryFactory.getAndCreateHackDir(hackId), METADATA_FILENAME);
@@ -46,6 +49,7 @@ public class FileHackStreamFactory implements HackStreamFactory {
     public InputStream getHackResourceInputStream(String hackId, String resourceName) {
         throw new RuntimeException("Not Implemented");
     }
+
     @Override
     public OutputStream getHackResourceOutputStream(String hackId, String resourceName) {
         throw new RuntimeException("Not Implemented");
@@ -53,11 +57,24 @@ public class FileHackStreamFactory implements HackStreamFactory {
 
     @Override
     public InputStream getHackConfigInputStream(String hackId) {
-        throw new RuntimeException("Not Implemented");
+        File hackMetadataFile = new File(directoryFactory.getAndCreateConfigDir(), hackId + "-" + CONFIG_FILENAME);
+
+        try {
+            return new FileInputStream(hackMetadataFile);
+        } catch (FileNotFoundException e) {
+            throw new ConfigNotFoundException(e);
+        }
     }
+
     @Override
     public OutputStream getHackConfigOutputStream(String hackId) {
-        throw new RuntimeException("Not Implemented");
+        File hackMetadataFile = new File(directoryFactory.getAndCreateConfigDir(), hackId + "-" + CONFIG_FILENAME);
+
+        try {
+            return new FileOutputStream(hackMetadataFile);
+        } catch (FileNotFoundException e) {
+            throw new ConfigNotFoundException(e);
+        }
     }
 
     public JSHackDirectoryFactory getDirectoryFactory() {

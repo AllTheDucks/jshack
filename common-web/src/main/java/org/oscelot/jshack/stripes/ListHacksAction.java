@@ -22,7 +22,7 @@ public class ListHacksAction implements ActionBean {
     @DefaultHandler
     public Resolution displayEditor() {
         this.hacks = hackManager.getHacks();
-        return new ForwardResolution("/WEB-INF/jsp/listhacks.jsp");
+        return new ForwardResolution("/WEB-INF/jsp/listHacks.jsp");
     }
 
     public ActionBeanContext getContext() {

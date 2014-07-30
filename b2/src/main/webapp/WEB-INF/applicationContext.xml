@@ -12,6 +12,7 @@
         <property name="discoveryService" ref="discoveryService"/>
         <property name="hackService" ref="hackService"/>
         <property name="hackResourceService" ref="hackResourceService"/>
+        <property name="resourceManager" ref="resourceManager"/>
     </bean>
 
     <bean id="discoveryService" class="org.oscelot.jshack.service.HackDiscoveryService">
@@ -30,6 +31,8 @@
         <property name="directoryFactory" ref="directoryFactory"/>
         <property name="tempFileService" ref="tempFileService"/>
     </bean>
+
+    <bean id="resourceManager" class="org.oscelot.jshack.resources.ResourceManager"></bean>
 
     <bean id="tempFileService" class="org.oscelot.jshack.service.TempFileService"/>
 

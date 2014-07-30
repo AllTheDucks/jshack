@@ -13,6 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The ResourceRequestMatcher is basically a sub-component of the HackGlobalContext. Its primary responsibility is
+ * to match incoming requests for a given hook-key and Bb Context, to matching Injectable Resources from Hacks.
+ * These hacks are then returned to the RenderingHook and rendered to the page.<br>
+ *
+ * Important: The ResourceRequestMatcher and all the hacks it contains, should be considered Immutable.<br>
+ *
+ *
  * Created by wiley on 20/07/14.
  */
 public class ResourceRequestMatcher {
