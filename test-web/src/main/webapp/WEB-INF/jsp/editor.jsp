@@ -23,18 +23,7 @@
     <title>Javascript Hacks Editor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-
 <body>
-<script type="application/javascript">
-    window.jshRootUri = "${actionBean.rootUri}";
-</script>
-<c:choose>
-    <c:when test="${actionBean.dev}">
-        <script src="http://localhost:9810/compile?id=jshack-common-web"></script>
-    </c:when>
-    <c:otherwise>
-        <script src="js/main.js"></script>
-    </c:otherwise>
-</c:choose>
+
 </body>
 </html>

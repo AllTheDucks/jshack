@@ -24,7 +24,7 @@ dependencies {
 
     compile project(':jshack-common-web')
 
-    compile 'blackboard.platform:bb-platform:9.1.100401.0'
+    providedCompile 'blackboard.platform:bb-platform:9.1.100401.0'
     providedCompile 'blackboard.platform:bb-cms-admin:9.1.100401.0'
     providedCompile 'blackboard.platform:bb-taglibs:9.1.100401.0'
     providedCompile 'blackboard.platform:bb-ws-gradebook:9.1.100401.0'

@@ -44,13 +44,15 @@ public class ResourceRequestMatcher {
                             compiledResource.getRestrictions().add(RestrictionCompiler.compileRestriction(restriction));
                         }
                     }
-                    for (String hook : resource.getInjectionPoints()) {
-                        List<CompiledHackResource> resList = resourcesByHookKey.get(hook);
-                        if (resList == null) {
-                            resList = new ArrayList();
-                            resourcesByHookKey.put(hook, resList);
+                    if (resource.getInjectionPoints() != null) {
+                        for (String hook : resource.getInjectionPoints()) {
+                            List<CompiledHackResource> resList = resourcesByHookKey.get(hook);
+                            if (resList == null) {
+                                resList = new ArrayList();
+                                resourcesByHookKey.put(hook, resList);
+                            }
+                            resList.add(compiledResource);
                         }
-                        resList.add(compiledResource);
                     }
                 }
             }

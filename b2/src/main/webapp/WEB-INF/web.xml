@@ -46,6 +46,29 @@
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/applicationContext.xml
+            classpath:META-INF/server/wink-core-context.xml</param-value>
+    </context-param>
+
+    <servlet>
+        <servlet-name>JSHacksApp</servlet-name>
+        <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>org.oscelot.jshack.ws.JSHacksApplication</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JSHacksApp</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>StripesDispatcher</servlet-name>
         <servlet-class>net.sourceforge.stripes.controller.DispatcherServlet</servlet-class>
@@ -55,18 +78,18 @@
         <servlet-name>HackResourceServlet</servlet-name>
         <servlet-class>org.oscelot.jshack.servlets.HackResourceServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>JerseyEndpoint</servlet-name>
-        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>org.oscelot.jshack.ws</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>JerseyEndpoint</servlet-name>
-        <url-pattern>/ws/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet>-->
+        <!--<servlet-name>JerseyEndpoint</servlet-name>-->
+        <!--<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>-->
+        <!--<init-param>-->
+            <!--<param-name>jersey.config.server.provider.packages</param-name>-->
+            <!--<param-value>org.oscelot.jshack.ws</param-value>-->
+        <!--</init-param>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>JerseyEndpoint</servlet-name>-->
+        <!--<url-pattern>/ws/*</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>StripesDispatcher</servlet-name>
         <url-pattern>*.action</url-pattern>
@@ -83,10 +106,7 @@
         <param-name>blackboard.plugin.handle</param-name>
         <param-value>jshack</param-value>
     </context-param>
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>WEB-INF/applicationContext.xml</param-value>
-    </context-param>
+
     <listener>
         <listener-class>blackboard.platform.plugin.PluginLocalizationContextListener</listener-class>
     </listener>
@@ -95,9 +115,7 @@
         <mime-type>text/css</mime-type>
     </mime-mapping>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+
     <listener>
         <listener-class>
             org.oscelot.jshack.servlets.JSHackServletContextListener

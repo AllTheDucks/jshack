@@ -7,6 +7,8 @@ import org.oscelot.jshack.service.HackResourceService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,27 +26,32 @@ public class HacksWebService {
     @GET
     @Produces("application/json")
     @Path("{hackId}")
-    public Hack getHackDetails(@PathParam("hackId") String hackId) {
+    public Response getHackDetails(@PathParam("hackId") String hackId) {
         Hack hack = hackManager.getHackById(hackId);
-        return hack;
+        Response r = Response.ok(hack).type(MediaType.APPLICATION_JSON_TYPE).build();
+        return r;
     }
 
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Hack createHack(Hack hack) {
+    public Response createHack(Hack hack) {
         hackManager.persistHack(hack);
-        return hackManager.getHackById(hack.getIdentifier());
+        Hack savedHack = hackManager.getHackById(hack.getIdentifier());
+        Response r = Response.ok(savedHack).type(MediaType.APPLICATION_JSON_TYPE).build();
+        return r;
     }
 
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
     @Path("{hackId}")
-    public Hack updateHack(Hack hack) {
+    public Response updateHack(Hack hack) {
         //TODO check for existence of hack before persisting it.
         hackManager.persistHack(hack);
-        return hackManager.getHackById(hack.getIdentifier());
+        Hack savedHack = hackManager.getHackById(hack.getIdentifier());
+        Response r = Response.ok(savedHack).type(MediaType.APPLICATION_JSON_TYPE).build();
+        return r;
     }
 
     public HackManager getHackManager() {

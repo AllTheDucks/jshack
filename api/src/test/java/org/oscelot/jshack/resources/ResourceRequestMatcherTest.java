@@ -49,6 +49,27 @@ public class ResourceRequestMatcherTest {
         Assert.assertEquals(1, resList.size());
     }
 
+
+    @Test
+    public void getResources_withSingleResourceAndNoInjPoint_returnsNoResource() {
+        Hack hack = new Hack("myhack");
+        HackResource resource = new HackResource();
+        ArrayList<HackResource> resources = new ArrayList<>();
+
+        resources.add(resource);
+        hack.setResources(resources);
+        resource.setHack(hack);
+
+        ArrayList<Hack> hacks = new ArrayList<>();
+        hacks.add(hack);
+
+        matcher = new ResourceRequestMatcher(hacks);
+
+        List<HackResource> resList = matcher.getMatchingResources("my.injection.point", null);
+
+        Assert.assertEquals(0, resList.size());
+    }
+
     @Test
     public void getResources_withSingleResourceAndMismatchedInjPoint_returnsNoResources() {
         Hack hack = new Hack("myhack");
@@ -151,6 +172,7 @@ public class ResourceRequestMatcherTest {
         Assert.assertTrue(resList.get(0).getRestrictions().get(0).getValue().contains("/myurl"));
         Assert.assertEquals(1, resList.size());
     }
+
 
 
 

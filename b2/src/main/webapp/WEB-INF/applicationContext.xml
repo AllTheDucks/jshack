@@ -42,4 +42,17 @@
 
     <!--<bean id="bbRoleService" class="org.oscelot.jshack.service.TestBbRoleService" />-->
 
+    <!-- Web Services -->
+    <bean id="resources.hackResource" class="org.oscelot.jshack.ws.HacksWebService">
+        <property name="hackManager" ref="hackManager"/>
+    </bean>
+
+    <bean class="org.apache.wink.spring.Registrar">
+        <property name="instances">
+            <set>
+                <ref bean="resources.hackResource" />
+            </set>
+        </property>
+    </bean>
+
 </beans>
