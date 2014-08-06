@@ -6,12 +6,9 @@
 
     <c:choose>
         <c:when test="${actionBean.dev}">
-            <script src="http://localhost:9810/compile?id=jshack-common-web"></script>
             <link rel="stylesheet" href="http://localhost:9810/css/jshack-common-web/"/>
-
         </c:when>
         <c:otherwise>
-            <script src="js/main.js"></script>
             <link rel="stylesheet" href="css/main.css"/>
         </c:otherwise>
     </c:choose>

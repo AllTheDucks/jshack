@@ -243,7 +243,15 @@ jsh.HackEditor.prototype.updateEditorState = function(hack) {
 
   this.setModel(hack);
 
-  //TODO Need to update the resources when the data comes back from the server.
+  if (hack.resources && (!this.resources_ || this.resources_.length == 0)) {
+    for (var i = 0; i < hack.resources.length; i++) {
+      var res = hack.resources[i];
+      if (res) {
+        this.resources_.push(res);
+        this.addResourceListItem_(res);
+      }
+    }
+  }
 
 };
 
@@ -536,16 +544,16 @@ jsh.HackEditor.prototype.getResourceCompleter = function() {
           var items = goog.array.reduce(
               this.resourceListContainer_.getChildIds(),
               /**
-           *
-           * @param {Array.<{name: string, value:string, score: number,
+               *
+               * @param {Array.<{name: string, value:string, score: number,
            * meta: string}>} accumulation
-           * @param {string} childId
-           * @param {number} index
-           * @param {Array.<{name: string, value:string, score: number,
+               * @param {string} childId
+               * @param {number} index
+               * @param {Array.<{name: string, value:string, score: number,
            * meta: string}>} array
-           * @return {Array.<{name: string, value:string, score: number,
+               * @return {Array.<{name: string, value:string, score: number,
            * meta: string}>}
-           */
+               */
               function(accumulation, childId, index, array) {
                 var lowerprefix = prefix.toLowerCase();
                 var selectedResource = /** @type {jsh.model.HackResource} */
@@ -569,7 +577,7 @@ jsh.HackEditor.prototype.getResourceCompleter = function() {
                 var score;
                 if (prefix.length === 0 ||
                     goog.string.startsWith(model.path.toLowerCase(),
-                    lowerprefix)) {
+                        lowerprefix)) {
                   score = 100;
                 } else if (goog.string.contains(model.path.toLowerCase(),
                     lowerprefix)) {

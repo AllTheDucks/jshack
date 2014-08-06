@@ -262,6 +262,19 @@ jsh.DataService.prototype.unpackHackJSON = function(jsonData) {
         }, this);
   }
 
+  hack.resources = [];
+  if (jsonData['resources']) {
+    goog.array.forEach(jsonData['resources'],
+        function(item, index, array) {
+          var res = new jsh.model.HackResource();
+          res.path = item['path'];
+          res.mime = item['mime'];
+          res.content = item['content'];
+          res.tempFileName = item['tempFileName'];
+
+          hack.resources.push(res);
+        }, this);
+  }
   return hack;
 };
 

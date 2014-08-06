@@ -6,12 +6,9 @@
 
     <c:choose>
         <c:when test="${actionBean.dev}">
-            <script src="http://localhost:9810/compile?id=jshack-common-web"></script>
             <link rel="stylesheet" href="http://localhost:9810/css/jshack-common-web/"/>
-
         </c:when>
         <c:otherwise>
-            <script src="js/main.js"></script>
             <link rel="stylesheet" href="css/main.css"/>
         </c:otherwise>
     </c:choose>
@@ -24,6 +21,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-
+<script type="application/javascript">
+    window.jshRootUri = "/jshack-test-web";
+</script>
+<c:choose>
+    <c:when test="${actionBean.dev}">
+        <script src="http://localhost:9810/compile?id=jshack-common-web"></script>
+    </c:when>
+    <c:otherwise>
+        <script src="js/main.js"></script>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>
