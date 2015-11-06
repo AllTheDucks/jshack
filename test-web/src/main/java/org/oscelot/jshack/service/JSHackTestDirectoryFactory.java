@@ -20,9 +20,7 @@ public class JSHackTestDirectoryFactory extends JSHackDirectoryFactory {
     @Override
     public File getRootConfigDir() {
         File rootConfigDir = new File(rootConfigDirPath);
-        if(!rootConfigDir.exists()) {
-            throw new RuntimeException("Root config directory does not exist.");
-        }
+        rootConfigDir.mkdirs();
         return rootConfigDir;
     }
 

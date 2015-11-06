@@ -35,7 +35,7 @@
     <bean id="tempFileService" class="org.oscelot.jshack.service.TempFileService"/>
 
     <bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackTestDirectoryFactory">
-        <property name="rootConfigDirPath" value="test-web/src/test/data"></property>
+        <property name="rootConfigDirPath" value="test-web/build/test/rootConfigDir"></property>
     </bean>
 
     <bean id="bbRoleService" class="org.oscelot.jshack.service.TestBbRoleService" />
