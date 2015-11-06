@@ -24,7 +24,7 @@
 <body>
 <script type="application/javascript">
     window.hackid = "${actionBean.hackId}";
-    window.jshRootUri = "${actionBean.rootUri}";
+    window.jshRootUri = "${pageContext.request.contextPath}";
 </script>
 <c:choose>
     <c:when test="${actionBean.dev}">
