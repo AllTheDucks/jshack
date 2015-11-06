@@ -17,7 +17,7 @@
 </head>
 <body>
     <h1>Hacks List (Test Application)</h1>
-    <a href="Editor.action">Create New Hack</a>
+    <a href="editor">Create New Hack</a>
     <p>Hack Count: ${fn:length(actionBean.hacks)}</p>
     <c:choose>
         <c:when test="${empty actionBean.hacks}">
@@ -25,7 +25,7 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${actionBean.hacks}" var="currHack">
-                <a href="Editor.action?hackid=${currHack.identifier}">${currHack.identifier}</a><br>
+                <a href="editor/${currHack.identifier}">${currHack.identifier}</a><br>
             </c:forEach>
         </c:otherwise>
     </c:choose>

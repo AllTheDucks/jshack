@@ -28,7 +28,7 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
   var uri = new goog.Uri(window.location);
 
 
-  var hackId = /** @type {string} */(uri.getQueryData().get('hackid'));
+  var hackId = window['hackid'];
 
   if (hackId) {
     controller.loadHackById(hackId);

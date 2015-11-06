@@ -11,11 +11,13 @@ import org.oscelot.jshack.BuildingBlockHelper;
  * Time: 1:19 PM
  * To change this template use File | Settings | File Templates.
  */
+@UrlBinding("/editor/{hackId}")
 public class EditorAction implements ActionBean {
 
     private boolean dev = false;
     private ActionBeanContext context;
     private String rootUri;
+    private String hackId;
 
     @DefaultHandler
     public Resolution displayEditor() {
@@ -41,5 +43,13 @@ public class EditorAction implements ActionBean {
 
     public void setDev(boolean dev) {
         this.dev = dev;
+    }
+
+    public String getHackId() {
+        return hackId;
+    }
+
+    public void setHackId(String hackId) {
+        this.hackId = hackId;
     }
 }

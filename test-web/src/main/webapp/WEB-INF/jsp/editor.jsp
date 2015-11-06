@@ -9,12 +9,12 @@
             <link rel="stylesheet" href="http://localhost:9810/css/jshack-common-web/"/>
         </c:when>
         <c:otherwise>
-            <link rel="stylesheet" href="css/main.css"/>
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
         </c:otherwise>
     </c:choose>
-    <script src="js/ace/ace.js"></script>
-    <script src="js/ace/ext-language_tools.js"></script>
-    <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
+    <script src="${pageContext.request.contextPath}/js/ace/ace.js"></script>
+    <script src="${pageContext.request.contextPath}/js/ace/ext-language_tools.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/font-awesome-4.0.3/css/font-awesome.min.css">
 
 
     <title>Javascript Hacks Editor</title>
@@ -22,6 +22,7 @@
 </head>
 <body>
 <script type="application/javascript">
+    window.hackid = "${actionBean.hackId}";
     window.jshRootUri = "/jshack-test-web";
 </script>
 <c:choose>
@@ -29,7 +30,7 @@
         <script src="http://localhost:9810/compile?id=jshack-common-web"></script>
     </c:when>
     <c:otherwise>
-        <script src="js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/js/main.js"></script>
     </c:otherwise>
 </c:choose>
 </body>

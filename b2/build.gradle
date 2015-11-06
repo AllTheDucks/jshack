@@ -50,7 +50,7 @@ ant.taskdef(name: 'b2deploy', classname: 'org.oscelot.ant.B2DeployTask', classpa
 task deployb2(dependsOn: 'war') << {
     println "Deploying \"" + war.archivePath + "\""
     ant.b2deploy(localfilepath: war.archivePath,
-        host: 'localhost:8081',
+        host: 'localhost:9876',
         clean: 'true',
         courseorgavailable:'true')
 }

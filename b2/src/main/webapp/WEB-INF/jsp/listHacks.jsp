@@ -53,7 +53,7 @@
   <bbNG:hierarchyList reorderable="false" >
 
     <bbNG:actionControlBar showWhenEmpty="true">
-      <bbNG:actionButton title="${buttonCreateHackText}" url="Editor.action" primary="true"></bbNG:actionButton>
+      <bbNG:actionButton title="${buttonCreateHackText}" url="editor" primary="true"></bbNG:actionButton>
       <bbNG:actionButton title="${buttonUploadHackPackageText}" url="UploadHackPackage.action" primary="true"></bbNG:actionButton>
       <bbNG:actionButton title="${buttonForceReloadText}" url="ReloadHackPackages.action" primary="false"></bbNG:actionButton>
     </bbNG:actionControlBar>
@@ -62,7 +62,7 @@
       <bbNG:hierarchyListItem title="${hack.name}">
         <bbNG:delegateContextMenu>
           <bbNG:contextMenuItem title="${menuConfigText}" url="ConfigHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
-          <bbNG:contextMenuItem title="${menuEditText}" url="CreateHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
+          <bbNG:contextMenuItem title="${menuEditText}" url="editor/${hack.identifier}"></bbNG:contextMenuItem>
           <bbNG:contextMenuItem title="${menuDeleteText}" url="DeleteHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
           <bbNG:contextMenuItem title="${menuDownloadText}" url="DownloadHackPackage.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
           <%--<c:choose>--%>

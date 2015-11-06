@@ -102,6 +102,10 @@
         <url-pattern>*.action</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <url-pattern>/editor/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>HackResourceServlet</servlet-name>
         <url-pattern>/resources/*</url-pattern>
     </servlet-mapping>
