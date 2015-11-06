@@ -58,31 +58,32 @@
       <bbNG:actionButton title="${buttonForceReloadText}" url="ReloadHackPackages.action" primary="false"></bbNG:actionButton>
     </bbNG:actionControlBar>
     <c:forEach items="${actionBean.hacks}" var="hack">
-        <c:set var="hackDefn" value="${hack.hack}" />
-      <bbNG:hierarchyListItem title="${hackDefn.name}">
+
+      <bbNG:hierarchyListItem title="${hack.name}">
         <bbNG:delegateContextMenu>
-          <bbNG:contextMenuItem title="${menuConfigText}" url="ConfigHack.action?hackId=${hackDefn.identifier}"></bbNG:contextMenuItem>
-          <bbNG:contextMenuItem title="${menuEditText}" url="CreateHack.action?hackId=${hackDefn.identifier}"></bbNG:contextMenuItem>
-          <bbNG:contextMenuItem title="${menuDeleteText}" url="DeleteHack.action?hackId=${hackDefn.identifier}"></bbNG:contextMenuItem>
-          <bbNG:contextMenuItem title="${menuDownloadText}" url="DownloadHackPackage.action?hackId=${hackDefn.identifier}"></bbNG:contextMenuItem>
-          <c:choose>
-            <c:when test="${hack.enabled}"><bbNG:contextMenuItem title="${menuDisableText}" url="SetHackStatus.action?disableHack&hackId=${hackDefn.identifier}"></bbNG:contextMenuItem></c:when>
-            <c:otherwise><bbNG:contextMenuItem title="${menuEnableText}" url="SetHackStatus.action?enableHack&hackId=${hackDefn.identifier}"></bbNG:contextMenuItem></c:otherwise>
-        </c:choose>
+          <bbNG:contextMenuItem title="${menuConfigText}" url="ConfigHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
+          <bbNG:contextMenuItem title="${menuEditText}" url="CreateHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
+          <bbNG:contextMenuItem title="${menuDeleteText}" url="DeleteHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
+          <bbNG:contextMenuItem title="${menuDownloadText}" url="DownloadHackPackage.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
+          <%--<c:choose>--%>
+            <%--<c:when test="${hack.enabled}"><bbNG:contextMenuItem title="${menuDisableText}" url="SetHackStatus.action?disableHack&hackId=${hack.identifier}"></bbNG:contextMenuItem></c:when>--%>
+            <%--<c:otherwise><bbNG:contextMenuItem title="${menuEnableText}" url="SetHackStatus.action?enableHack&hackId=${hack.identifier}"></bbNG:contextMenuItem></c:otherwise>--%>
+          <%--</c:choose>--%>
         </bbNG:delegateContextMenu>
-          <c:if test="${not empty hackDefn.developerName}">
-            <p><em>${hackDefn.developerName} | ${hackDefn.developerInstitution} | <a href="${hackDefn.developerURL}">${hackDefn.developerURL}</a> | <a href="mailto:${hackDefn.developerEmail}">${hackDefn.developerEmail}</a></em></p>
-          </c:if>
-        <p><c:choose>
-            <c:when test="${hack.enabled}"><span class="disabledIcon"><img src="/images/ci/icons/check.gif" alt="${imgaltEnabledText}" title="${imgaltEnabledText}"/></span></c:when>
-            <c:otherwise><span class="disabledIcon"><img src="/images/ci/icons/x.gif"  alt="${imgaltDisabledText}" title="${imgaltDisabledText}"/></span></c:otherwise>
-        </c:choose>
-        ${hackDefn.description}</p>
-        <bbNG:itemDetail title="${labelHackIdText}" value="${hackDefn.identifier}"/>
-        <bbNG:itemDetail title="${labelVersionText}" value="${hackDefn.version}"/>
-        <bbNG:itemDetail title="${labelMinBbVersionText}" value="${hackDefn.targetVersionMin}"/>
-        <bbNG:itemDetail title="${labelMaxBbVersionText}" value="${hackDefn.targetVersionMax}"/>
-        <bbNG:itemDetail title="${labelEnabledText}" value="${hack.enabled}"/>
+          <%--<c:if test="${not empty hack.developerName}">--%>
+            <%--<p><em>${hack.developerName} | ${hack.developerInstitution} | <a href="${hack.developerURL}">${hack.developerURL}</a> | <a href="mailto:${hack.developerEmail}">${hack.developerEmail}</a></em></p>--%>
+          <%--</c:if>--%>
+        <p>
+        <%--<c:choose>--%>
+            <%--<c:when test="${hack.enabled}"><span class="disabledIcon"><img src="/images/ci/icons/check.gif" alt="${imgaltEnabledText}" title="${imgaltEnabledText}"/></span></c:when>--%>
+            <%--<c:otherwise><span class="disabledIcon"><img src="/images/ci/icons/x.gif"  alt="${imgaltDisabledText}" title="${imgaltDisabledText}"/></span></c:otherwise>--%>
+        <%--</c:choose>--%>
+        ${hack.description}</p>
+        <bbNG:itemDetail title="${labelHackIdText}" value="${hack.identifier}"/>
+        <bbNG:itemDetail title="${labelVersionText}" value="${hack.version}"/>
+        <bbNG:itemDetail title="${labelMinBbVersionText}" value="${hack.targetVersionMin}"/>
+        <bbNG:itemDetail title="${labelMaxBbVersionText}" value="${hack.targetVersionMax}"/>
+        <%--<bbNG:itemDetail title="${labelEnabledText}" value="${hack.enabled}"/>--%>
       </bbNG:hierarchyListItem>
     </c:forEach>
   </bbNG:hierarchyList>

@@ -1,6 +1,8 @@
 package org.oscelot.jshack.service;
 
 import blackboard.platform.context.Context;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.oscelot.jshack.exceptions.HackNotFoundException;
 import org.oscelot.jshack.model.ConfigEntry;
 import org.oscelot.jshack.model.Hack;

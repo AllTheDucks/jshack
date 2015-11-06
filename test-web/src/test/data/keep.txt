@@ -1,1 +1,0 @@
-This file is here to ensure that git creates it's parent directory. (Git ignores empty directories)
