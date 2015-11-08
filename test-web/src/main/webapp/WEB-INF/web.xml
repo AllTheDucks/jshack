@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
     <session-config>
         <session-timeout>
             30
@@ -57,14 +60,6 @@
         <servlet-class>org.oscelot.jshack.servlets.HackResourceServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>JerseyEndpoint</servlet-name>
-        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>org.oscelot.jshack.ws</param-value>
-        </init-param>
-    </servlet>
-    <servlet>
         <servlet-name>TempFileServlet</servlet-name>
         <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
     </servlet>
@@ -73,9 +68,12 @@
         <servlet-name>TempFileServlet</servlet-name>
         <url-pattern>/temp/*</url-pattern>
     </servlet-mapping>
-    
+
+    <servlet>
+        <servlet-name>org.oscelot.jshack.ws.JSHackApplication</servlet-name>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>JerseyEndpoint</servlet-name>
+        <servlet-name>org.oscelot.jshack.ws.JSHackApplication</servlet-name>
         <url-pattern>/ws/*</url-pattern>
     </servlet-mapping>
 
