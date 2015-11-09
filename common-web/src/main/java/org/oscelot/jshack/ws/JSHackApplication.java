@@ -16,7 +16,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.ApplicationPath;
 
 
-@ApplicationPath("ws")
+@ApplicationPath("/ws/*")
 public class JSHackApplication extends ResourceConfig {
     final Logger logger = LoggerFactory.getLogger(JSHackApplication.class);
 

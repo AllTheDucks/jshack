@@ -70,37 +70,14 @@
     </servlet-mapping>
 
 
-    <filter>
-        <filter-name>jersey-filter</filter-name>
-        <filter-class>org.glassfish.jersey.servlet.ServletContainer</filter-class>
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.oscelot.jshack.ws.JSHackApplication</param-value>
-        </init-param>
-    </filter>
+    <servlet>
+        <servlet-name>org.oscelot.jshack.ws.JSHackApplication</servlet-name>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>org.oscelot.jshack.ws.JSHackApplication</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
 
-    <!--<servlet>-->
-        <!--<servlet-name>jersey-servlet</servlet-name>-->
-        <!--<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>-->
-        <!--<init-param>-->
-            <!--<param-name>javax.ws.rs.Application</param-name>-->
-            <!--<param-value>org.oscelot.jshack.ws.JSHackApplication</param-value>-->
-        <!--</init-param>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>jersey-servlet</servlet-name>-->
-        <!--<url-pattern>/ws/*</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-
-    <!--<servlet>-->
-        <!--<servlet-name>org.oscelot.jshack.ws.JSHackApplication</servlet-name>-->
-        <!--<servlet-class>org.oscelot.jshack.ws.JSHackApplication</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>org.oscelot.jshack.ws.JSHackApplication</servlet-name>-->
-        <!--<url-pattern>/ws/*</url-pattern>-->
-    <!--</servlet-mapping>-->
 
     <servlet-mapping>
         <servlet-name>StripesDispatcher</servlet-name>

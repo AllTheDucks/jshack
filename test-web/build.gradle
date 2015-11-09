@@ -1,6 +1,11 @@
 apply plugin: 'base'
 apply plugin: 'war'
-apply plugin: 'jetty'
+//apply plugin: 'jetty'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+gretty {
+    servletContainer = 'jetty9'
+}
 
 
 repositories {
@@ -35,6 +40,7 @@ dependencies {
     providedCompile 'org.apache.velocity:velocity:1.5'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    providedCompile 'javax.servlet:servlet-api:2.5'
     providedCompile 'jstl:jstl:1.2'
     providedCompile 'javax.activation:activation:1.1'
 
