@@ -34,7 +34,7 @@ dependencies {
     providedCompile 'commons-lang:commons-lang:2.4'
     providedCompile 'org.apache.velocity:velocity:1.5'
 
-    providedCompile 'javax.servlet:servlet-api:2.5'
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
     providedCompile 'jstl:jstl:1.2'
     providedCompile 'javax.activation:activation:1.1'
 
