@@ -23,8 +23,7 @@ public class JSHackApplication extends ResourceConfig {
     @Inject
     public JSHackApplication(ServiceLocator serviceLocator, ServletContext servletContext) {
 
-//        System.out.println("Hello service locator: " + serviceLocator);
-        final WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+//        final WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 
         packages("org.oscelot.jshack.ws;org.oscelot.jshack.security");
         register(JacksonJsonProvider.class);
@@ -32,6 +31,5 @@ public class JSHackApplication extends ResourceConfig {
 
         logger.info("Started JSHackApplication.");
     }
-
 
 }

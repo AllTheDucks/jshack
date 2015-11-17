@@ -2,11 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:util="http://www.springframework.org/schema/util"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
-        ">
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="hackManager" class="org.oscelot.jshack.service.HackManagerFactory" factory-method="getHackManager">
         <property name="discoveryService" ref="discoveryService"/>
@@ -34,9 +36,19 @@
     <bean id="tempFileService" class="org.oscelot.jshack.service.TempFileService"/>
 
     <bean id="directoryFactory" class="org.oscelot.jshack.service.JSHackTestDirectoryFactory">
-        <property name="rootConfigDirPath" value="test-web/build/test/rootConfigDir"></property>
+        <property name="rootConfigDirPath" value="test-web/build/test/rootConfigDir"/>
     </bean>
 
     <bean id="bbRoleService" class="org.oscelot.jshack.service.TestBbRoleService" />
+
+    <bean id="tokenService" class="org.oscelot.jshack.security.TestTokenService">
+        <constructor-arg name="validToken" value="atesttoken" />
+    </bean>
+
+    <util:list id="wsFilters" value-type="javax.ws.rs.container.ContainerRequestFilter">
+        <bean class="org.oscelot.jshack.security.TokenFilter">
+            <property name="tokenService" ref="tokenService" />
+        </bean>
+    </util:list>
 
 </beans>
