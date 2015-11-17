@@ -73,7 +73,8 @@ jsh.DataService = function(contextRoot, token, opt_xhrManager) {
    */
   this.xhrManager_ = opt_xhrManager ?
       opt_xhrManager :
-      new goog.net.XhrManager(1, new goog.structs.Map({'X-JSHack-CSRF': token }));
+      new goog.net.XhrManager(1,
+          new goog.structs.Map({'X-JSHack-CSRF': token }));
 
   /**
    * Stores DataService.Requests for retrieval when the Xhr completes.
