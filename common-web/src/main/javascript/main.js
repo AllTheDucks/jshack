@@ -20,7 +20,8 @@ goog.events.listenOnce(window, goog.events.EventType.LOAD, function() {
 
   modalUiContainer.render(document.body);
 
-  var dataService = new jsh.DataService('/jshack-test-web');
+  var dataService = new jsh.DataService('/jshack-test-web',
+      window['jshackToken']);
 
   var controller = new jsh.EditorController(editor, dataService);
 

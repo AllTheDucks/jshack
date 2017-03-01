@@ -15,12 +15,13 @@ goog.require('jsh.model.Hack');
 /**
  * Creates a DataService.
  * @param {string} contextRoot The application context root url.
+ * @param {string} token CSRF token
  * @param {goog.net.XhrManager=} opt_xhrManager The XhrManager used to process
  *     Xhr requests.
  * @constructor
  * @extends {goog.Disposable}
  */
-jsh.DataService = function(contextRoot, opt_xhrManager) {
+jsh.DataService = function(contextRoot, token, opt_xhrManager) {
   goog.base(this);
 
   /**
@@ -29,6 +30,13 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
    * @private
    */
   this.contextRoot_ = contextRoot;
+
+  /**
+   * CSRF token
+   * @type {string}
+   * @private
+   */
+  this.token_ = token;
 
   /**
    * The url of the remote service for hacks.
@@ -65,7 +73,8 @@ jsh.DataService = function(contextRoot, opt_xhrManager) {
    */
   this.xhrManager_ = opt_xhrManager ?
       opt_xhrManager :
-      new goog.net.XhrManager();
+      new goog.net.XhrManager(1,
+          new goog.structs.Map({'X-JSHack-CSRF': token }));
 
   /**
    * Stores DataService.Requests for retrieval when the Xhr completes.

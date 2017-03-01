@@ -1,6 +1,8 @@
 package org.oscelot.jshack.stripes;
 
 import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.integration.spring.SpringBean;
+import org.oscelot.jshack.security.TokenService;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,12 +15,14 @@ public class EditorAction implements ActionBean {
 
     private boolean dev = false;
     private ActionBeanContext context;
+    private String token;
+
+    private TokenService tokenService;
 
     @DefaultHandler
     public Resolution displayEditor() {
-
+        this.token = this.tokenService.generateToken();
         return new ForwardResolution("/WEB-INF/jsp/editor.jsp");
-
     }
 
     public ActionBeanContext getContext() {
@@ -35,5 +39,14 @@ public class EditorAction implements ActionBean {
 
     public void setDev(boolean dev) {
         this.dev = dev;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    @SpringBean
+    public void injectTokenService(TokenService tokenService) {
+        this.tokenService = tokenService;
     }
 }

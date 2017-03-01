@@ -4,6 +4,10 @@
 <html>
 <head>
 
+    <script type="application/javascript">
+        var jshackToken = '${actionBean.token}';
+    </script>
+
     <c:choose>
         <c:when test="${actionBean.dev}">
             <script src="http://localhost:9810/compile?id=jshack-common-web"></script>
