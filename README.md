@@ -1,5 +1,9 @@
-Javascript Hacks for Blackboard
-===============================
+NOTICE: Javascript Hacks for Blackboard Version 1
+=================================================
+This is the repository for the incomplete version 2 of JS Hack. If you wish to download the production ready version one, [see the version 1 repository](https://github.com/AllTheDucks/jshack-v1).
+
+Javascript Hacks for Blackboard (Incomplete Version 2)
+======================================================
 
 JS Hack is a Building Block for the Blackboard Learn LMS, which allows the injection
 of arbitrary HTML and Javascript into the Blackboard UI.
@@ -8,11 +12,9 @@ of arbitrary HTML and Javascript into the Blackboard UI.
 Download
 --------
 You can find the latest binary version of JS Hack at the
-[JSHack Oscelot Project Page](http://projects.oscelot.org/gf/project/jshack/frs/?action=FrsReleaseBrowse&frs_package_id=360)
-If you come across an issue in JSHack V1, Please either:
+[JS Hack Version 1 repository](https://github.com/AllTheDucks/jshack-v1)
 
-- post to the forums in the JSHack project.
-- or post to the bb-open_src mailing list.
+If you come across an issue in JSHack V1, please [add an issue to the v1 repository](https://github.com/AllTheDucks/jshack-v1).
 
 Before you Begin
 ----------------
